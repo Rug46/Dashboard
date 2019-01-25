@@ -9,12 +9,12 @@
         <h1>Set Budget</h1>
         <form asp-action="SetBudget">
             <div class="form-group">
-                Daily Budget: <input type="number" id="tbDayH" style="width:50px;" value="@Dashboard.Data.SetBudgetToday.GetBudgetHours()" /> h
-                <input type="number" id="tbDayM" style="width:50px;margin-left:10px;" value="@Dashboard.Data.SetBudgetToday.GetBudgetMinutes()" /> m
+                Daily Budget: <input type="number" id="tbDayH" style="width:50px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetHours()" /> h
+                <input type="number" id="tbDayM" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetMinutes()" /> m
             </div>
             <div class="form-group">
-                Monthly Budget: <input type="number" id="tbMonthH" style="width: 50px;" value="@Dashboard.Data.SetBudget.GetBudgetHours()" /> h
-                <input type="number" id="tbMonthM" style="width:50px;margin-left:10px;" value="@Dashboard.Data.SetBudget.GetBudgetMinutes()" /> m
+                Monthly Budget: <input type="number" id="tbMonthH" style="width: 50px;" value="@Dashboard.Helpers.SetBudget.GetBudgetHours()" /> h
+                <input type="number" id="tbMonthM" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudget.GetBudgetMinutes()" /> m
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" style="background-color:lightgray;margin-left:10px;" onclick="Save()" />

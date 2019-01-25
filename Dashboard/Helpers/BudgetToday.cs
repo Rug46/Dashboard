@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dashboard.Data;
 
-namespace Dashboard.Data
+namespace Dashboard.Helpers
 {
-    public class Budget
+    public class BudgetToday
     {
         public static float GetBudgetAmount()
         {
             using (var db = new BudgetContext())
             {
                 var records = db.BudgetRecords
-                    .Where(bm => bm.Name == "Month")
+                    .Where(bm => bm.Name == "Day")
                     .OrderBy(bm => bm.Id)
                     .ToList();
 
@@ -38,7 +39,7 @@ namespace Dashboard.Data
             using (var db = new PlaytimeContext())
             {
                 var records = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
@@ -100,37 +101,12 @@ namespace Dashboard.Data
 
         public static bool IsOverBudget()
         {
-            if(GetUsedAmount() >= GetBudgetAmount())
+            if(GetUsedAmount() > GetBudgetAmount())
             {
                 return true;
             } else
             {
                 return false;
-            }
-        }
-
-        public static bool IsOverBudgetAny()
-        {
-            if(IsOverBudget() || BudgetToday.IsOverBudget())
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
-
-        public static string IsOverBudgetFormatted()
-        {
-            if (BudgetToday.IsOverBudget())
-            {
-                return "Over Budget Today!";
-            } else if(IsOverBudget())
-            {
-                return "Over Budget!";
-            } else
-            {
-                return "";
             }
         }
     }

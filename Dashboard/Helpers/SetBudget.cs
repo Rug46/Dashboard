@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dashboard.Data;
 
-namespace Dashboard.Data
+namespace Dashboard.Helpers
 {
     public class SetBudget
     {
@@ -38,8 +39,8 @@ namespace Dashboard.Data
 
         public static void Save(int bmHours, int bmMinutes, int bdHours, int bdMinutes)
         {
-            Dashboard.Data.SetBudget.SetBudgetAmount(bmHours, bmMinutes);
-            Dashboard.Data.SetBudgetToday.SetBudgetAmount(bdHours, bdMinutes);
+            SetBudgetAmount(bmHours, bmMinutes);
+            SetBudgetToday.SetBudgetAmount(bdHours, bdMinutes);
         }
     }
 }

@@ -14,6 +14,10 @@
     td {
         padding: 0px 10px;
     }
+
+    table {
+        width: 100%;
+    }
 </style>
 
 <div class="main-content-inner">
@@ -65,7 +69,7 @@
                         </tbody>
                     </table>
                     @{
-                        var LastPage = Dashboard.Data.Playtime.GetLastPage();
+                        var LastPage = Dashboard.Helpers.Playtime.GetLastPage();
                     }
                     <nav aria-label="Page Navigation">
                         <ul class="pagination justify-content-center">
@@ -145,7 +149,7 @@
                             var urlSplit = url.split("/");
                             var page = urlSplit[urlSplit.length - 1];
 
-                            window.location.href = "/Playtime/Index/" + @(Dashboard.Data.Playtime.GetLastPage() - 1);
+                            window.location.href = "/Playtime/Index/" + @(Dashboard.Helpers.Playtime.GetLastPage() - 1);
                         }
                     </script>
                 </div>

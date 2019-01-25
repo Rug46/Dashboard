@@ -79,27 +79,27 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if (Dashboard.Data.Data.GetGameLast(1) != "")
+                    @if (Dashboard.Helpers.Data.GetGameLast(1) != "")
                     {
                         <h2 class="modalText">Most Recent</h2>
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(1)" onclick="setGame('@Dashboard.Data.Data.GetGameLast(1)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetGameLast(1)" onclick="setGame('@Dashboard.Helpers.Data.GetGameLast(1)')" data-dismiss="modal" />
                     }
 
-                    @if (Dashboard.Data.Data.GetGameLast(2) != "")
+                    @if (Dashboard.Helpers.Data.GetGameLast(2) != "")
                     {
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(2)" onclick="setGame('@Dashboard.Data.Data.GetGameLast(2)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetGameLast(2)" onclick="setGame('@Dashboard.Helpers.Data.GetGameLast(2)')" data-dismiss="modal" />
                     }
 
-                    @if (Dashboard.Data.Data.GetGameLast(3) != "")
+                    @if (Dashboard.Helpers.Data.GetGameLast(3) != "")
                     {
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(3)" onclic="setGame('@Dashboard.Data.Data.GetGameLast(3)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetGameLast(3)" onclic="setGame('@Dashboard.Helpers.Data.GetGameLast(3)')" data-dismiss="modal" />
                     }
-                    @if (Dashboard.Data.Data.GetGameLast(1) != "")
+                    @if (Dashboard.Helpers.Data.GetGameLast(1) != "")
                     {
                         <hr />
                     }
                     @{
-                        var gameList = Dashboard.Data.Data.GetGames();
+                        var gameList = Dashboard.Helpers.Data.GetGames();
                     }
 
                     @for (int i = 0; i < gameList.Count; i++)
@@ -121,27 +121,27 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if (Dashboard.Data.Data.GetModeLast(1) != "")
+                    @if (Dashboard.Helpers.Data.GetModeLast(1) != "")
                     {
                         <h2 class="modalText">Most Recent</h2>
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(1)" onclick="setMode('@Dashboard.Data.Data.GetModeLast(1)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetModeLast(1)" onclick="setMode('@Dashboard.Helpers.Data.GetModeLast(1)')" data-dismiss="modal" />
                     }
 
-                    @if (Dashboard.Data.Data.GetModeLast(2) != "")
+                    @if (Dashboard.Helpers.Data.GetModeLast(2) != "")
                     {
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(2)" onclick="setMode('@Dashboard.Data.Data.GetModeLast(2)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetModeLast(2)" onclick="setMode('@Dashboard.Helpers.Data.GetModeLast(2)')" data-dismiss="modal" />
                     }
 
-                    @if (Dashboard.Data.Data.GetModeLast(3) != "")
+                    @if (Dashboard.Helpers.Data.GetModeLast(3) != "")
                     {
-                        <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(3)" onclic="setMode('@Dashboard.Data.Data.GetModeLast(3)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@Dashboard.Helpers.Data.GetModeLast(3)" onclic="setMode('@Dashboard.Helpers.Data.GetModeLast(3)')" data-dismiss="modal" />
                     }
-                    @if (Dashboard.Data.Data.GetModeLast(1) != "")
+                    @if (Dashboard.Helpers.Data.GetModeLast(1) != "")
                     {
                         <hr />
                     }
                     @{
-                        var modeList = Dashboard.Data.Data.GetModes();
+                        var modeList = Dashboard.Helpers.Data.GetModes();
                     }
 
                     @for (int i = 0; i < modeList.Count; i++)

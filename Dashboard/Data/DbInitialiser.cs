@@ -21,8 +21,8 @@ namespace Dashboard.Data
             var records = new PlaytimeModel[]
             {
                 // TODO: Remove these after testing
-                //new PlaytimeModel{Date=DateTime.Parse("2018-10-24 10:00"), Game="Splatoon 2", Finish=DateTime.Parse("2018-10-24 11:36"), Mode="Online"},
-                //new PlaytimeModel{Date=DateTime.Parse("2018-10-24 11:45"), Game="Mario Kart 8 Deluxe", Finish=DateTime.Parse("2018-10-24 12:03"), Mode="Friends"}
+                new PlaytimeModel{Date=DateTime.Parse("2018-10-24 10:00"), Game="Splatoon 2", Finish=DateTime.Parse("2018-10-24 11:36"), Mode="Online"},
+                new PlaytimeModel{Date=DateTime.Parse("2018-10-24 11:45"), Game="Mario Kart 8 Deluxe", Finish=DateTime.Parse("2018-10-24 12:03"), Mode="Friends"}
             };
 
             foreach (PlaytimeModel ptm in records)
@@ -44,6 +44,7 @@ namespace Dashboard.Data
 
             var records = new BudgetModel[]
             {
+                // Default Values
                 new BudgetModel{Name="Day",Minutes=120 },
                 new BudgetModel{Name="Month",Minutes=1440 }
             };

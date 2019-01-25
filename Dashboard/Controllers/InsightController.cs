@@ -11,7 +11,7 @@ namespace Dashboard.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Budget");
         }
 
         public IActionResult Budget()

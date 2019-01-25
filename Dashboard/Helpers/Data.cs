@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dashboard.Models;
+using Dashboard.Data;
 
-namespace Dashboard.Data
+namespace Dashboard.Helpers
 {
     public class Data
     {

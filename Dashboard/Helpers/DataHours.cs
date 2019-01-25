@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Dashboard.Models;
 using Microsoft.AspNetCore.Mvc;
+using Dashboard.Data;
 
-namespace Dashboard.Data
+namespace Dashboard.Helpers
 {
     public class DataHours : Controller
     {
