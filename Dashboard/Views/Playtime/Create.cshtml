@@ -4,6 +4,31 @@
     ViewData["Title"] = "Add New";
 }
 
+<style>
+    form {
+        font-size: 20px;
+    }
+
+    .modalButton {
+        border: 0;
+        padding: 5px;
+        background-color: lightgrey;
+        width: 100%;
+        margin: auto;
+        margin-bottom: 5px;
+    }
+
+    .modalButton:hover {
+        background-color: grey;
+        color: white;
+    }
+
+    .modalText {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+</style>
+
 <div class="main-content-inner">
     <div class="row">
         <div class="col-md-6" style="margin: auto;">
@@ -132,3 +157,27 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    function getDate() {
+        var today = new Date();
+        var date = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        var hour = today.getHours();
+        var minute = today.getMinutes();
+        if (date < 10) {
+            date = '0' + date;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (hour < 10) {
+            hour = '0' + hour;
+        }
+        if (minute < 10) {
+            minute = '0' + minute;
+        }
+        return year + "-" + month + "-" + date + "T" + hour + ":" + minute;
+    }
+</script>
