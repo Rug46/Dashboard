@@ -1,0 +1,357 @@
+﻿@*model IEnumerable<Dashboard.Models.PlaytimeModel>*@
+@model Dashboard.Models.PlaytimeModel
+
+@{
+    ViewData["Title"] = "Add New";
+}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>srtdash - ICO Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="~/assets/css/typography.css">
+    <link rel="stylesheet" href="~/assets/css/default-css.css">
+    <link rel="stylesheet" href="~/assets/css/styles.css">
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="~/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <link rel="stylesheet" href="~/css/activity.css" />
+
+    <link rel="stylesheet" href="~/css/activityCreate.css" />
+</head>
+
+<body>
+
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a asp-controller="Home" asp-action="Index"><img src="~/assets/images/icon/logonew.png" /></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            <li>
+                                <a asp-controller="Home" asp-action="Index" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)" aria-expanded="true">
+                                    <i class="ti-list"></i><span>Activity</span>
+                                </a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Index", "Playtime")">All Activity</a></li>
+                                    <li>
+                                        <a href="#" aria-expanded="true">Activity</a>
+                                        <ul class="collapse">
+                                            <li><a href="@Url.Action("Today", "Playtime")">Last 24 Hours</a></li>
+                                            <li><a href="@Url.Action("Week", "Playtime")">Last 7 Days</a></li>
+                                            <li><a href="@Url.Action("Month", "Playtime")">Ladt 28 Days</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- Add Game List Here -->
+                                    <li class="active"><a href="@Url.Action("Create", "Playtime")">Add New</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Charts</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Hours", "Chart")">Hours Over Time</a></li>
+                                    <li><a href="@Url.Action("Games", "Chart")">Games Played Recently</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-eye"></i><span>Insights</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Budget", "Insight")">Time Budget</a></li>
+                                    <li><a href="@Url.Action("Leaderboard", "Insight")">Game Leaderboard</a></li>
+                                    <li><a href="@Url.Action("Outlook", "Insight")">Future Outlook</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                                    <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            @if (Dashboard.Data.Budget.IsOverBudgetAny())
+                            {
+                                <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
+                            }
+                            <a href="@Url.Action("Create", "Playtime")"><li title="Add New Record"><i class="ti-plus"></i></li></a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">All Activity</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li><a asp-controller="Playtime" asp-action="Index"><span>Activity</span></a></li>
+                                <li><span>All Activity</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="~/assets/images/author/avatar2.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Ethan Lane<i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Message</a>
+                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="#">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <div class="row">
+                    <div class="col-md-6" style="margin: auto;">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Date" class="control-label"></label>
+                                <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('DateDate').value = getDate();" />
+                                <input asp-for="Date" class="form-control" id="DateDate" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Game" class="control-label"></label>
+                                <input type="button" value="Games" class="btn btn-default" style="float:right;" data-toggle="modal" data-target="#modalGame" />
+                                <input asp-for="Game" class="form-control" id="gameName" />
+                                <span asp-validation-for="Game" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Finish" class="control-label"></label>
+                                <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('FinishDate').value = getDate();" />
+                                <input asp-for="Finish" class="form-control" id="FinishDate" />
+                                <span asp-validation-for="Finish" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Mode" class="control-label"></label>
+                                <input type="button" value="Modes" class="btn btn-default" style="float:right;" data-toggle="modal" data-target="#modalMode" />
+                                <input asp-for="Mode" class="form-control" id="modeName" />
+                                <span asp-validation-for="Mode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+
+                <div class="modal fade" id="modalGame" tabindex="-1" role="dialog" aria-labelledby="Games" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalGameTitle">Games</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @if (Dashboard.Data.Data.GetGameLast(1) != "")
+                                {
+                                    <h2 class="modalText">Most Recent</h2>
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(1)" onclick="setGame('@Dashboard.Data.Data.GetGameLast(1)')" data-dismiss="modal" />
+                                }
+
+                                @if (Dashboard.Data.Data.GetGameLast(2) != "")
+                                {
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(2)" onclick="setGame('@Dashboard.Data.Data.GetGameLast(2)')" data-dismiss="modal" />
+                                }
+
+                                @if (Dashboard.Data.Data.GetGameLast(3) != "")
+                                {
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetGameLast(3)" onclic="setGame('@Dashboard.Data.Data.GetGameLast(3)')" data-dismiss="modal" />
+                                }
+                                @if (Dashboard.Data.Data.GetGameLast(1) != "")
+                                {
+                                    <hr />
+                                }
+                                @{
+                                    var gameList = Dashboard.Data.Data.GetGames();
+                                }
+
+                                @for (int i = 0; i < gameList.Count; i++)
+                                {
+                                    <input type="button" class="modalButton" value="@gameList.ElementAt(i)" onclick="setGame('@gameList.ElementAt(i)')" data-dismiss="modal" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalMode" tabindex="-1" role="dialog" aria-labelledby="Modes" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalGameTitle">Modes</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @if (Dashboard.Data.Data.GetModeLast(1) != "")
+                                {
+                                    <h2 class="modalText">Most Recent</h2>
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(1)" onclick="setMode('@Dashboard.Data.Data.GetModeLast(1)')" data-dismiss="modal" />
+                                }
+
+                                @if (Dashboard.Data.Data.GetModeLast(2) != "")
+                                {
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(2)" onclick="setMode('@Dashboard.Data.Data.GetModeLast(2)')" data-dismiss="modal" />
+                                }
+
+                                @if (Dashboard.Data.Data.GetModeLast(3) != "")
+                                {
+                                    <input type="button" class="modalButton" value="@Dashboard.Data.Data.GetModeLast(3)" onclic="setMode('@Dashboard.Data.Data.GetModeLast(3)')" data-dismiss="modal" />
+                                }
+                                @if (Dashboard.Data.Data.GetModeLast(1) != "")
+                                {
+                                    <hr />
+                                }
+                                @{
+                                    var modeList = Dashboard.Data.Data.GetModes();
+                                }
+
+                                @for (int i = 0; i < modeList.Count; i++)
+                                {
+                                    <input type="button" class="modalButton" value="@modeList.ElementAt(i)" onclick="setMode('@modeList.ElementAt(i)')" data-dismiss="modal" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jquery latest version -->
+    <script src="~/assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/metisMenu.min.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    @*<script src="assets/js/line-chart.js"></script>
+        <!-- all pie chart -->
+        @*<script src="assets/js/pie-chart.js"></script>*@
+    <!-- others plugins -->
+    <script src="~/assets/js/plugins.js"></script>
+    <script src="~/assets/js/scripts.js"></script>
+
+    <script src="~/js/ActivityCreate.js"></script>
+
+    <script>
+        function getDate() {
+            var today = new Date();
+
+            var date = today.getDate();
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+
+            if (date < 10) {
+                date = '0' + date;
+            }
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+
+            return year + "-" + month + "-" + date + "T" + hour + ":" + minute;
+        }
+    </script>
+
+    @*<script src="~/js/home.js"></script>*@
+</body>
+
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

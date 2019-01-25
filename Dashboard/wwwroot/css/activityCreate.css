@@ -1,0 +1,22 @@
+﻿form {
+    font-size: 20px;
+}
+
+.modalButton {
+    border: 0;
+    padding: 5px;
+    background-color: lightgrey;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+.modalButton:hover {
+    background-color: grey;
+    color: white;
+}
+
+.modalText {
+    text-align: center;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,478 @@
+﻿@model IEnumerable<Dashboard.Models.PlaytimeModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>srtdash - ICO Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/metisMenu.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="assets/css/typography.css">
+    <link rel="stylesheet" href="assets/css/default-css.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <!-- Hours Today Chart Data -->
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(0))" id="hrt_d1" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-1))" id="hrt_d2" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-2))" id="hrt_d3" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-3))" id="hrt_d4" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-4))" id="hrt_d5" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-5))" id="hrt_d6" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-6))" id="hrt_d7" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-7))" id="hrt_d8" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-8))" id="hrt_d9" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-9))" id="hrt_d10" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-10))" id="hrt_d11" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-11))" id="hrt_d12" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-12))" id="hrt_d13" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-13))" id="hrt_d14" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-14))" id="hrt_d15" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-15))" id="hrt_d16" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-16))" id="hrt_d17" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-17))" id="hrt_d18" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-18))" id="hrt_d19" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-19))" id="hrt_d20" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-20))" id="hrt_d21" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-21))" id="hrt_d22" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-22))" id="hrt_d23" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeHour(DateTime.Now.AddHours(-23))" id="hrt_d24" />
+
+    <!-- Hours Today Chart Labels -->
+    <input type="hidden" value="@DateTime.Now.AddHours(0).ToString("HH:00")" id="hrt_d1l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-1).ToString("HH:00")" id="hrt_d2l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-2).ToString("HH:00")" id="hrt_d3l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-3).ToString("HH:00")" id="hrt_d4l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-4).ToString("HH:00")" id="hrt_d5l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-5).ToString("HH:00")" id="hrt_d6l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-6).ToString("HH:00")" id="hrt_d7l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-7).ToString("HH:00")" id="hrt_d8l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-8).ToString("HH:00")" id="hrt_d9l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-9).ToString("HH:00")" id="hrt_d10l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-10).ToString("HH:00")" id="hrt_d11l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-11).ToString("HH:00")" id="hrt_d12l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-12).ToString("HH:00")" id="hrt_d13l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-13).ToString("HH:00")" id="hrt_d14l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-14).ToString("HH:00")" id="hrt_d15l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-15).ToString("HH:00")" id="hrt_d16l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-16).ToString("HH:00")" id="hrt_d17l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-17).ToString("HH:00")" id="hrt_d18l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-18).ToString("HH:00")" id="hrt_d19l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-19).ToString("HH:00")" id="hrt_d20l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-20).ToString("HH:00")" id="hrt_d21l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-21).ToString("HH:00")" id="hrt_d22l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-22).ToString("HH:00")" id="hrt_d23l" />
+    <input type="hidden" value="@DateTime.Now.AddHours(-23).ToString("HH:00")" id="hrt_d24l" />
+
+    <!-- Hours Week Chart Data -->
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(0))" id="hrt_w1" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-1))" id="hrt_w2" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-2))" id="hrt_w3" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-3))" id="hrt_w4" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-4))" id="hrt_w5" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-5))" id="hrt_w6" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-6))" id="hrt_w7" />
+
+    <!-- Hours Week Chart Labels -->
+    <input type="hidden" value="@DateTime.Now.AddDays(0).ToString("dd/MM/yyyy")" id="hrt_w1l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy")" id="hrt_w2l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-2).ToString("dd/MM/yyyy")" id="hrt_w3l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-3).ToString("dd/MM/yyyy")" id="hrt_w4l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-4).ToString("dd/MM/yyyy")" id="hrt_w5l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")" id="hrt_w6l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-6).ToString("dd/MM/yyyy")" id="hrt_w7l" />
+
+    <!-- Hours Month Chart Data -->
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(0))" id="hrt_m1" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-1))" id="hrt_m2" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-2))" id="hrt_m3" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-3))" id="hrt_m4" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-4))" id="hrt_m5" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-5))" id="hrt_m6" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-6))" id="hrt_m7" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-7))" id="hrt_m8" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-8))" id="hrt_m9" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-9))" id="hrt_m10" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-10))" id="hrt_m11" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-11))" id="hrt_m12" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-12))" id="hrt_m13" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-13))" id="hrt_m14" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-14))" id="hrt_m15" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-15))" id="hrt_m16" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-16))" id="hrt_m17" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-17))" id="hrt_m18" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-18))" id="hrt_m19" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-19))" id="hrt_m20" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-20))" id="hrt_m21" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-21))" id="hrt_m22" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-22))" id="hrt_m23" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-23))" id="hrt_m24" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-24))" id="hrt_m25" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-25))" id="hrt_m26" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-26))" id="hrt_m27" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetGameTimeDay(DateTime.Now.AddDays(-27))" id="hrt_m28" />
+
+    <!-- Hours Month Chart Labels -->
+    <input type="hidden" value="@DateTime.Now.AddDays(0).ToString("dd/MM/yyyy")" id="hrt_m1l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy")" id="hrt_m2l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-2).ToString("dd/MM/yyyy")" id="hrt_m3l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-3).ToString("dd/MM/yyyy")" id="hrt_m4l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-4).ToString("dd/MM/yyyy")" id="hrt_m5l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")" id="hrt_m6l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-6).ToString("dd/MM/yyyy")" id="hrt_m7l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy")" id="hrt_m8l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-8).ToString("dd/MM/yyyy")" id="hrt_m9l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-9).ToString("dd/MM/yyyy")" id="hrt_m10l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-10).ToString("dd/MM/yyyy")" id="hrt_m11l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-11).ToString("dd/MM/yyyy")" id="hrt_m12l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-12).ToString("dd/MM/yyyy")" id="hrt_m13l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-13).ToString("dd/MM/yyyy")" id="hrt_m14l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-14).ToString("dd/MM/yyyy")" id="hrt_m15l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-15).ToString("dd/MM/yyyy")" id="hrt_m16l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-16).ToString("dd/MM/yyyy")" id="hrt_m17l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-17).ToString("dd/MM/yyyy")" id="hrt_m18l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-18).ToString("dd/MM/yyyy")" id="hrt_m19l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-19).ToString("dd/MM/yyyy")" id="hrt_m20l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-20).ToString("dd/MM/yyyy")" id="hrt_m21l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-21).ToString("dd/MM/yyyy")" id="hrt_m22l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-22).ToString("dd/MM/yyyy")" id="hrt_m23l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-23).ToString("dd/MM/yyyy")" id="hrt_m24l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-24).ToString("dd/MM/yyyy")" id="hrt_m25l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-25).ToString("dd/MM/yyyy")" id="hrt_m26l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-26).ToString("dd/MM/yyyy")" id="hrt_m27l" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-27).ToString("dd/MM/yyyy")" id="hrt_m28l" />
+
+    <!-- Pie Chart Data -->
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedTime(1)" id="gp_g1" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedTime(2)" id="gp_g2" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedTime(3)" id="gp_g3" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedTime(4)" id="gp_g4" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedTime(5)" id="gp_g5" />
+
+    <!-- Pie Chart Labels -->
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedName(1)" id="gp_l1" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedName(2)" id="gp_l2" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedName(3)" id="gp_l3" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedName(4)" id="gp_l4" />
+    <input type="hidden" value="@Dashboard.Data.Data.GetMostPlayedName(5)" id="gp_l5" />
+
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a asp-controller="Home" asp-action="Index"><img src="~/assets/images/icon/logonew.png" /></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            <li class="active">
+                                <a asp-controller="Home" asp-action="Index" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true">
+                                    <i class="ti-list"></i><span>Activity</span>
+                                </a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Index", "Playtime")">All Activity</a></li>
+                                    <li>
+                                        <a href="#" aria-expanded="true">Activity</a>
+                                        <ul class="collapse">
+                                            <li><a href="@Url.Action("Today", "Playtime")">Last 24 Hours</a></li>
+                                            <li><a href="@Url.Action("Week", "Playtime")">Last 7 Days</a></li>
+                                            <li><a href="@Url.Action("Month", "Playtime")">Last 28 Days</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- Add Game List Here -->
+                                    <li><a href="@Url.Action("Create", "Playtime")">Add New</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Charts</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Hours", "Chart")">Hours Over Time</a></li>
+                                    <li><a href="@Url.Action("Games", "Chart")">Games Played Recently</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-eye"></i><span>Insights</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Budget", "Insight")">Time Budget</a></li>
+                                    <li><a href="@Url.Action("Leaderboard", "Insight")">Game Leaderboard</a></li>
+                                    <li><a href="@Url.Action("Outlook", "Insight")">Future Outlook</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                                    <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            @if (Dashboard.Data.Budget.IsOverBudgetAny())
+                            {
+                                <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
+                            }
+                            <a href="@Url.Action("Create", "Playtime")"><li title="Add New Record"><i class="ti-plus"></i></li></a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Dashboard</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li><span>Dashboard</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="assets/images/author/avatar2.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Ethan Lane<i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Message</a>
+                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="#">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <!-- sales report area start -->
+                <div class="sales-report-area mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="single-report mb-xs-30">
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div class="icon"><i class="ti-time"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Last 24 Hours</h4>
+                                        <p>@Dashboard.Data.Data.GetPlayTimeLast24H()</p>
+                                    </div>
+                                </div>
+                                <canvas id="hours_today" height="100"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="single-report mb-xs-30">
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div class="icon"><i class="ti-time"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Last 7 Days</h4>
+                                        <p>@Dashboard.Data.Data.GetPlayTimeLast7D()</p>
+                                    </div>
+                                </div>
+                                <canvas id="hours_week" height="100"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="single-report">
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div class="icon"><i class="ti-time"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Last 28 Days</h4>
+                                        <p>@Dashboard.Data.Data.GetPlayTimeLast28D()</p>
+                                    </div>
+
+                                </div>
+                                <canvas id="hours_month" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- sales report area end -->
+                <!-- overview area start -->
+                <div class="row">
+                    @*<div class="col-xl-7 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h4 class="header-title mb-0">Overview</h4>
+                                        <select class="custome-select border-0 pr-3">
+                                            <option selected>Today</option>
+                                            <option value="0">24/10/2018</option>
+                                            <option value="1">23/10/2018</option>
+                                        </select>
+                                    </div>
+                                    <div id="verview-shart"></div>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<div class="col-xl-12 col-lg-12 coin-distribution">
+                            <div class="card h-full">
+                                <div class="card-body">
+                                    <h4 class="header-title mb-0">Games Played</h4>
+                                    <div id="coin_distribution"></div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="col-lg-12">
+                        <div class="single-report">
+                            <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div class="icon"><i class="ti-pie-chart"></i></div>
+                                <div class="s-report-title d-flex justify-content-between">
+                                    <h4 class="header-title mb-0">Games Played</h4>
+                                    <p>Last 28 Days</p>
+                                </div>
+                            </div>
+                            <canvas id="games_played" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- overview area end -->
+                <!-- market value area start -->
+                <div class="row mt-5 mb-5">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-center">
+                                    <h4 class="header-title mb-0">Top 3</h4>
+                                </div>
+                                <div class="market-status-table mt-4">
+                                    <div class="table-responsive">
+                                        <table class="dbkit-table">
+                                            <tr class="heading-td">
+                                                <td class="mv-icon">Place</td>
+                                                <td class="coin-name">Game Name</td>
+                                                <td class="buy">Last 24 Hours</td>
+                                                <td class="sell">Last 28 Days</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="mv-icon">
+                                                    1
+                                                </td>
+                                                <td class="coin-name">@Dashboard.Data.Data.GetMostPlayedName(1)</td>
+                                                <td class="buy">@Dashboard.Data.Data.GetMostPlayedTimeTodayFormatted(1)</td>
+                                                <td class="sell">@Dashboard.Data.Data.GetMostPlayedTimeFormatted(1)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="mv-icon">
+                                                    2
+                                                </td>
+                                                <td class="coin-name">@Dashboard.Data.Data.GetMostPlayedName(2)</td>
+                                                <td class="buy">@Dashboard.Data.Data.GetMostPlayedTimeTodayFormatted(2)</td>
+                                                <td class="sell">@Dashboard.Data.Data.GetMostPlayedTimeFormatted(2)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="mv-icon">
+                                                    3
+                                                </td>
+                                                <td class="coin-name">@Dashboard.Data.Data.GetMostPlayedName(3)</td>
+                                                <td class="buy">@Dashboard.Data.Data.GetMostPlayedTimeTodayFormatted(3)</td>
+                                                <td class="sell">@Dashboard.Data.Data.GetMostPlayedTimeFormatted(3)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2018. All right reserved..</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    <!-- offset area start -->
+    <!-- offset area end -->
+    <!-- jquery latest version -->
+    <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/metisMenu.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    @*<script src="assets/js/line-chart.js"></script>*@
+    <!-- all pie chart -->
+    @*<script src="assets/js/pie-chart.js"></script>*@
+    <!-- others plugins -->
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+    <script src="~/js/home.js"></script>
+</body>
+
+</html>
