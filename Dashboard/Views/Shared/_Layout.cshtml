@@ -52,7 +52,7 @@
                     <div class="menu-inner">
                         <nav>
                             <ul class="metismenu" id="menu">
-                                <li class="active">
+                                <li>
                                     <a asp-controller="Home" asp-action="Index" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                                 </li>
                                 <li>
@@ -64,9 +64,9 @@
                                         <li>
                                             <a href="#" aria-expanded="true">Activity</a>
                                             <ul class="collapse">
-                                                <li><a href="@Url.Action("Today", "Playtime")">Last 24 Hours</a></li>
-                                                <li><a href="@Url.Action("Week", "Playtime")">Last 7 Days</a></li>
-                                                <li><a href="@Url.Action("Month", "Playtime")">Last 28 Days</a></li>
+                                                <li><a href="/Playtime/Today/0">Last 24 Hours</a></li>
+                                                <li><a href="/Playtime/Week/0">Last 7 Days</a></li>
+                                                <li><a href="/Playtime/Month/0">Last 28 Days</a></li>
                                             </ul>
                                         </li>
                                         <!-- Add Game List Here -->

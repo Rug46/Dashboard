@@ -40,7 +40,7 @@ namespace Dashboard.Controllers
                 }
 
                 int startRecord = recordsPerPage * page;
-                var endRecord = startRecord + recordsPerPage;
+                int endRecord = startRecord + recordsPerPage;
 
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
@@ -85,7 +85,7 @@ namespace Dashboard.Controllers
                 }
 
                 int startRecord = recordsPerPage * page;
-                var endRecord = startRecord + recordsPerPage;
+                int endRecord = startRecord + recordsPerPage;
 
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
@@ -133,7 +133,7 @@ namespace Dashboard.Controllers
                 }
 
                 int startRecord = recordsPerPage * page;
-                var endRecord = startRecord + recordsPerPage;
+                int endRecord = startRecord + recordsPerPage;
 
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
@@ -180,7 +180,7 @@ namespace Dashboard.Controllers
                 }
 
                 int startRecord = recordsPerPage * page;
-                var endRecord = startRecord + recordsPerPage;
+                int endRecord = startRecord + recordsPerPage;
 
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
