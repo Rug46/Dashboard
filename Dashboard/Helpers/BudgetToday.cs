@@ -34,8 +34,6 @@ namespace Dashboard.Helpers
 
         public static float GetUsedAmount()
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -50,10 +48,8 @@ namespace Dashboard.Helpers
                     count += Data.GetTimeDifference(records.ElementAt(i).Id);
                 }
 
-                result = count;
+                return count;
             }
-
-            return result;
         }
 
         public static string GetUsedAmountFormatted()
@@ -89,14 +85,14 @@ namespace Dashboard.Helpers
             var used = GetUsedAmount();
             var left = GetLeftAmount();
 
-            var percentage = (left / budget) * 100;
+            var percentage = (used / budget) * 100;
 
             return percentage;
         }
 
         public static string GetPercentageFormatted()
         {
-            return Math.Floor(GetPercentage()) + "%";
+            return Math.Floor(GetPercentage()) + "% Used";
         }
 
         public static bool IsOverBudget()
@@ -104,7 +100,8 @@ namespace Dashboard.Helpers
             if(GetUsedAmount() > GetBudgetAmount())
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }

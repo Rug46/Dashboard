@@ -11,8 +11,6 @@ namespace Dashboard.Helpers
     {
         public JsonResult GetRecordsHours1(int hoursAgo, int index, int col)
         {
-            var result = new List<ActivityModel>();
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -21,45 +19,42 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
-                result = records;
-            }
+                if (index < 0 || index >= records.Count)
+                {
+                    return Json(new { });
+                }
 
-            if (index < 0 || index >= result.Count)
-            {
+                if (col == 0)
+                {
+                    return Json(new { result = records.ElementAt(index).Id });
+                }
+
+                if (col == 1)
+                {
+                    return Json(new { result = records.ElementAt(index).Date });
+                }
+
+                if (col == 2)
+                {
+                    return Json(new { result = records.ElementAt(index).Game });
+                }
+
+                if (col == 3)
+                {
+                    return Json(new { result = records.ElementAt(index).Finish });
+                }
+
+                if (col == 4)
+                {
+                    return Json(new { result = records.ElementAt(index).Mode });
+                }
+
                 return Json(new { });
             }
-
-            if (col == 0)
-            {
-                return Json(new { result = result.ElementAt(index).Id });
-            }
-
-            if (col == 1)
-            {
-                return Json(new { result = result.ElementAt(index).Date });
-            }
-
-            if (col == 2)
-            {
-                return Json(new { result = result.ElementAt(index).Game });
-            }
-
-            if (col == 3)
-            {
-                return Json(new { result = result.ElementAt(index).Finish });
-            }
-
-            if (col == 4) {
-                return Json(new { result = result.ElementAt(index).Mode });
-            } 
-
-            return Json(new { });
         }
 
         public static string GetRecordsDays(int daysAgo, int index, int col)
         {
-            var result = new List<ActivityModel>();
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -67,22 +62,18 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
-                result = records;
+                if (index < 0 || index >= records.Count) return "";
+                if (col == 0) return records.ElementAt(index).Id.ToString();
+                if (col == 1) return records.ElementAt(index).Date.ToString();
+                if (col == 2) return records.ElementAt(index).Game.ToString();
+                if (col == 3) return records.ElementAt(index).Finish.ToString();
+                if (col == 4) return records.ElementAt(index).Mode.ToString();
+                return "";
             }
-
-            if (index < 0 || index >= result.Count) return "";
-            if (col == 0) return result.ElementAt(index).Id.ToString();
-            if (col == 1) return result.ElementAt(index).Date.ToString();
-            if (col == 2) return result.ElementAt(index).Game.ToString();
-            if (col == 3) return result.ElementAt(index).Finish.ToString();
-            if (col == 4) return result.ElementAt(index).Mode.ToString();
-            return "";
         }
 
         public static int GetRecordsHoursCount(int hoursAgo)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -90,16 +81,12 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
-                result = records.Count;
+                return records.Count;
             }
-
-            return result;
         }
 
         public static int GetRecordsDaysCount(int daysAgo)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -107,10 +94,8 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
-                result = records.Count;
+                return records.Count;
             }
-
-            return result;
         }
     }
 }

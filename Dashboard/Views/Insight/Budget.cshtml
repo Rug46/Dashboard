@@ -188,14 +188,22 @@
                 <span style="margin-right:50px;">Budget: @Dashboard.Helpers.BudgetToday.GetBudgetAmountFormatted()</span>
                 <span style="margin-right:50px;">Used: @Dashboard.Helpers.BudgetToday.GetUsedAmountFormatted()</span>
                 <span style="margin-right:20px;">Left: @Dashboard.Helpers.BudgetToday.GetLeftAmountFormatted()</span>
-                <span>(@Dashboard.Helpers.BudgetToday.GetPercentageFormatted())</span><br />
+                <span>(@Dashboard.Helpers.BudgetToday.GetPercentageFormatted())</span>
                 <br />
+                <div class="progress" style="height: 20px">
+                    <div class="progress-bar" role="progressbar" style="width: @Dashboard.Helpers.BudgetToday.GetPercentage()%"></div>
+                </div>
+                <hr />
                 <h1>Last 28 Days</h1>
                 <span>Since @DateTime.Now.AddDays(-28)</span><br />
                 <span style="margin-right:50px;">Budget: @Dashboard.Helpers.Budget.GetBudgetAmountFormatted()</span>
                 <span style="margin-right:50px;">Used: @Dashboard.Helpers.Budget.GetUsedAmountFormatted()</span>
                 <span style="margin-right:20px;">Left: @Dashboard.Helpers.Budget.GetLeftAmountFormatted()</span>
                 <span>(@Dashboard.Helpers.Budget.GetPercentageFormatted())</span>
+                <br />
+                <div class="progress" style="height: 20px">
+                    <div class="progress-bar" role="progressbar" style="width: @Dashboard.Helpers.Budget.GetPercentage()%"></div>
+                </div>
             </div>
             <a href="@Url.Action("SetBudget", "Insight")"><input type="button" value="Set Budget" class="btn" style="font-size:16px;padding:10px;margin-top:10px;color:black;" /></a>
         </div>

@@ -12,8 +12,6 @@ namespace Dashboard.Helpers
 
         public static int GetTimeDifference(int id)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -26,16 +24,12 @@ namespace Dashboard.Helpers
 
                 var duration = (recordEnd - recordStart).TotalMinutes;
 
-                result = (int)Math.Floor(duration);
+                return (int)Math.Floor(duration);
             }
-
-            return result;
         }
 
         public static int GetGameTimeHour(DateTime hour)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -52,16 +46,12 @@ namespace Dashboard.Helpers
                     count += GetTimeDifference(id);
                 }
 
-                result = count;
+                return count;
             }
-
-            return result;
         }
 
         public static int GetGameTimeDay(DateTime day)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -77,16 +67,12 @@ namespace Dashboard.Helpers
                     count += GetTimeDifference(id);
                 }
 
-                result = count;
+                return count;
             }
-
-            return result;
         }
 
         public static String GetPlayTimeLast24H()
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -103,21 +89,17 @@ namespace Dashboard.Helpers
 
                 if (count < 60)
                 {
-                    result = count + "m";
+                    return count + "m";
                 }
                 else
                 {
-                    result = count / 60 + "h";
+                    return count / 60 + "h";
                 }
             }
-
-            return result;
         }
 
         public static String GetPlayTimeLast7D()
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -134,21 +116,17 @@ namespace Dashboard.Helpers
 
                 if (count < 60)
                 {
-                    result = count + "m";
+                    return count + "m";
                 }
                 else
                 {
-                    result = count / 60 + "h";
+                    return count / 60 + "h";
                 }
             }
-
-            return result;
         }
 
         public static String GetPlayTimeLast28D()
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -165,21 +143,17 @@ namespace Dashboard.Helpers
 
                 if (count < 60)
                 {
-                    result = count + "m";
+                    return count + "m";
                 }
                 else
                 {
-                    result = count / 60 + "h";
+                    return count / 60 + "h";
                 }
             }
-
-            return result;
         }
 
         public static int GetMostPlayedTime(int place)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -187,14 +161,12 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                // var count = 0;
                 var gameNames = new List<String>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
                     if (!gameNames.Contains(records.ElementAt(i).Game))
                     {
-                        // count++;
                         gameNames.Add(records.ElementAt(i).Game);
                     }
                 }
@@ -214,7 +186,6 @@ namespace Dashboard.Helpers
                     gameMinutes.Add(gameRecordsCount);
                 }
 
-                //var gameMinutesOrdered = gameMinutes.OrderBy(x => x).ToList();
                 var gameMinutesOrdered = gameMinutes.OrderByDescending(x => x).ToList();
 
 
@@ -223,16 +194,12 @@ namespace Dashboard.Helpers
                     return 0;
                 }
 
-                result = gameMinutesOrdered.ElementAt(place - 1);
+                return gameMinutesOrdered.ElementAt(place - 1);
             }
-
-            return result;
         }
 
         public static String GetMostPlayedName(int place)
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -240,7 +207,6 @@ namespace Dashboard.Helpers
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                // var count = 0;
                 var gameNames = new List<String>();
                 var gameNamesOrdered = new List<String>();
 
@@ -255,11 +221,6 @@ namespace Dashboard.Helpers
 
                 var gameMinutes = new List<int>();
 
-                //for(int i = 0; i < gameNames.Count; i++)
-                //{
-                //    gameNamesOrdered.Add("");
-                //}
-
                 for (int i = 0; i < gameNames.Count; i++)
                 {
                     var gameRecords = records.FindAll(ptm => ptm.Game == gameNames.ElementAt(i));
@@ -271,13 +232,10 @@ namespace Dashboard.Helpers
                     }
 
                     gameMinutes.Add(gameRecordsCount);
-                    //gameNamesOrdered.Add(gameNames.ElementAt(i));
                 }
 
-                //var gameMinutesOrdered = gameMinutes.OrderBy(x => x).ToList();
                 var gameMinutesOrdered = gameMinutes.OrderByDescending(x => x).ToList();
 
-                //gameNamesOrdered = gameNames.Zip(gameMinutes, Tuple.Create).OrderBy(x => x.Item2).Select(x => x.Item1).ToList();
                 gameNamesOrdered = gameNames.Zip(gameMinutes, Tuple.Create).OrderByDescending(x => x.Item2).Select(x => x.Item1).ToList();
 
                 if (place - 1 >= gameMinutesOrdered.Count)
@@ -285,16 +243,12 @@ namespace Dashboard.Helpers
                     return "";
                 }
 
-                result = gameNamesOrdered.ElementAt(place - 1);
+                return gameNamesOrdered.ElementAt(place - 1);
             }
-
-            return result;
         }
 
         public static int GetMostPlayedTimeToday(int place)
         {
-            var result = 0;
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -334,16 +288,12 @@ namespace Dashboard.Helpers
                     return 0;
                 }
 
-                result = gameMinutesOrdered.ElementAt(place - 1);
+                return gameMinutesOrdered.ElementAt(place - 1);
             }
-
-            return result;
         }
 
         public static String GetMostPlayedTimeFormatted(int place)
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -387,21 +337,17 @@ namespace Dashboard.Helpers
 
                 if (placeMinutes < 60)
                 {
-                    result = placeMinutes + " Minutes";
+                    return placeMinutes + " Minutes";
                 }
                 else
                 {
-                    result = placeMinutes / 60 + " Hours";
+                    return placeMinutes / 60 + " Hours";
                 }
             }
-
-            return result;
         }
 
         public static String GetMostPlayedTimeTodayFormatted(int place)
         {
-            var result = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -450,7 +396,6 @@ namespace Dashboard.Helpers
                 }
 
                 var gameMinutesOrdered = gameMinutes.OrderByDescending(x => x).ToList();
-                //var gameMinutesTodayOrdered = gameMinutesToday.OrderByDescending(x => x).ToList();
                 var gameMinutesTodayOrdered = gameMinutesToday.Zip(gameMinutes, Tuple.Create).OrderByDescending(x => x.Item2).Select(x => x.Item1).ToList();
 
                 if (place - 1 >= gameMinutesTodayOrdered.Count || place - 1 >= gameMinutesOrdered.Count)
@@ -458,26 +403,21 @@ namespace Dashboard.Helpers
                     return "0 Minutes";
                 }
 
-                //var placeMinutes = gameMinutesOrdered.ElementAt(place - 1);
                 var placeMinutes = gameMinutesTodayOrdered.ElementAt(place - 1);
 
                 if (placeMinutes < 60)
                 {
-                    result = placeMinutes + " Minutes";
+                    return placeMinutes + " Minutes";
                 }
                 else
                 {
-                    result = placeMinutes / 60 + " Hours";
+                    return placeMinutes / 60 + " Hours";
                 }
             }
-
-            return result;
         }
 
         public static List<String> GetGames()
         {
-            var games = new List<String>();
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -495,16 +435,12 @@ namespace Dashboard.Helpers
                     }
                 }
 
-                games = gameNames;
+                return gameNames;
             }
-
-            return games;
         }
 
         public static List<String> GetModes()
         {
-            var modes = new List<String>();
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -522,16 +458,12 @@ namespace Dashboard.Helpers
                     }
                 }
 
-                modes = modeNames;
+                return modeNames;
             }
-
-            return modes;
         }
 
         public static String GetGameLast(int item)
         {
-            var game = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -539,7 +471,6 @@ namespace Dashboard.Helpers
                     .OrderByDescending(ptm => ptm.Id)
                     .ToList();
 
-                //var recordsSorted = new List<PlaytimeModel>();
                 var recordsSorted = new List<String>();
 
                 for (int i = 0; i < records.Count; i++)
@@ -556,16 +487,12 @@ namespace Dashboard.Helpers
                     return "";
                 }
 
-                game = recordsSorted.ElementAt(recordsSorted.Count - item);
+                return recordsSorted.ElementAt(recordsSorted.Count - item);
             }
-
-            return game;
         }
 
         public static String GetModeLast(int item)
         {
-            var mode = "";
-
             using (var db = new ActivityContext())
             {
                 var records = db.ActivityRecords
@@ -590,10 +517,8 @@ namespace Dashboard.Helpers
                     return "";
                 }
 
-                mode = recordsSorted.ElementAt(recordsSorted.Count - item);
+                return recordsSorted.ElementAt(recordsSorted.Count - item);
             }
-
-            return mode;
         }
     }
 }

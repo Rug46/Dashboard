@@ -48,11 +48,6 @@ namespace Dashboard.Controllers
                 var model = db.ActivityRecords.ToList();
                 model.Reverse();
 
-                var playtimeModelSorted = model
-                    .Where(am => am.Id >= startRecordSorted)
-                    .Where(am => am.Id <= endRecordSorted)
-                    .ToList();
-
                 var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
@@ -144,11 +139,6 @@ namespace Dashboard.Controllers
 
                 model.Reverse();
 
-                var activityModelSorted = model
-                    .Where(am => am.Id >= startRecordSorted)
-                    .Where(am => am.Id <= endRecordSorted)
-                    .ToList();
-
                 var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
@@ -190,11 +180,6 @@ namespace Dashboard.Controllers
                     .ToList();
 
                 model.Reverse();
-
-                var activityModelSorted = model
-                    .Where(am => am.Id >= startRecordSorted)
-                    .Where(am => am.Id <= endRecordSorted)
-                    .ToList();
 
                 var records = new List<ActivityModel>();
 
