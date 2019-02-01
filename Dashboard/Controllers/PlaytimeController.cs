@@ -63,23 +63,152 @@ namespace Dashboard.Controllers
                     }
                 }
 
+                ViewData["Page"] = id + 1;
                 return View(records);
             }
         }
 
-        public async Task<IActionResult> Today()
+        public async Task<IActionResult> Today(int id)
         {
-            return View(await _context.PlaytimeRecords.ToListAsync());
+            using (var db = new PlaytimeContext())
+            {
+                int page = id;
+                s_Page = page;
+
+                count = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
+                    .Count();
+
+                if (id < 0 || id > Playtime.GetLastPage())
+                {
+                    return RedirectToAction("Today", "Playtime", new { id = 0 });
+                }
+
+                int startRecord = recordsPerPage * page;
+                var endRecord = startRecord + recordsPerPage;
+
+                int startRecordSorted = count - endRecord;
+                int endRecordSorted = count - startRecord;
+
+                var model = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
+                    .ToList();
+
+                model.Reverse();
+
+                var playtimeModelSorted = model
+                    .Where(ptm => ptm.Id >= startRecordSorted)
+                    .Where(ptm => ptm.Id <= endRecordSorted)
+                    .ToList();
+
+                var records = new List<PlaytimeModel>();
+
+                for (int i = startRecord; i < endRecord; i++)
+                {
+                    if (i < count)
+                    {
+                        records.Add(model.ElementAt(i));
+                    }
+                }
+
+                ViewData["Page"] = id + 1;
+                return View(records);
+            }
         }
 
-        public async Task<IActionResult> Week()
+        public async Task<IActionResult> Week(int id)
         {
-            return View(await _context.PlaytimeRecords.ToListAsync());
+            using (var db = new PlaytimeContext())
+            {
+                int page = id;
+                s_Page = page;
+
+                count = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
+                    .Count();
+
+                if (id < 0 || id > Playtime.GetLastPage())
+                {
+                    return RedirectToAction("Week", "Playtime", new { id = 0 });
+                }
+
+                int startRecord = recordsPerPage * page;
+                var endRecord = startRecord + recordsPerPage;
+
+                int startRecordSorted = count - endRecord;
+                int endRecordSorted = count - startRecord;
+
+                var model = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
+                    .ToList();
+
+                model.Reverse();
+
+                var playtimeModelSorted = model
+                    .Where(ptm => ptm.Id >= startRecordSorted)
+                    .Where(ptm => ptm.Id <= endRecordSorted)
+                    .ToList();
+
+                var records = new List<PlaytimeModel>();
+
+                for (int i = startRecord; i < endRecord; i++)
+                {
+                    if (i < count)
+                    {
+                        records.Add(model.ElementAt(i));
+                    }
+                }
+
+                ViewData["Page"] = id + 1;
+                return View(records);
+            }
         }
 
-        public async Task<IActionResult> Month()
+        public async Task<IActionResult> Month(int id)
         {
-            return View(await _context.PlaytimeRecords.ToListAsync());
+            using (var db = new PlaytimeContext())
+            {
+                int page = id;
+                s_Page = page;
+                count = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                    .Count();
+
+                if (id < 0 || id > Playtime.GetLastPage())
+                {
+                    return RedirectToAction("Month", "Playtime", new { id = 0 });
+                }
+
+                int startRecord = recordsPerPage * page;
+                var endRecord = startRecord + recordsPerPage;
+
+                int startRecordSorted = count - endRecord;
+                int endRecordSorted = count - startRecord;
+
+                var model = db.PlaytimeRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                    .ToList();
+
+                model.Reverse();
+
+                var playtimeModelSorted = model
+                    .Where(ptm => ptm.Id >= startRecordSorted)
+                    .Where(ptm => ptm.Id <= endRecordSorted)
+                    .ToList();
+
+                var records = new List<PlaytimeModel>();
+
+                for (int i = startRecord; i < endRecord; i++)
+                {
+                    if (i < count)
+                    {
+                        records.Add(model.ElementAt(i));
+                    }
+                }
+
+                ViewData["Page"] = id + 1;
+                return View(records);
+            }
         }
 
         // GET: Playtime/Details/5
