@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Dashboard.Models
 {
-    public class PlaytimeModel
+    public class ActivityModel
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

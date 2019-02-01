@@ -11,11 +11,11 @@ namespace Dashboard.Helpers
     {
         public JsonResult GetRecordsHours1(int hoursAgo, int index, int col)
         {
-            var result = new List<PlaytimeModel>();
+            var result = new List<ActivityModel>();
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == DateTime.Now.AddHours(-hoursAgo).Date)
                     .Where(ptm => ptm.Date.Hour == DateTime.Now.AddHours(-hoursAgo).Hour)
                     .OrderBy(ptm => ptm.Id)
@@ -58,11 +58,11 @@ namespace Dashboard.Helpers
 
         public static string GetRecordsDays(int daysAgo, int index, int col)
         {
-            var result = new List<PlaytimeModel>();
+            var result = new List<ActivityModel>();
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == DateTime.Now.AddDays(-daysAgo))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -83,9 +83,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == DateTime.Now.AddHours(-hoursAgo))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -100,9 +100,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == DateTime.Now.AddDays(-daysAgo))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();

@@ -36,9 +36,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();

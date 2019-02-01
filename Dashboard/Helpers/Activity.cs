@@ -7,12 +7,12 @@ using Dashboard.Data;
 
 namespace Dashboard.Helpers
 {
-    public class Playtime
+    public class Activity
     {
         public static int GetLastPage()
         {
-            var recordsPerPage = PlaytimeController.recordsPerPage;
-            var count = PlaytimeController.count;
+            var recordsPerPage = ActivityController.recordsPerPage;
+            var count = ActivityController.count;
 
             var LastPage = (decimal) count / recordsPerPage;
             var LastPageRounded = Math.Ceiling(LastPage);
@@ -22,7 +22,7 @@ namespace Dashboard.Helpers
 
         public static int GetCurrentPage()
         {
-            return PlaytimeController.s_Page + 1;
+            return ActivityController.s_Page + 1;
         }
     }
 }

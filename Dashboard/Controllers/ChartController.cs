@@ -27,14 +27,14 @@ namespace Dashboard.Controllers
 
         public JsonResult GetRecordsHours(int hoursAgo, int index, int col)
         {
-            var result = new List<PlaytimeModel>();
+            var result = new List<ActivityModel>();
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date == DateTime.Now.AddHours(-hoursAgo).Date)
-                    .Where(ptm => ptm.Date.Hour == DateTime.Now.AddHours(-hoursAgo).Hour)
-                    .OrderBy(ptm => ptm.Id)
+                var records = db.ActivityRecords
+                    .Where(am => am.Date.Date == DateTime.Now.AddHours(-hoursAgo).Date)
+                    .Where(am => am.Date.Hour == DateTime.Now.AddHours(-hoursAgo).Hour)
+                    .OrderBy(am => am.Id)
                     .ToList();
 
                 result = records;

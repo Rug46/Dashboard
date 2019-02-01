@@ -3,7 +3,7 @@
     var urlSplit = url.split("/");
     var page = urlSplit[urlSplit.length - 1];
 
-    window.location.href = "/Playtime/" + action + "/0";
+    window.location.href = "/Activity/" + action + "/0";
 }
 
 function prevPage(action) {
@@ -11,7 +11,7 @@ function prevPage(action) {
     var urlSplit = url.split("/");
     var page = urlSplit[urlSplit.length - 1];
 
-    window.location.href = "/Playtime/" + action + "/" + (page - 1);
+    window.location.href = "/Activity/" + action + "/" + (page - 1);
 }
 
 function nextPage(action) {
@@ -19,7 +19,7 @@ function nextPage(action) {
     var urlSplit = url.split("/");
     var page = parseInt(urlSplit[urlSplit.length - 1]);
 
-    window.location.href = "/Playtime/" + action + "/" + (page + 1);
+    window.location.href = "/Activity/" + action + "/" + (page + 1);
 }
 
 function lastPage(action, lastPage) {
@@ -27,5 +27,5 @@ function lastPage(action, lastPage) {
     var urlSplit = url.split("/");
     var page = urlSplit[urlSplit.length - 1];
 
-    window.location.href = "/Playtime/" + action + "/" + (lastPage - 1);
+    window.location.href = "/Activity/" + action + "/" + (lastPage - 1);
 }

@@ -11,32 +11,32 @@ using Dashboard.Helpers;
 
 namespace Dashboard.Controllers
 {
-    public class PlaytimeController : Controller
+    public class ActivityController : Controller
     {
-        private readonly PlaytimeContext _context;
+        private readonly ActivityContext _context;
 
         public static int recordsPerPage = 10;
         public static int count;
         public static int s_Page;
 
 
-        public PlaytimeController(PlaytimeContext context)
+        public ActivityController(ActivityContext context)
         {
             _context = context;
         }
 
-        // GET: Playtime
+        // GET: Activity
         public async Task<IActionResult> Index(int id)
         {
-            using(var db = new PlaytimeContext())
+            using(var db = new ActivityContext())
             {
                 int page = id;
                 s_Page = page;
-                count = db.PlaytimeRecords.Count();
+                count = db.ActivityRecords.Count();
 
-                if (id < 0 || id > Playtime.GetLastPage())
+                if (id < 0 || id > Activity.GetLastPage())
                 {
-                    return RedirectToAction("Index", "Playtime", new { id = 0 });
+                    return RedirectToAction("Index", "Activity", new { id = 0 });
                 }
 
                 int startRecord = recordsPerPage * page;
@@ -45,15 +45,15 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.PlaytimeRecords.ToList();
+                var model = db.ActivityRecords.ToList();
                 model.Reverse();
 
                 var playtimeModelSorted = model
-                    .Where(ptm => ptm.Id >= startRecordSorted)
-                    .Where(ptm => ptm.Id <= endRecordSorted)
+                    .Where(am => am.Id >= startRecordSorted)
+                    .Where(am => am.Id <= endRecordSorted)
                     .ToList();
 
-                var records = new List<PlaytimeModel>();
+                var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
                 {
@@ -70,18 +70,18 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Today(int id)
         {
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
                 int page = id;
                 s_Page = page;
 
-                count = db.PlaytimeRecords
+                count = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .Count();
 
-                if (id < 0 || id > Playtime.GetLastPage())
+                if (id < 0 || id > Activity.GetLastPage())
                 {
-                    return RedirectToAction("Today", "Playtime", new { id = 0 });
+                    return RedirectToAction("Today", "Activity", new { id = 0 });
                 }
 
                 int startRecord = recordsPerPage * page;
@@ -90,18 +90,18 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
+                var model = db.ActivityRecords
+                    .Where(am => am.Date.Date >= DateTime.Now.AddHours(-24))
                     .ToList();
 
                 model.Reverse();
 
-                var playtimeModelSorted = model
-                    .Where(ptm => ptm.Id >= startRecordSorted)
-                    .Where(ptm => ptm.Id <= endRecordSorted)
+                var activityModelSorted = model
+                    .Where(am => am.Id >= startRecordSorted)
+                    .Where(am => am.Id <= endRecordSorted)
                     .ToList();
 
-                var records = new List<PlaytimeModel>();
+                var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
                 {
@@ -118,18 +118,18 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Week(int id)
         {
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
                 int page = id;
                 s_Page = page;
 
-                count = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
+                count = db.ActivityRecords
+                    .Where(am => am.Date.Date >= DateTime.Now.AddDays(-7))
                     .Count();
 
-                if (id < 0 || id > Playtime.GetLastPage())
+                if (id < 0 || id > Activity.GetLastPage())
                 {
-                    return RedirectToAction("Week", "Playtime", new { id = 0 });
+                    return RedirectToAction("Week", "Activity", new { id = 0 });
                 }
 
                 int startRecord = recordsPerPage * page;
@@ -138,18 +138,18 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
+                var model = db.ActivityRecords
+                    .Where(am => am.Date.Date >= DateTime.Now.AddDays(-7))
                     .ToList();
 
                 model.Reverse();
 
-                var playtimeModelSorted = model
-                    .Where(ptm => ptm.Id >= startRecordSorted)
-                    .Where(ptm => ptm.Id <= endRecordSorted)
+                var activityModelSorted = model
+                    .Where(am => am.Id >= startRecordSorted)
+                    .Where(am => am.Id <= endRecordSorted)
                     .ToList();
 
-                var records = new List<PlaytimeModel>();
+                var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
                 {
@@ -166,17 +166,17 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Month(int id)
         {
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
                 int page = id;
                 s_Page = page;
-                count = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                count = db.ActivityRecords
+                    .Where(am => am.Date.Date >= DateTime.Now.AddDays(-28))
                     .Count();
 
-                if (id < 0 || id > Playtime.GetLastPage())
+                if (id < 0 || id > Activity.GetLastPage())
                 {
-                    return RedirectToAction("Month", "Playtime", new { id = 0 });
+                    return RedirectToAction("Month", "Activity", new { id = 0 });
                 }
 
                 int startRecord = recordsPerPage * page;
@@ -185,18 +185,18 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.PlaytimeRecords
-                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                var model = db.ActivityRecords
+                    .Where(am => am.Date.Date >= DateTime.Now.AddDays(-28))
                     .ToList();
 
                 model.Reverse();
 
-                var playtimeModelSorted = model
-                    .Where(ptm => ptm.Id >= startRecordSorted)
-                    .Where(ptm => ptm.Id <= endRecordSorted)
+                var activityModelSorted = model
+                    .Where(am => am.Id >= startRecordSorted)
+                    .Where(am => am.Id <= endRecordSorted)
                     .ToList();
 
-                var records = new List<PlaytimeModel>();
+                var records = new List<ActivityModel>();
 
                 for (int i = startRecord; i < endRecord; i++)
                 {
@@ -211,7 +211,7 @@ namespace Dashboard.Controllers
             }
         }
 
-        // GET: Playtime/Details/5
+        // GET: Activity/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -219,20 +219,20 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var playtimeModel = await _context.PlaytimeRecords
+            var activityModel = await _context.ActivityRecords
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (playtimeModel == null)
+            if (activityModel == null)
             {
                 return NotFound();
             }
 
-            return View(playtimeModel);
+            return View(activityModel);
         }
 
-        // GET: Playtime/Create
+        // GET: Activity/Create
         //public async Task<IActionResult> Create()
         //{
-        //    return View(await _context.PlaytimeRecords.ToListAsync());
+        //    return View(await _context.ActivityRecords.ToListAsync());
         //}
 
         public IActionResult Create()
@@ -240,23 +240,23 @@ namespace Dashboard.Controllers
             return View();
         }
 
-        // POST: Playtime/Create
+        // POST: Activity/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] PlaytimeModel playtimeModel)
+        public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(playtimeModel);
+                _context.Add(activityModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(playtimeModel);
+            return View(activityModel);
         }
 
-        // GET: Playtime/Edit/5
+        // GET: Activity/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -264,22 +264,22 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var playtimeModel = await _context.PlaytimeRecords.FindAsync(id);
-            if (playtimeModel == null)
+            var activityModel = await _context.ActivityRecords.FindAsync(id);
+            if (activityModel == null)
             {
                 return NotFound();
             }
-            return View(playtimeModel);
+            return View(activityModel);
         }
 
-        // POST: Playtime/Edit/5
+        // POST: Activity/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Game,Finish,Mode")] PlaytimeModel playtimeModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
         {
-            if (id != playtimeModel.Id)
+            if (id != activityModel.Id)
             {
                 return NotFound();
             }
@@ -288,12 +288,12 @@ namespace Dashboard.Controllers
             {
                 try
                 {
-                    _context.Update(playtimeModel);
+                    _context.Update(activityModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlaytimeModelExists(playtimeModel.Id))
+                    if (!ActivityModelExists(activityModel.Id))
                     {
                         return NotFound();
                     }
@@ -304,10 +304,10 @@ namespace Dashboard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(playtimeModel);
+            return View(activityModel);
         }
 
-        // GET: Playtime/Delete/5
+        // GET: Activity/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -315,30 +315,30 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var playtimeModel = await _context.PlaytimeRecords
+            var activityModel = await _context.ActivityRecords
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (playtimeModel == null)
+            if (activityModel == null)
             {
                 return NotFound();
             }
 
-            return View(playtimeModel);
+            return View(activityModel);
         }
 
-        // POST: Playtime/Delete/5
+        // POST: Activity/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var playtimeModel = await _context.PlaytimeRecords.FindAsync(id);
-            _context.PlaytimeRecords.Remove(playtimeModel);
+            var activityModel = await _context.ActivityRecords.FindAsync(id);
+            _context.ActivityRecords.Remove(activityModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlaytimeModelExists(int id)
+        private bool ActivityModelExists(int id)
         {
-            return _context.PlaytimeRecords.Any(e => e.Id == id);
+            return _context.ActivityRecords.Any(e => e.Id == id);
         }
     }
 }

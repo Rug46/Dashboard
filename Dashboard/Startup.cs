@@ -37,7 +37,7 @@ namespace Dashboard
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<PlaytimeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<ActivityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddDbContext<BudgetContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
 

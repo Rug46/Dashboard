@@ -14,9 +14,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Id == id)
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -36,9 +36,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == hour.Date)
                     .Where(ptm => ptm.Date.Hour == hour.Hour)
                     .OrderBy(ptm => ptm.Date)
@@ -62,9 +62,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date == day.Date)
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -87,9 +87,9 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -118,9 +118,9 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -149,9 +149,9 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -180,9 +180,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -233,9 +233,9 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -295,9 +295,9 @@ namespace Dashboard.Helpers
         {
             var result = 0;
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -344,9 +344,9 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -402,14 +402,14 @@ namespace Dashboard.Helpers
         {
             var result = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var recordsToday = db.PlaytimeRecords
+                var recordsToday = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -478,9 +478,9 @@ namespace Dashboard.Helpers
         {
             var games = new List<String>();
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Game)
                     .ToList();
@@ -505,9 +505,9 @@ namespace Dashboard.Helpers
         {
             var modes = new List<String>();
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Mode)
                     .ToList();
@@ -532,9 +532,9 @@ namespace Dashboard.Helpers
         {
             var game = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderByDescending(ptm => ptm.Id)
                     .ToList();
@@ -566,9 +566,9 @@ namespace Dashboard.Helpers
         {
             var mode = "";
 
-            using (var db = new PlaytimeContext())
+            using (var db = new ActivityContext())
             {
-                var records = db.PlaytimeRecords
+                var records = db.ActivityRecords
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderByDescending(ptm => ptm.Id)
                     .ToList();

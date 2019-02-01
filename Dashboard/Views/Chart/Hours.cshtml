@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dashboard.Models.PlaytimeModel>
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
 
 @{
     ViewData["Title"] = "Hours Over Time";
@@ -194,17 +194,17 @@
                                     <i class="ti-list"></i><span>Activity</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li><a href="@Url.Action("Index", "Playtime")">All Activity</a></li>
+                                    <li><a href="@Url.Action("Index", "Activity")">All Activity</a></li>
                                     <li>
                                         <a href="#" aria-expanded="true">Activity</a>
                                         <ul class="collapse">
-                                            <li><a href="@Url.Action("Today", "Playtime")">Last 24 Hours</a></li>
-                                            <li><a href="@Url.Action("Week", "Playtime")">Last 7 Days</a></li>
-                                            <li><a href="@Url.Action("Month", "Playtime")">Last 28 Days</a></li>
+                                            <li><a href="@Url.Action("Today", "Activity")">Last 24 Hours</a></li>
+                                            <li><a href="@Url.Action("Week", "Activity")">Last 7 Days</a></li>
+                                            <li><a href="@Url.Action("Month", "Activity")">Last 28 Days</a></li>
                                         </ul>
                                     </li>
                                     <!-- Add Game List Here -->
-                                    <li><a href="@Url.Action("Create", "Playtime")">Add New</a></li>
+                                    <li><a href="@Url.Action("Create", "Activity")">Add New</a></li>
                                 </ul>
                             </li>
                             <li class="active">
@@ -256,7 +256,7 @@
                             {
                                 <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
                             }
-                            <a href="@Url.Action("Create", "Playtime")"><li title="Add New Record"><i class="ti-plus"></i></li></a>
+                            <a href="@Url.Action("Create", "Activity")"><li title="Add New Record"><i class="ti-plus"></i></li></a>
                         </ul>
                     </div>
                 </div>

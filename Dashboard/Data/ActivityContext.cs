@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dashboard.Data
 {
-    public class PlaytimeContext : DbContext
+    public class ActivityContext : DbContext
     {
-        public PlaytimeContext()
+        public ActivityContext()
         {
         }
 
-        public PlaytimeContext(DbContextOptions<PlaytimeContext> options) : base(options)
+        public ActivityContext(DbContextOptions<ActivityContext> options) : base(options)
         {
 
         }
@@ -19,11 +19,11 @@ namespace Dashboard.Data
             optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=dbo.PlayTime;Trusted_Connection=True;");
         }
 
-        public DbSet<PlaytimeModel> PlaytimeRecords { get; set; }
+        public DbSet<ActivityModel> ActivityRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PlaytimeModel>().ToTable("dbo.PlayTime");
+            modelBuilder.Entity<ActivityModel>().ToTable("dbo.PlayTime");
         }
     }
 }

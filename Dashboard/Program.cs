@@ -24,7 +24,7 @@ namespace Dashboard
 
                 try
                 {
-                    var context = services.GetRequiredService<PlaytimeContext>();
+                    var context = services.GetRequiredService<ActivityContext>();
                     DbInitialiser.Initialise(context);
                 }
                 catch (Exception e)

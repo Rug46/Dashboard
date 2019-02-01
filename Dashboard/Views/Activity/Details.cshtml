@@ -1,7 +1,7 @@
-﻿@model Dashboard.Models.PlaytimeModel
+﻿@model Dashboard.Models.ActivityModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
 <style>
@@ -18,7 +18,7 @@
 
 <div class="main-content-inner">
     <div class="row">
-        <div class="col-md-12" style="margin: auto;">
+        <div class="col-md-12">
             <table>
                 <tr>
                     <td>@Html.DisplayNameFor(model => model.Date)</td>
@@ -40,11 +40,10 @@
         </div>
     </div>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
         <a asp-action="Index">Back to List</a>
-    </form>
+    </div>
 </div>
 
 @section Scripts {
