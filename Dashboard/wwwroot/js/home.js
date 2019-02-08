@@ -112,7 +112,7 @@ var activity_ctx = document.getElementById("hours_today").getContext('2d');
                     activity_d1
                 ],
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: 'rgba(255, 99, 132, 1)'
             }]
         },
         // Configuration options go here

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
+
+@{
+    ViewData["Title"] = "Past Year";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@for (int i = 0; i < 365; i++)
+{
+    <input type="hidden" value="@Dashboard.Helpers.DataYears.GetGameTime(DateTime.Now.AddDays(-@i))" id="activity_year_@(i + 1)" />
+    <input type="hidden" value="@DateTime.Now.AddDays(-@i).ToString("dd/MM/yyyy")" id="activity_year_@(i + 1)_l" />
+}
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Past Year</h1>
+                    <canvas id="hours_year" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="~/js/year.js"></script>
