@@ -20,14 +20,14 @@ namespace Dashboard.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=dbo.Budget;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard;Trusted_Connection=True;");
         }
 
         public DbSet<BudgetModel> BudgetRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BudgetModel>().ToTable("dbo.PlayTime");
+            modelBuilder.Entity<BudgetModel>().ToTable("Budget");
         }
     }
 }

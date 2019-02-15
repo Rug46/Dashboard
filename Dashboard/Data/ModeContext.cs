@@ -21,14 +21,14 @@ namespace Dashboard.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=dbo.Mode;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard;Trusted_Connection=True;");
         }
 
         public DbSet<ModeModel> ModeRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ModeModel>().ToTable("dbo.PlayTime");
+            modelBuilder.Entity<ModeModel>().ToTable("Mode");
         }
     }
 }
