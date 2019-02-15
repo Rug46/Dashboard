@@ -520,5 +520,65 @@ namespace Dashboard.Helpers
                 return recordsSorted.ElementAt(recordsSorted.Count - item);
             }
         }
+
+        public static bool Any24H()
+        {
+            using (var db = new ActivityContext())
+            {
+                var records = db.ActivityRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public static bool Any7D()
+        {
+            using (var db = new ActivityContext())
+            {
+                var records = db.ActivityRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public static bool Any28D()
+        {
+            using (var db = new ActivityContext())
+            {
+                var records = db.ActivityRecords
+                    .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
     }
 }

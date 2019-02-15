@@ -162,7 +162,21 @@
                             <p>@Dashboard.Helpers.Data.GetPlayTimeLast24H()</p>
                         </div>
                     </div>
-                    <canvas id="hours_today" height="100"></canvas>
+                    <div style="min-height:100px;max-height:100px;">
+                        @if (Dashboard.Helpers.Data.Any24H())
+                        {
+                            <canvas id="hours_today" height="100"></canvas>
+                        }
+                        else
+                        {
+                            <div class="card" style="height: 100px;">
+                                <div class="card-body" style="text-align:center;">
+                                    <i class="ti-bar-chart" style="font-size:50px;"></i><br />
+                                    Nothing here
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -174,7 +188,21 @@
                             <p>@Dashboard.Helpers.Data.GetPlayTimeLast7D()</p>
                         </div>
                     </div>
-                    <canvas id="hours_week" height="100"></canvas>
+                    <div style="min-height:100px;max-height:100px;">
+                        @if (Dashboard.Helpers.Data.Any7D())
+                        {
+                            <canvas id="hours_week" height="100"></canvas>
+                        }
+                        else
+                        {
+                            <div class="card" style="height: 100px;">
+                                <div class="card-body" style="text-align:center;">
+                                    <i class="ti-bar-chart" style="font-size:50px;"></i><br />
+                                    Nothing here
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -187,7 +215,21 @@
                         </div>
 
                     </div>
-                    <canvas id="hours_month" height="100"></canvas>
+                    <div style="min-height:100px;max-height:100px;">
+                        @if (Dashboard.Helpers.Data.Any28D())
+                        {
+                            <canvas id="hours_month" height="100"></canvas>
+                        }
+                        else
+                        {
+                            <div class="card" style="height: 100px;">
+                                <div class="card-body" style="text-align:center;">
+                                    <i class="ti-bar-chart" style="font-size:50px;"></i><br />
+                                    Nothing here
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,7 +246,21 @@
                         <p>Last 28 Days</p>
                     </div>
                 </div>
-                <canvas id="games_played" height="150"></canvas>
+                <div style="min-height:100px;max-height:100px;">
+                    @if (Dashboard.Helpers.Data.Any24H())
+                    {
+                        <canvas id="games_played" height="150"></canvas>
+                    }
+                    else
+                    {
+                        <div class="card" style="height: 300px;vertical-align:middle;">
+                            <div class="card-body" style="text-align:center;">
+                                <i class="ti-bar-chart" style="font-size:50px;"></i><br />
+                                Nothing here
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -259,3 +315,9 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="~/js/ChartToday.js"></script>
+<script src="~/js/ChartWeek.js"></script>
+<script src="~/js/ChartMonth.js"></script>
+<script src="~/js/ChartPie.js"></script>
