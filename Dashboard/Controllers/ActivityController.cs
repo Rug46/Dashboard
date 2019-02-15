@@ -325,5 +325,19 @@ namespace Dashboard.Controllers
         {
             return _context.ActivityRecords.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(DateTime SearchDate)
+        {
+            string dateFormatted = SearchDate.Day + "/" + SearchDate.Month + "/" + SearchDate.Year;
+            TempData["Day"] = dateFormatted;
+            return View();
+        }
     }
 }

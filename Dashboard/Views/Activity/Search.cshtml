@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .textbox {
+        border: solid 1px black;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+    }
+
+    th {
+        background-color: gray;
+        color: white;
+        padding: 0px 10px;
+    }
+
+    td {
+        padding: 0px 10px;
+    }
+
+    table {
+        width: 100%;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Search</h2>
+                    <br />
+                    <form action="Search" method="post">
+                        <input type="date" name="SearchDate" class="textbox" />
+                        <input type="submit" value="Search" class="btn padding-btn" />
+                    </form>
+
+                    @if (TempData["Day"] != null)
+                    {
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 00:00")))" id="activity_00" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 01:00")))" id="activity_01" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 02:00")))" id="activity_02" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 03:00")))" id="activity_03" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 04:00")))" id="activity_04" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 05:00")))" id="activity_05" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 06:00")))" id="activity_06" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 07:00")))" id="activity_07" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 08:00")))" id="activity_08" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 09:00")))" id="activity_09" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 10:00")))" id="activity_10" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 11:00")))" id="activity_11" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 12:00")))" id="activity_12" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 13:00")))" id="activity_13" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 14:00")))" id="activity_14" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 15:00")))" id="activity_15" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 16:00")))" id="activity_16" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 17:00")))" id="activity_17" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 18:00")))" id="activity_18" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 19:00")))" id="activity_19" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 20:00")))" id="activity_20" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 21:00")))" id="activity_21" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 22:00")))" id="activity_22" />
+                        <input type="hidden" value="@Dashboard.Helpers.ActivitySearch.GetGameTimeHour(DateTime.Parse(String.Concat(TempData["Day"].ToString(), " 23:00")))" id="activity_23" />
+
+                        <input type="hidden" value="00:00" id="activity_00l" />
+                        <input type="hidden" value="01:00" id="activity_01l" />
+                        <input type="hidden" value="02:00" id="activity_02l" />
+                        <input type="hidden" value="03:00" id="activity_03l" />
+                        <input type="hidden" value="04:00" id="activity_04l" />
+                        <input type="hidden" value="05:00" id="activity_05l" />
+                        <input type="hidden" value="06:00" id="activity_06l" />
+                        <input type="hidden" value="07:00" id="activity_07l" />
+                        <input type="hidden" value="08:00" id="activity_08l" />
+                        <input type="hidden" value="09:00" id="activity_09l" />
+                        <input type="hidden" value="10:00" id="activity_10l" />
+                        <input type="hidden" value="11:00" id="activity_11l" />
+                        <input type="hidden" value="12:00" id="activity_12l" />
+                        <input type="hidden" value="13:00" id="activity_13l" />
+                        <input type="hidden" value="14:00" id="activity_14l" />
+                        <input type="hidden" value="15:00" id="activity_15l" />
+                        <input type="hidden" value="16:00" id="activity_16l" />
+                        <input type="hidden" value="17:00" id="activity_17l" />
+                        <input type="hidden" value="18:00" id="activity_18l" />
+                        <input type="hidden" value="19:00" id="activity_19l" />
+                        <input type="hidden" value="20:00" id="activity_20l" />
+                        <input type="hidden" value="21:00" id="activity_21l" />
+                        <input type="hidden" value="22:00" id="activity_22l" />
+                        <input type="hidden" value="23:00" id="activity_23l" />
+
+                        @using (var db = new Dashboard.Data.ActivityContext())
+                        {
+                            var records = db.ActivityRecords
+                                .Where(ptm => ptm.Date.Date == DateTime.Parse(TempData["Day"].ToString()))
+                                .OrderBy(ptm => ptm.Date)
+                                .ToList();
+
+                            <hr />
+                            <h3>@TempData["Day"].ToString()</h3>
+                            <br />
+
+                            if (records.Count == 0)
+                            {
+                                <div class="alert alert-warning">
+                                    No records
+                                </div>
+                            }
+                            else
+                            {
+                                <canvas id="hour_chart"></canvas>
+                                <hr />
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Date)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Game)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Finish)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Mode)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in records)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Date)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Game)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Finish)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Mode)
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="~/js/ActivitySearch.js"></script>
