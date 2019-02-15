@@ -42,6 +42,26 @@ namespace Dashboard
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(e, "An error occured while seeding the database (Budget)");
                 }
+
+                try
+                {
+                    var context = services.GetRequiredService<ModeContext>();
+                    DbInitialiser.InitialiseMode(context);
+                } catch (Exception e)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "An error occured while seeding the database (Mode)");
+                }
+
+                try
+                {
+                    var context = services.GetRequiredService<GameContext>();
+                    DbInitialiser.InitialiseGame(context);
+                } catch (Exception e)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "An error occured while seeding the database (Game)");
+                }
             }
 
                 CreateWebHostBuilder(args).Build().Run();

@@ -56,5 +56,49 @@ namespace Dashboard.Data
 
             context.SaveChanges();
         }
+
+        public static void InitialiseMode(ModeContext context)
+        {
+            context.Database.EnsureCreated();
+
+            if (context.ModeRecords.Any())
+            {
+                return;
+            }
+
+            var records = new ModeModel[]
+            {
+
+            };
+
+            foreach (ModeModel mm in records)
+            {
+                context.ModeRecords.Add(mm);
+            }
+
+            context.SaveChanges();
+        }
+
+        public static void InitialiseGame(GameContext context)
+        {
+            context.Database.EnsureCreated();
+                
+            if (context.GameRecords.Any())
+            {
+                return;
+            }
+
+            var records = new GameModel[]
+            {
+
+            };
+
+            foreach (GameModel gm in records)
+            {
+                context.GameRecords.Add(gm);
+            }
+
+            context.SaveChanges();
+        }
     }
 }

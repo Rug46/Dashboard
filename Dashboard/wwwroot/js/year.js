@@ -370,7 +370,7 @@ var year_chart = new Chart(year_ctx, {
             document.getElementById("activity_year_1_l").value
         ],
         datasets: [{
-            label: 'Dataset',
+            label: 'Minutes',
             data: [
                 document.getElementById("activity_year_365").value,
                 document.getElementById("activity_year_364").value,

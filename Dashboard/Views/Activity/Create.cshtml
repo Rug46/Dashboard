@@ -99,12 +99,13 @@
                         <hr />
                     }
                     @{
-                        var gameList = Dashboard.Helpers.Data.GetGames();
+                        //var gameList = Dashboard.Helpers.Data.GetGames();
+                        var gameList = Dashboard.Helpers.Games.GetList();
                     }
 
                     @for (int i = 0; i < gameList.Count; i++)
                     {
-                        <input type="button" class="modalButton" value="@gameList.ElementAt(i)" onclick="setGame('@gameList.ElementAt(i)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@gameList.ElementAt(i).Game.Trim()" onclick="setGame('@gameList.ElementAt(i).Game.Trim()')" data-dismiss="modal" />
                     }
                 </div>
             </div>
@@ -141,12 +142,13 @@
                         <hr />
                     }
                     @{
-                        var modeList = Dashboard.Helpers.Data.GetModes();
+                        //var modeList = Dashboard.Helpers.Data.GetModes();
+                        var modeList = Dashboard.Helpers.GameMode.GetList();
                     }
 
                     @for (int i = 0; i < modeList.Count; i++)
                     {
-                        <input type="button" class="modalButton" value="@modeList.ElementAt(i)" onclick="setMode('@modeList.ElementAt(i)')" data-dismiss="modal" />
+                        <input type="button" class="modalButton" value="@modeList.ElementAt(i).Mode.Trim()" onclick="setMode('@modeList.ElementAt(i).Mode.Trim()')" data-dismiss="modal" />
                     }
                 </div>
             </div>
