@@ -243,7 +243,7 @@ namespace Dashboard.Helpers
                     return "";
                 }
 
-                return gameNamesOrdered.ElementAt(place - 1);
+                return gameNamesOrdered.ElementAt(place - 1).Trim();
             }
         }
 

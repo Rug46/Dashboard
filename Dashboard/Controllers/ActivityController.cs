@@ -367,5 +367,10 @@ namespace Dashboard.Controllers
 
             return View();
         }
+
+        public IActionResult Timeline()
+        {
+            return View();
+        }
     }
 }

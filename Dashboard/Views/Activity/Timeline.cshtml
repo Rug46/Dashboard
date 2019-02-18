@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
+
+@{
+    ViewData["Title"] = "Timeline";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/timeline.css" />
+</head>
+
+<style>
+    th {
+        background-color: gray;
+        color: white;
+        padding: 0px 10px;
+    }
+
+    td {
+        padding: 0px 10px;
+    }
+
+    table {
+        width: 100%;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Timeline</h1>
+                    <br />
+                    @using (var db = new Dashboard.Data.ActivityContext())
+                    {
+                        var records = db.ActivityRecords
+                                .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                                .OrderByDescending(ptm => ptm.Date)
+                                .ToList();
+
+                        <ul class="timeline">
+                            @for (int i = 0; i < records.Count; i++)
+                            {
+                                <li>
+                                    <a>@records.ElementAt(i).Date.ToString("HH:mm")</a>
+                                    <a class="float-right">@records.ElementAt(i).Date.ToString("dd/MM/yyyy")</a>
+                                    <p>@records.ElementAt(i).Game</p>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
