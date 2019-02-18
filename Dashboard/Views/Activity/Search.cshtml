@@ -37,7 +37,8 @@
                     <h2>Search</h2>
                     <br />
                     <form action="Search" method="post">
-                        <input type="date" name="SearchDate" class="textbox" />
+                        <input type="date" name="SearchDate" class="textbox" id="SearchDate" />
+                        <input type="button" value="Today" class="btn padding-btn" onclick="document.getElementById('SearchDate').value = getDate();" />
                         <input type="submit" value="Search" class="btn padding-btn" />
                     </form>
 
@@ -165,6 +166,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    function getDate() {
+        var today = new Date();
+        var date = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+
+        if (date < 10) {
+            date = '0' + date;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+        return year + "-" + month + "-" + date;
+    }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script src="~/js/ActivitySearch.js"></script>
