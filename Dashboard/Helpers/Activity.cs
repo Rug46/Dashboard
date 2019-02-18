@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dashboard.Controllers;
 using Dashboard.Data;
+using Dashboard.Models;
 
 namespace Dashboard.Helpers
 {
@@ -23,6 +24,15 @@ namespace Dashboard.Helpers
         public static int GetCurrentPage()
         {
             return ActivityController.s_Page + 1;
+        }
+
+        public static void AddNew(ActivityModel model)
+        {
+            using (var db = new ActivityContext())
+            {
+                db.ActivityRecords.Add(model);
+                db.SaveChanges();
+            }
         }
     }
 }

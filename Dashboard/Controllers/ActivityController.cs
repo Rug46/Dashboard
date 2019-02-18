@@ -229,16 +229,20 @@ namespace Dashboard.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
+        //public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
+        public async Task<IActionResult> Create(int id, DateTime DateStart, string GameName, DateTime DateFinish, string ModeName)
         {
-            if (ModelState.IsValid)
+            ActivityModel activityModel = new ActivityModel
             {
-                _context.Add(activityModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(activityModel);
+                Date = DateStart,
+                Game = GameName,
+                Finish = DateFinish,
+                Mode = ModeName
+            };
+
+            Activity.AddNew(activityModel);
+
+            return RedirectToAction("Index");
         }
 
         // GET: Activity/Edit/5
