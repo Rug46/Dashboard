@@ -34,9 +34,14 @@ namespace Dashboard.Controllers
                 s_Page = page;
                 count = db.ActivityRecords.Count();
 
-                if (id < 0 || id > Activity.GetLastPage())
+                if (id < 0)
                 {
                     return RedirectToAction("Index", "Activity", new { id = 0 });
+                }
+
+                if (id >= Activity.GetLastPage())
+                {
+                    return RedirectToAction("Index", "Activity", new { id = Activity.GetLastPage() - 1 });
                 }
 
                 int startRecord = recordsPerPage * page;
