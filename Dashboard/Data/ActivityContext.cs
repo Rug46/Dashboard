@@ -16,7 +16,7 @@ namespace Dashboard.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard-User;Trusted_Connection=True;");
         }
 
         public DbSet<ActivityModel> ActivityRecords { get; set; }
