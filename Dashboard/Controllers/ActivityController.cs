@@ -337,6 +337,30 @@ namespace Dashboard.Controllers
         {
             string dateFormatted = SearchDate.Day + "/" + SearchDate.Month + "/" + SearchDate.Year;
             TempData["Day"] = dateFormatted;
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Game()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Game(int GameID)
+        {
+            if(GameID == 0)
+            {
+                TempData["None"] = "Please select a game";
+                return View();
+            }
+
+            string Name = Games.GetGame(GameID);
+
+            TempData["Id"] = GameID;
+            TempData["Game"] = Name;
+
             return View();
         }
     }

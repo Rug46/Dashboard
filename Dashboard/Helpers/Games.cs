@@ -87,7 +87,12 @@ namespace Dashboard.Helpers
         {
             using (var db = new GameContext())
             {
-                return db.GameRecords.ToList().ElementAt(id).Game;
+                var records = db.GameRecords
+                    .Where(gm => gm.Id == id)
+                    .OrderBy(gm => gm.Id)
+                    .ToList();
+
+                return records.ElementAt(0).Game;
             }
         }
     }

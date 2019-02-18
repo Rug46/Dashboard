@@ -87,7 +87,12 @@ namespace Dashboard.Helpers
         {
             using (var db = new ModeContext())
             {
-                return db.ModeRecords.ToList().ElementAt(id).Mode;
+                var records = db.ModeRecords
+                    .Where(mm => mm.Id == id)
+                    .OrderBy(mm => mm.Id)
+                    .ToList();
+
+                return records.ElementAt(0).Mode;
             }
         }
     }
