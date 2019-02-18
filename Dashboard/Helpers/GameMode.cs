@@ -92,6 +92,11 @@ namespace Dashboard.Helpers
                     .OrderBy(mm => mm.Id)
                     .ToList();
 
+                if (records.Count <= 0)
+                {
+                    return null;
+                }
+
                 return records.ElementAt(0).Mode;
             }
         }

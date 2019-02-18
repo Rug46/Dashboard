@@ -22,7 +22,6 @@ namespace Dashboard.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public IActionResult RemoveGameMode(int id)
         {
             GameMode.RemoveGameMode(id);
@@ -36,7 +35,6 @@ namespace Dashboard.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public IActionResult RemoveGame(int id)
         {
             Games.RemoveGame(id);
