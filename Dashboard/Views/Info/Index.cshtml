@@ -12,21 +12,55 @@
         border: solid 1px black;
         margin-top: 5px;
         padding: 0px 5px;
+        width: 100%;
     }
 
     .padding-btn {
         padding: 5px 10px;
         margin-top: 5px;
+        width: 100%;
     }
 </style>
 
 <div class="main-content-inner">
     <div class="row">
-        <div class="col-md-6" style="margin: auto;">
+        <div class="col-md-4" style="margin: auto;">
             <form action="/Info/Search" method="post">
-                <input type="text" class="textbox" name="game" placeholder="Game" />
-                <input type="text" class="textbox" name="platform" placeholder="Platform" />
+                <input type="text" class="textbox" name="game" placeholder="Game" id="GameText" />
                 <br />
+                <select onchange="changeGame();" id="GameSelector" class="textbox">
+                    <option disabled selected>Change Game</option>
+
+                    @using (var db = new Dashboard.Data.GameContext())
+                    {
+                        var records = db.GameRecords
+                            .OrderBy(gm => gm.Game)
+                            .ToList();
+
+                        for (int i = 0; i < records.Count; i++)
+                        {
+                            <option value="@records.ElementAt(i).Game">@records.ElementAt(i).Game</option>
+                        }
+                    }
+                </select>
+                <hr />
+                <input type="text" class="textbox" name="platform" placeholder="Console" id="ConsoleText" />
+                <br />
+                <select onchange="changeConsole();" id="ConsoleSelector" class="textbox">
+                    <option selected disabled>Change Console</option>
+                    @using (var db = new Dashboard.Data.ConsoleContext())
+                    {
+                        var records = db.ConsoleRecords
+                            .OrderBy(cm => cm.Console)
+                            .ToList();
+
+                        for (int i = 0; i < records.Count; i++)
+                        {
+                            <option value="@records.ElementAt(i).Console">@records.ElementAt(i).Console</option>
+                        }
+                    }
+                </select>
+                <hr />
                 <input type="submit" class="btn btn-primary padding-btn" value="Search" />
             </form>
         </div>
@@ -36,3 +70,16 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    function changeGame() {
+        document.getElementById("GameText").value = document.getElementById("GameSelector").value.trim();
+        document.getElementById("GameSelector").selectedIndex = 0;
+
+    }
+
+    function changeConsole() {
+        document.getElementById("ConsoleText").value = document.getElementById("ConsoleSelector").value.trim();
+        document.getElementById("ConsoleSelector").selectedIndex = 0;
+    }
+</script>

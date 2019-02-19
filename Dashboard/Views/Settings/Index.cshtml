@@ -102,6 +102,36 @@
                             </li>
                         </ul>
                     </div>
+                    <br />
+                    <div class="col-lg-6">
+                        <h2>Consoles</h2>
+                        <ul class="list-group">
+                            @using (var db = new Dashboard.Data.ConsoleContext())
+                            {
+                                var records = db.ConsoleRecords
+                                    .OrderBy(cm => cm.Id)
+                                    .ToList();
+
+                                for (int i = 0; i < records.Count; i++)
+                                {
+                                    <li class="list-group-item">
+                                        @records.ElementAt(i).Console
+                                        <div class="float-right">
+                                            <a href="/Settings/RemoveConsole/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            <li class="list-group-item" style="padding-top: 0; padding-bottom: 0; padding-left: 0;">
+                                <form action="Settings/NewConsole" method="post">
+                                    <input type="text" placeholder="New Console" class="textbox-task" name="ConsoleName" />
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-link btn-custom"><i class="ti-arrow-right align-middle"></i></button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

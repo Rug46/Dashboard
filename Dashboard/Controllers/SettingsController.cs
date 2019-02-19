@@ -18,7 +18,9 @@ namespace Dashboard.Controllers
         [HttpPost]
         public IActionResult NewGameMode(string Mode)
         {
-            GameMode.NewGameMode(Mode);
+            var ModeTrim = Mode.Trim();
+            GameMode.NewGameMode(ModeTrim);
+
             return RedirectToAction("Index");
         }
 
@@ -31,13 +33,29 @@ namespace Dashboard.Controllers
         [HttpPost]
         public IActionResult NewGame(string Game)
         {
-            Games.NewGame(Game);
+            var GameTrim = Game.Trim();
+            Games.NewGame(GameTrim);
+
             return RedirectToAction("Index");
         }
 
         public IActionResult RemoveGame(int id)
         {
             Games.RemoveGame(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult NewConsole(string ConsoleName)
+        {
+            var ConsoleNameTrim = ConsoleName.Trim();
+            Consoles.NewConsole(ConsoleNameTrim);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveConsole(int id)
+        {
+            Consoles.RemoveConsole(id);
             return RedirectToAction("Index");
         }
     }
