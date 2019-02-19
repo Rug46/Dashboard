@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<style>
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
+
+    .next-to-image {
+        margin-left: 10px;
+    }
+
+    .boxart {
+        margin-right: 10px;
+    }
+
+    .score {
+        font-size: 20px;
+        background-color: grey;
+        padding: 5px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .score-title {
+        font-size: 20px;
+        margin-right: 5px;
+    }
+
+    .green {
+        background-color: green;
+        color: white;
+    }
+
+    .amber {
+        background-color: orange;
+        color: black;
+    }
+
+    .red {
+        background-color: red;
+        color: white;
+    }
+</style>
+
+@{ 
+    var platform = TempData["Platform"].ToString();
+    var game = TempData["game"].ToString();
+
+    var Info = Dashboard.Helpers.Info.QueryGameInfo(platform, game);
+
+    int Metascore;
+    float Userscore, Yourscore;
+
+    try
+    {
+        Metascore = int.Parse(Info.Metascore);
+        Userscore = float.Parse(Info.UserScore);
+        Yourscore = 7.5f;
+    }
+    catch
+    {
+        Metascore = 0;
+        Userscore = 0.0f;
+        Yourscore = 7.5f;
+    }
+}
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-md-12" style="margin: auto;">
+            <div>
+                <br />
+                <a class="btn btn-primary" href="/Info/Index">Back to search</a>
+            </div>
+            @if (Info.Error != null)
+            {
+                <br />
+                <div class="alert alert-danger">
+                    @Info.Error
+                </div>
+            }
+            else
+            {
+                <div class="float-left">
+                    <br />
+                    <img class="boxart" src="@Info.BoxArt" />
+                </div>
+                <div class="next-to-image">
+                    <br />
+                    <h1>@Info.Title</h1>
+                    <p>@Info.Platform | Release Date @Info.ReleaseDate</p>
+                    <p>@Info.Summary</p>
+                </div>
+                <div>
+                    <br />
+                    <span class="score-title">Metacritic Score</span>
+
+                    @if (Metascore >= 75)
+                    {
+                        <span class="score green">@Metascore</span>
+                    }
+                    else if (Metascore < 75 && Metascore >= 50)
+                    {
+                        <span class="score amber">@Metascore</span>
+                    }
+                    else if (Metascore < 50)
+                    {
+                        <span class="score red">@Metascore</span>
+                    }
+                    else
+                    {
+                        <span class="score">@Metascore</span>
+                    }
+
+                    <span class="score-title">User Score</span>
+
+                    @if (Userscore >= 7.5f)
+                    {
+                        <span class="score green">@Userscore</span>
+                    }
+                    else if (Userscore < 7.5f && Userscore >= 5.0f)
+                    {
+                        <span class="score amber">@Userscore</span>
+                    }
+                    else if (Userscore < 5.0f)
+                    {
+                        <span class="score red">@Userscore</span>
+                    }
+                    else
+                    {
+                        <span class="score">@Userscore</span>
+                    }
+
+                    <span class="score-title">Your Score</span>
+
+                    @if (Yourscore >= 7.5f)
+                    {
+                        <span class="score green">@Yourscore</span>
+                    }
+                    else if (Yourscore < 7.5f && Yourscore >= 5.0f)
+                    {
+                        <span class="score amber">@Yourscore</span>
+                    }
+                    else if (Yourscore < 5.0f)
+                    {
+                        <span class="score red">@Yourscore</span>
+                    }
+                    else
+                    {
+                        <span class="score">@Yourscore</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

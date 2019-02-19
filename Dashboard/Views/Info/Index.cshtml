@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Search Game Info";
+}
+
+<style>
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-md-6" style="margin: auto;">
+            <form action="/Info/Search" method="post">
+                <input type="text" class="textbox" name="game" placeholder="Game" />
+                <input type="text" class="textbox" name="platform" placeholder="Platform" />
+                <br />
+                <input type="submit" class="btn btn-primary padding-btn" value="Search" />
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
