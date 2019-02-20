@@ -33,6 +33,7 @@
         padding: 5px;
         border-radius: 5px;
         margin-right: 10px;
+        color: white;
     }
 
     .score-title {
@@ -63,19 +64,19 @@
     var Info = Dashboard.Helpers.Info.QueryGameInfo(platform, game);
 
     int Metascore;
-    float Userscore, Yourscore;
+    double Userscore, Yourscore;
 
     try
     {
         Metascore = int.Parse(Info.Metascore);
-        Userscore = float.Parse(Info.UserScore);
-        Yourscore = 7.5f;
+        Userscore = double.Parse(Info.UserScore) * 10;
+        Yourscore = Dashboard.Helpers.Games.GetRating(int.Parse(TempData["id"].ToString()));
     }
     catch
     {
         Metascore = 0;
-        Userscore = 0.0f;
-        Yourscore = 7.5f;
+        Userscore = 0.0;
+        Yourscore = 0.0;
     }
 }
 
@@ -85,6 +86,7 @@
             <div>
                 <br />
                 <a class="btn btn-primary" href="/Info/Index">Back to search</a>
+                <a class="btn btn-secondary" style="color: white;" data-toggle="modal" data-target="#rateModal">Rate Game</a>
             </div>
             @if (Info.Error != null)
             {
@@ -117,51 +119,51 @@
                     {
                         <span class="score amber">@Metascore</span>
                     }
-                    else if (Metascore < 50)
+                    else if (Metascore < 50 && Metascore > 0)
                     {
                         <span class="score red">@Metascore</span>
                     }
                     else
                     {
-                        <span class="score">@Metascore</span>
+                        <span class="score">N/A</span>
                     }
 
                     <span class="score-title">User Score</span>
 
-                    @if (Userscore >= 7.5f)
+                    @if (Userscore >= 75)
                     {
                         <span class="score green">@Userscore</span>
                     }
-                    else if (Userscore < 7.5f && Userscore >= 5.0f)
+                    else if (Userscore < 75 && Userscore >= 50)
                     {
                         <span class="score amber">@Userscore</span>
                     }
-                    else if (Userscore < 5.0f)
+                    else if (Userscore < 50 && Userscore > 0)
                     {
                         <span class="score red">@Userscore</span>
                     }
                     else
                     {
-                        <span class="score">@Userscore</span>
+                        <span class="score">N/A</span>
                     }
 
                     <span class="score-title">Your Score</span>
 
-                    @if (Yourscore >= 7.5f)
+                    @if (Yourscore >= 75)
                     {
                         <span class="score green">@Yourscore</span>
                     }
-                    else if (Yourscore < 7.5f && Yourscore >= 5.0f)
+                    else if (Yourscore < 75 && Yourscore >= 50)
                     {
                         <span class="score amber">@Yourscore</span>
                     }
-                    else if (Yourscore < 5.0f)
+                    else if (Yourscore < 50 && Yourscore > 0)
                     {
                         <span class="score red">@Yourscore</span>
                     }
                     else
                     {
-                        <span class="score">@Yourscore</span>
+                        <span class="score">N/A</span>
                     }
                 </div>
             }
@@ -231,6 +233,26 @@
                 <input type="hidden" value="@DateTime.Now.AddDays(-26).ToString("dd/MM/yyyy")" id="activity_27l" />
                 <input type="hidden" value="@DateTime.Now.AddDays(-27).ToString("dd/MM/yyyy")" id="activity_28l" />
             }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Rate Game</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Info/Rate" method="post">
+                    <input type="hidden" name="gameID" value="@int.Parse(TempData["id"].ToString())" />
+                    <input type="number" name="score" placeholder="85" />
+                    <input type="submit" class="btn btn-primary" value="Rate" />
+                </form>
+            </div>
         </div>
     </div>
 </div>

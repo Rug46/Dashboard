@@ -33,5 +33,18 @@ namespace Dashboard.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Rate(int gameID, int score)
+        {
+            if (score <= 0 || score > 100)
+            {
+                TempData["Error"] = "Score must be between 1 and 100";
+                return RedirectToAction("Index");
+            }
+
+            Helpers.Games.SetRating(gameID, score);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Dashboard.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard-User;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Dashboard;Trusted_Connection=True;");
         }
 
         public DbSet<ActivityModel> Activity { get; set; }
@@ -30,6 +30,7 @@ namespace Dashboard.Data
         public DbSet<FavouriteModel> Favourites { get; set; }
         public DbSet<GameModel> Games { get; set; }
         public DbSet<ModeModel> Modes { get; set; }
+        public DbSet<RatingModel> Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,7 @@ namespace Dashboard.Data
             modelBuilder.Entity<FavouriteModel>().ToTable("Favourite");
             modelBuilder.Entity<GameModel>().ToTable("Game");
             modelBuilder.Entity<ModeModel>().ToTable("Mode");
+            modelBuilder.Entity<RatingModel>().ToTable("Rating");
         }
     }
 }

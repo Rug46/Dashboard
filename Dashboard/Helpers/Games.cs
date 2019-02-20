@@ -185,5 +185,63 @@ namespace Dashboard.Helpers
                 return records;
             }
         }
+
+        public static void SetRating(int GameID, int score)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Ratings
+                    .OrderBy(rm => rm.Id)
+                    .ToList();
+
+                bool newRow = true;
+                int rowID = 0;
+
+                for (int i = 0; i < records.Count; i++)
+                {
+                    if (records.ElementAt(i).GameID == GameID)
+                    {
+                        newRow = false;
+                        rowID = records.ElementAt(i).Id;
+                    }
+                }
+
+                if (newRow)
+                {
+                    RatingModel single = new RatingModel
+                    {
+                        Score = score,
+                        GameID = GameID
+                    };
+
+                    db.Ratings.Add(single);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var single = records.Where(rm => rm.Id == rowID).Single();
+                    single.Score = score;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static int GetRating(int GameID)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Ratings
+                    .Where(rm => rm.GameID == GameID)
+                    .OrderBy(rm => rm.Id)
+                    .ToList();
+
+                if (records.Count != 1)
+                {
+                    return 0;
+                }
+
+                return records.ElementAt(0).Score;
+            }
+        }
     }
 }
