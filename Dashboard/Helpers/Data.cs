@@ -71,6 +71,28 @@ namespace Dashboard.Helpers
             }
         }
 
+        public static int GetGameTimeGame(DateTime day, int GameID)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.Date.Date == day.Date)
+                    .Where(ptm => ptm.Game == Games.GetGame(GameID))
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                var count = 0;
+
+                for (int i = 0; i < records.Count; i++)
+                {
+                    var id = records.ElementAt(i).Id;
+                    count += GetTimeDifference(id);
+                }
+
+                return count;
+            }
+        }
+
         public static String GetPlayTimeLast24H()
         {
             using (var db = new Database())

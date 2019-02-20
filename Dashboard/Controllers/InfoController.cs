@@ -29,6 +29,7 @@ namespace Dashboard.Controllers
 
             TempData["platform"] = platform;
             TempData["game"] = game;
+            TempData["id"] = Dashboard.Helpers.Games.SearchGame(game);
 
             return View();
         }

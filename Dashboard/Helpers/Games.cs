@@ -74,6 +74,24 @@ namespace Dashboard.Helpers
             }
         }
 
+        public static int SearchGame(string name)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Games
+                    .Where(gm => gm.Name == name)
+                    .OrderBy(gm => gm.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return 0;
+                }
+
+                return records.ElementAt(0).Id;
+            }
+        }
+
         public static List<GameModel> GetList()
         {
             using (var db = new Database())

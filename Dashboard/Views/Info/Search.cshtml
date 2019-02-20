@@ -56,7 +56,7 @@
     }
 </style>
 
-@{ 
+@{
     var platform = TempData["Platform"].ToString();
     var game = TempData["game"].ToString();
 
@@ -165,6 +165,72 @@
                     }
                 </div>
             }
+            <hr />
+            @if (int.Parse(TempData["id"].ToString()) > 0)
+            {
+                int GameID = int.Parse(TempData["id"].ToString());
+
+                <h1>Activity</h1>
+                <canvas id="gameChart"></canvas>
+
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(0), GameID)" id="activity_1" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-1), GameID)" id="activity_2" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-2), GameID)" id="activity_3" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-3), GameID)" id="activity_4" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-4), GameID)" id="activity_5" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-5), GameID)" id="activity_6" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-6), GameID)" id="activity_7" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-7), GameID)" id="activity_8" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-8), GameID)" id="activity_9" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-9), GameID)" id="activity_10" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-10), GameID)" id="activity_11" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-11), GameID)" id="activity_12" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-12), GameID)" id="activity_13" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-13), GameID)" id="activity_14" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-14), GameID)" id="activity_15" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-15), GameID)" id="activity_16" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-16), GameID)" id="activity_17" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-17), GameID)" id="activity_18" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-18), GameID)" id="activity_19" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-19), GameID)" id="activity_20" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-20), GameID)" id="activity_21" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-21), GameID)" id="activity_22" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-22), GameID)" id="activity_23" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-23), GameID)" id="activity_24" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-24), GameID)" id="activity_25" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-25), GameID)" id="activity_26" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-26), GameID)" id="activity_27" />
+                <input type="hidden" value="@Dashboard.Helpers.Data.GetGameTimeGame(DateTime.Now.AddDays(-27), GameID)" id="activity_28" />
+
+                <input type="hidden" value="@DateTime.Now.AddDays(0).ToString("dd/MM/yyyy")" id="activity_1l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy")" id="activity_2l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-2).ToString("dd/MM/yyyy")" id="activity_3l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-3).ToString("dd/MM/yyyy")" id="activity_4l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-4).ToString("dd/MM/yyyy")" id="activity_5l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")" id="activity_6l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-6).ToString("dd/MM/yyyy")" id="activity_7l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy")" id="activity_8l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-8).ToString("dd/MM/yyyy")" id="activity_9l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-9).ToString("dd/MM/yyyy")" id="activity_10l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-10).ToString("dd/MM/yyyy")" id="activity_11l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-11).ToString("dd/MM/yyyy")" id="activity_12l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-12).ToString("dd/MM/yyyy")" id="activity_13l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-13).ToString("dd/MM/yyyy")" id="activity_14l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-14).ToString("dd/MM/yyyy")" id="activity_15l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-15).ToString("dd/MM/yyyy")" id="activity_16l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-16).ToString("dd/MM/yyyy")" id="activity_17l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-17).ToString("dd/MM/yyyy")" id="activity_18l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-18).ToString("dd/MM/yyyy")" id="activity_19l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-19).ToString("dd/MM/yyyy")" id="activity_20l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-20).ToString("dd/MM/yyyy")" id="activity_21l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-21).ToString("dd/MM/yyyy")" id="activity_22l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-22).ToString("dd/MM/yyyy")" id="activity_23l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-23).ToString("dd/MM/yyyy")" id="activity_24l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-24).ToString("dd/MM/yyyy")" id="activity_25l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-25).ToString("dd/MM/yyyy")" id="activity_26l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-26).ToString("dd/MM/yyyy")" id="activity_27l" />
+                <input type="hidden" value="@DateTime.Now.AddDays(-27).ToString("dd/MM/yyyy")" id="activity_28l" />
+            }
         </div>
     </div>
 </div>
@@ -172,3 +238,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="~/js/InfoSearch.js"></script>
