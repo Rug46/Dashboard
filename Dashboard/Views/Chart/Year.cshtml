@@ -5,27 +5,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 7px;
+        padding: 0px 5px;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+    }
+</style>
+
 @for (int i = 0; i < 365; i++)
 {
     <input type="hidden" value="@Dashboard.Helpers.DataYears.GetGameTime(DateTime.Now.AddDays(-@i))" id="activity_year_@(i + 1)" />
     <input type="hidden" value="@DateTime.Now.AddDays(-@i).ToString("dd/MM/yyyy")" id="activity_year_@(i + 1)_l" />
 }
 
+<input type="hidden" value="@Dashboard.Helpers.DataYears.GetFirstRecordDate()" id="firstRecordDate" />
+
 <div class="main-content-inner">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
                     <h1>Past Year</h1>
                     <canvas id="hours_year" height="100"></canvas>
                     <hr />
-                    Month
-                    <select id="month-select">
-                        <option value="None"></option>
-                        <option value="Feb19">February 2019</option>
-                        <option value="Jan19">January 2019</option>
-                        <option value="Dec18">December 2018</option>
-                    </select>
+                    <form action="/Chart/Month" method="post">
+                        Month
+                        <select id="month-select" name="month" class="textbox">
+                            <option></option>
+
+                            @{ 
+                                var firstRecordDate = Dashboard.Helpers.DataYears.GetFirstRecordDate();
+                                var thisMonth = DateTime.Now;
+                                var months = Dashboard.Helpers.DataYears.GetMonths(thisMonth, firstRecordDate);
+                            }
+
+                            @for (int i = 0; i < months + 1; i++)
+                            {
+                                var monthsAgo = DateTime.Now.AddMonths(-i);
+
+                                <option value="@monthsAgo">@Dashboard.Helpers.DataYears.GetMonthName(monthsAgo)</option>
+                            }
+                        </select>
+                        <input type="submit" class="btn btn-primary padding-btn" value="Go" />
+                    </form>
                 </div>
             </div>
         </div>
