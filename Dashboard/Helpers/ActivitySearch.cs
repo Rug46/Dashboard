@@ -11,9 +11,9 @@ namespace Dashboard.Helpers
     {
         public static int GetGameTimeHour(DateTime hour)
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .Where(ptm => ptm.Date.Date == hour.Date)
                     .Where(ptm => ptm.Date.Hour == hour.Hour)
                     .OrderBy(ptm => ptm.Date)

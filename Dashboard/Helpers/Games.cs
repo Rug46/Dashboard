@@ -12,15 +12,15 @@ namespace Dashboard.Helpers
     {
         public static bool NewGame(string name)
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                var records = db.GameRecords
+                var records = db.Games
                     .OrderBy(gm => gm.Id)
                     .ToList();
 
                 for (int i = 0; i < records.Count; i++)
                 {
-                    if (records.ElementAt(i).Game.ToLower() == name.ToLower())
+                    if (records.ElementAt(i).Name.ToLower() == name.ToLower())
                     {
                         return false;
                     }
@@ -33,10 +33,10 @@ namespace Dashboard.Helpers
 
                 GameModel single = new GameModel
                 {
-                    Game = name
+                    Name = name
                 };
 
-                db.GameRecords.Add(single);
+                db.Games.Add(single);
                 db.SaveChanges();
 
                 return true;
@@ -45,18 +45,18 @@ namespace Dashboard.Helpers
 
         public static void RemoveGame(int id)
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                db.GameRecords.Remove(GetModel(id));
+                db.Games.Remove(GetModel(id));
                 db.SaveChanges();
             }
         }
 
         public static GameModel GetModel(int id)
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                return db.GameRecords
+                return db.Games
                     .Where(gm => gm.Id == id)
                     .ToList()
                     .ElementAt(0);
@@ -65,10 +65,10 @@ namespace Dashboard.Helpers
 
         public static int GetID(string name)
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                return db.GameRecords
-                    .Where(gm => gm.Game == name)
+                return db.Games
+                    .Where(gm => gm.Name == name)
                     .ToList()
                     .ElementAt(0).Id;
             }
@@ -76,38 +76,38 @@ namespace Dashboard.Helpers
 
         public static List<GameModel> GetList()
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                return db.GameRecords.ToList();
+                return db.Games.ToList();
             }
         }
 
         public static int GetCount()
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                return db.GameRecords.ToList().Count();
+                return db.Games.ToList().Count();
             }
         }
 
         public static string GetGame(int id)
         {
-            using (var db = new GameContext())
+            using (var db = new Database())
             {
-                var records = db.GameRecords
+                var records = db.Games
                     .Where(gm => gm.Id == id)
                     .OrderBy(gm => gm.Id)
                     .ToList();
 
-                return records.ElementAt(0).Game;
+                return records.ElementAt(0).Name;
             }
         }
 
         public static bool IsFavourite(int id)
         {
-            using (var db = new FavouriteContext())
+            using (var db = new Database())
             {
-                var records = db.FavouriteRecords
+                var records = db.Favourites
                     .OrderBy(gm => gm.Id)
                     .ToList();
 
@@ -125,23 +125,23 @@ namespace Dashboard.Helpers
 
         public static void AddFavourite(int id)
         {
-            using (var db = new FavouriteContext())
+            using (var db = new Database())
             {
                 FavouriteModel single = new FavouriteModel
                 {
                     GameID = id
                 };
 
-                db.FavouriteRecords.Add(single);
+                db.Favourites.Add(single);
                 db.SaveChanges();
             }
         }
 
         public static void RemoveFavourite(int id)
         {
-            using (var db = new FavouriteContext())
+            using (var db = new Database())
             {
-                var records = db.FavouriteRecords
+                var records = db.Favourites
                     .Where(fm => fm.GameID == id)
                     .OrderBy(fm => fm.Id)
                     .ToList();
@@ -149,7 +149,7 @@ namespace Dashboard.Helpers
                 for (int i = 0; i < records.Count; i++)
                 {
                     var single = records.ElementAt(i);
-                    db.FavouriteRecords.Remove(single);
+                    db.Favourites.Remove(single);
                 }
 
                 db.SaveChanges();
@@ -158,9 +158,9 @@ namespace Dashboard.Helpers
 
         public static List<FavouriteModel> GetFavourites()
         {
-            using (var db = new FavouriteContext())
+            using (var db = new Database())
             {
-                var records = db.FavouriteRecords
+                var records = db.Favourites
                     .OrderBy(gm => gm.Id)
                     .ToList();
 

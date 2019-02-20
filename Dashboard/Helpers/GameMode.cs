@@ -12,15 +12,15 @@ namespace Dashboard.Helpers
     {
         public static bool NewGameMode(string name)
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                var records = db.ModeRecords
+                var records = db.Modes
                     .OrderBy(mm => mm.Id)
                     .ToList();
 
                 for (int i = 0; i < records.Count; i++)
                 {
-                    if (records.ElementAt(i).Mode.ToLower() == name.ToLower())
+                    if (records.ElementAt(i).Name.ToLower() == name.ToLower())
                     {
                         return false;
                     }
@@ -33,10 +33,10 @@ namespace Dashboard.Helpers
 
                 ModeModel single = new ModeModel
                 {
-                    Mode = name
+                    Name = name
                 };
 
-                db.ModeRecords.Add(single);
+                db.Modes.Add(single);
                 db.SaveChanges();
 
                 return true;
@@ -45,18 +45,18 @@ namespace Dashboard.Helpers
 
         public static void RemoveGameMode(int id)
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                db.ModeRecords.Remove(GetModel(id));
+                db.Modes.Remove(GetModel(id));
                 db.SaveChanges();
             }
         }
 
         public static ModeModel GetModel(int id)
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                return db.ModeRecords
+                return db.Modes
                     .Where(mm => mm.Id == id)
                     .ToList()
                     .ElementAt(0);
@@ -65,10 +65,10 @@ namespace Dashboard.Helpers
 
         public static int GetID(string name)
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                return db.ModeRecords
-                    .Where(mm => mm.Mode == name)
+                return db.Modes
+                    .Where(mm => mm.Name == name)
                     .ToList()
                     .ElementAt(0).Id;
             }
@@ -76,25 +76,25 @@ namespace Dashboard.Helpers
 
         public static List<ModeModel> GetList()
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                return db.ModeRecords.ToList();
+                return db.Modes.ToList();
             }
         }
 
         public static int GetCount()
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                return db.ModeRecords.ToList().Count();
+                return db.Modes.ToList().Count();
             }
         }
 
         public static string GetMode(int id)
         {
-            using (var db = new ModeContext())
+            using (var db = new Database())
             {
-                var records = db.ModeRecords
+                var records = db.Modes
                     .Where(mm => mm.Id == id)
                     .OrderBy(mm => mm.Id)
                     .ToList();
@@ -104,7 +104,7 @@ namespace Dashboard.Helpers
                     return null;
                 }
 
-                return records.ElementAt(0).Mode;
+                return records.ElementAt(0).Name;
             }
         }
     }

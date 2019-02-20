@@ -94,9 +94,9 @@
                         <input type="hidden" value="22:00" id="activity_22l" />
                         <input type="hidden" value="23:00" id="activity_23l" />
 
-                        @using (var db = new Dashboard.Data.ActivityContext())
+                        @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.ActivityRecords
+                            var records = db.Activity
                                 .Where(ptm => ptm.Date.Date == DateTime.Parse(TempData["Day"].ToString()))
                                 .OrderBy(ptm => ptm.Date)
                                 .ToList();

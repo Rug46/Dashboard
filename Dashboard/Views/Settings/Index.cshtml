@@ -63,16 +63,16 @@
                     <div class="col-lg-6">
                         <h2>Game Modes</h2>
                         <ul class="list-group">
-                            @using (var db = new Dashboard.Data.ModeContext())
+                            @using (var db = new Dashboard.Data.Database())
                             {
-                                var records = db.ModeRecords
+                                var records = db.Modes
                                     .OrderBy(mm => mm.Id)
                                     .ToList();
 
                                 for (int i = 0; i < records.Count; i++)
                                 {
                                     <li class="list-group-item">
-                                        @records.ElementAt(i).Mode
+                                        @records.ElementAt(i).Name
                                         <div class="float-right">
                                             <a href="/Settings/RemoveGameMode/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
                                         </div>
@@ -92,16 +92,16 @@
                     <div class="col-lg-6">
                         <h2>Games</h2>
                         <ul class="list-group">
-                            @using (var db = new Dashboard.Data.GameContext())
+                            @using (var db = new Dashboard.Data.Database())
                             {
-                                var records = db.GameRecords
+                                var records = db.Games
                                                 .OrderBy(gm => gm.Id)
                                                 .ToList();
 
                                 for (int i = 1; i < records.Count; i++)
                                 {
                                     <li class="list-group-item">
-                                        @records.ElementAt(i).Game
+                                        @records.ElementAt(i).Name
                                         <div class="float-right">
                                             @if (Dashboard.Helpers.Games.IsFavourite(records.ElementAt(i).Id))
                                             {
@@ -130,16 +130,16 @@
                     <div class="col-lg-6" style="margin-top: 10px;">
                         <h2>Consoles</h2>
                         <ul class="list-group">
-                            @using (var db = new Dashboard.Data.ConsoleContext())
+                            @using (var db = new Dashboard.Data.Database())
                             {
-                                var records = db.ConsoleRecords
+                                var records = db.Consoles
                                     .OrderBy(cm => cm.Id)
                                     .ToList();
 
                                 for (int i = 0; i < records.Count; i++)
                                 {
                                     <li class="list-group-item">
-                                        @records.ElementAt(i).Console
+                                        @records.ElementAt(i).Name
                                         <div class="float-right">
                                             <a href="/Settings/RemoveConsole/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
                                         </div>

@@ -13,14 +13,14 @@ namespace Dashboard.Controllers
 {
     public class ActivityController : Controller
     {
-        private readonly ActivityContext _context;
+        private readonly Database _context;
 
         public static int recordsPerPage = 10;
         public static int count;
         public static int s_Page;
 
 
-        public ActivityController(ActivityContext context)
+        public ActivityController(Database context)
         {
             _context = context;
         }
@@ -28,11 +28,11 @@ namespace Dashboard.Controllers
         // GET: Activity
         public async Task<IActionResult> Index(int id)
         {
-            using(var db = new ActivityContext())
+            using(var db = new Database())
             {
                 int page = id;
                 s_Page = page;
-                count = db.ActivityRecords.Count();
+                count = db.Activity.Count();
 
                 if (id < 0)
                 {
@@ -50,7 +50,7 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.ActivityRecords.ToList();
+                var model = db.Activity.ToList();
                 model.Reverse();
 
                 var records = new List<ActivityModel>();
@@ -70,12 +70,12 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Today(int id)
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
                 int page = id;
                 s_Page = page;
 
-                count = db.ActivityRecords
+                count = db.Activity
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .Count();
 
@@ -90,7 +90,7 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.ActivityRecords
+                var model = db.Activity
                     .Where(am => am.Date.Date >= DateTime.Now.AddHours(-24))
                     .ToList();
 
@@ -118,12 +118,12 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Week(int id)
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
                 int page = id;
                 s_Page = page;
 
-                count = db.ActivityRecords
+                count = db.Activity
                     .Where(am => am.Date.Date >= DateTime.Now.AddDays(-7))
                     .Count();
 
@@ -138,7 +138,7 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.ActivityRecords
+                var model = db.Activity
                     .Where(am => am.Date.Date >= DateTime.Now.AddDays(-7))
                     .ToList();
 
@@ -161,11 +161,11 @@ namespace Dashboard.Controllers
 
         public async Task<IActionResult> Month(int id)
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
                 int page = id;
                 s_Page = page;
-                count = db.ActivityRecords
+                count = db.Activity
                     .Where(am => am.Date.Date >= DateTime.Now.AddDays(-28))
                     .Count();
 
@@ -180,7 +180,7 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.ActivityRecords
+                var model = db.Activity
                     .Where(am => am.Date.Date >= DateTime.Now.AddDays(-28))
                     .ToList();
 
@@ -209,7 +209,7 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var activityModel = await _context.ActivityRecords
+            var activityModel = await _context.Activity
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activityModel == null)
             {
@@ -258,7 +258,7 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var activityModel = await _context.ActivityRecords.FindAsync(id);
+            var activityModel = await _context.Activity.FindAsync(id);
             if (activityModel == null)
             {
                 return NotFound();
@@ -309,7 +309,7 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
-            var activityModel = await _context.ActivityRecords
+            var activityModel = await _context.Activity
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activityModel == null)
             {
@@ -324,15 +324,15 @@ namespace Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activityModel = await _context.ActivityRecords.FindAsync(id);
-            _context.ActivityRecords.Remove(activityModel);
+            var activityModel = await _context.Activity.FindAsync(id);
+            _context.Activity.Remove(activityModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ActivityModelExists(int id)
         {
-            return _context.ActivityRecords.Any(e => e.Id == id);
+            return _context.Activity.Any(e => e.Id == id);
         }
 
         [HttpGet]

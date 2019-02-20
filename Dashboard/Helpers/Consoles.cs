@@ -12,15 +12,15 @@ namespace Dashboard.Helpers
     {
         public static void NewConsole(string name)
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                var records = db.ConsoleRecords
+                var records = db.Consoles
                     .OrderBy(cm => cm.Id)
                     .ToList();
 
                 for (int i = 0; i < records.Count; i++)
                 {
-                    if (records.ElementAt(i).Console.ToLower() == name.ToLower())
+                    if (records.ElementAt(i).Name.ToLower() == name.ToLower())
                     {
                         return;
                     }
@@ -28,28 +28,28 @@ namespace Dashboard.Helpers
 
                 ConsoleModel single = new ConsoleModel
                 {
-                    Console = name
+                    Name = name
                 };
 
-                db.ConsoleRecords.Add(single);
+                db.Consoles.Add(single);
                 db.SaveChanges();
             }
         }
 
         public static void RemoveConsole(int id)
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                db.ConsoleRecords.Remove(GetModel(id));
+                db.Consoles.Remove(GetModel(id));
                 db.SaveChanges();
             }
         }
 
         public static ConsoleModel GetModel(int id)
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                return db.ConsoleRecords
+                return db.Consoles
                     .Where(cm => cm.Id == id)
                     .ToList()
                     .ElementAt(0);
@@ -58,10 +58,10 @@ namespace Dashboard.Helpers
 
         public static int GetID(string name)
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                return db.ConsoleRecords
-                    .Where(cm => cm.Console == name)
+                return db.Consoles
+                    .Where(cm => cm.Name == name)
                     .ToList()
                     .ElementAt(0).Id;
             }
@@ -69,25 +69,25 @@ namespace Dashboard.Helpers
 
         public static List<ConsoleModel> GetList()
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                return db.ConsoleRecords.ToList();
+                return db.Consoles.ToList();
             }
         }
 
         public static int GetCount()
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                return db.ConsoleRecords.ToList().Count();
+                return db.Consoles.ToList().Count();
             }
         }
 
         public static string GetConsole(int id)
         {
-            using (var db = new ConsoleContext())
+            using (var db = new Database())
             {
-                var records = db.ConsoleRecords
+                var records = db.Consoles
                     .Where(cm => cm.Id == id)
                     .OrderBy(cm => cm.Id)
                     .ToList();
@@ -97,7 +97,7 @@ namespace Dashboard.Helpers
                     return null;
                 }
 
-                return records.ElementAt(0).Console;
+                return records.ElementAt(0).Name;
             }
         }
     }

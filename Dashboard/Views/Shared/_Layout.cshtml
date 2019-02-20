@@ -161,9 +161,9 @@
                         </div>
                         <div class="form-group">
                             <label>Game</label>
-                            @using (var db = new Dashboard.Data.GameContext())
+                            @using (var db = new Dashboard.Data.Database())
                             {
-                                var records = db.GameRecords
+                                var records = db.Games
                                     .OrderBy(gm => gm.Id)
                                     .ToList();
 
@@ -171,7 +171,7 @@
                                     <option value="0" selected disabled>Select Game...</option>
                                     @for (int i = 0; i < records.Count; i++)
                                     {
-                                        <option value="@records.ElementAt(i).Game">@records.ElementAt(i).Game</option>
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
                                     }
                                 </select>
                             }
@@ -183,9 +183,9 @@
                         </div>
                         <div class="form-group">
                             <label>Mode</label>
-                            @using (var db = new Dashboard.Data.ModeContext())
+                            @using (var db = new Dashboard.Data.Database())
                             {
-                                var records = db.ModeRecords
+                                var records = db.Modes
                                     .OrderBy(mm => mm.Id)
                                     .ToList();
 
@@ -193,7 +193,7 @@
                                     <option value="0" selected disabled>Select Mode...</option>
                                     @for (int i = 0; i < records.Count; i++)
                                     {
-                                        <option value="@records.ElementAt(i).Mode">@records.ElementAt(i).Mode</option>
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
                                     }
                                 </select>
                             }

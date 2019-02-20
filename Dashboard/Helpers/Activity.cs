@@ -28,9 +28,9 @@ namespace Dashboard.Helpers
 
         public static bool IsSinglePage()
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
 
@@ -47,9 +47,9 @@ namespace Dashboard.Helpers
 
         public static bool IsSinglePage24H()
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -67,9 +67,9 @@ namespace Dashboard.Helpers
 
         public static bool IsSinglePage7D()
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -87,9 +87,9 @@ namespace Dashboard.Helpers
 
         public static bool IsSinglePage28D()
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -107,9 +107,9 @@ namespace Dashboard.Helpers
 
         public static void AddNew(ActivityModel model)
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                db.ActivityRecords.Add(model);
+                db.Activity.Add(model);
                 db.SaveChanges();
             }
         }

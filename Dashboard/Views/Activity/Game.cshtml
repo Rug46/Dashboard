@@ -40,9 +40,9 @@
                         <div class="alert alert-danger">@TempData["None"].ToString()</div>
                     }
                     <form action="Game" method="post">
-                        @using (var db = new Dashboard.Data.GameContext())
+                        @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.GameRecords
+                            var records = db.Games
                                 .OrderBy(gm => gm.Id)
                                 .ToList();
 
@@ -50,7 +50,7 @@
                                 <option value="0" selected disabled>Select Game...</option>
                                 @for (int i = 0; i < records.Count; i++)
                                 {
-                                    <option value="@records.ElementAt(i).Id">@records.ElementAt(i).Game</option>
+                                    <option value="@records.ElementAt(i).Id">@records.ElementAt(i).Name</option>
                                 }
                             </select>
                             <input type="submit" value="Search" class="btn padding-btn" />
@@ -58,9 +58,9 @@
                     </form>
                     @if (TempData["Game"] != null)
                     {
-                        @using (var db = new Dashboard.Data.ActivityContext())
+                        @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.ActivityRecords
+                            var records = db.Activity
                                 .Where(ptm => ptm.Game == TempData["Game"].ToString())
                                 .OrderBy(ptm => ptm.Date)
                                 .ToList();

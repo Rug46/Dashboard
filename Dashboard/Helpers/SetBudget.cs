@@ -26,11 +26,11 @@ namespace Dashboard.Helpers
 
         public static void SetBudgetAmount(int hours, int minutes)
         {
-            using (var db = new BudgetContext())
+            using (var db = new Database())
             {
                 var totalMinutes = (hours * 60) + minutes;
 
-                db.BudgetRecords.Where(bm => bm.Name == "Month")
+                db.Budgets.Where(bm => bm.Name == "Month")
                     .ElementAt(0).Minutes = totalMinutes;
 
                 db.SaveChanges();

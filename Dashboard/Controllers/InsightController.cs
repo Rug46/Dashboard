@@ -37,11 +37,11 @@ namespace Dashboard.Controllers
         [HttpPost]
         public string SetBudgetAmount(int monthHours, int monthMinutes, int dayHours, int dayMinutes)
         {
-            using (var db = new BudgetContext())
+            using (var db = new Database())
             {
                 var monthTotalMinutes = (monthHours * 60) + monthMinutes;
 
-                var monthRecords = db.BudgetRecords
+                var monthRecords = db.Budgets
                     .Where(bm => bm.Name == "Month")
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -50,7 +50,7 @@ namespace Dashboard.Controllers
 
                 var dayTotalMinutes = (dayHours * 60) + dayMinutes;
 
-                var dayRecords = db.BudgetRecords
+                var dayRecords = db.Budgets
                     .Where(bm => bm.Name == "Day")
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -65,11 +65,11 @@ namespace Dashboard.Controllers
 
         public static void SetBudgetAmountToday(int hours, int minutes)
         {
-            using (var db = new BudgetContext())
+            using (var db = new Database())
             {
                 var totalMinutes = (hours * 60) + minutes;
 
-                db.BudgetRecords.Where(bm => bm.Name == "Day")
+                db.Budgets.Where(bm => bm.Name == "Day")
                     .ElementAt(0).Minutes = totalMinutes;
 
                 db.SaveChanges();

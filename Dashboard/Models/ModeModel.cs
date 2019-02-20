@@ -8,6 +8,6 @@ namespace Dashboard.Models
     public class ModeModel
     {
         public int Id { get; set; }
-        public string Mode { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -31,29 +31,26 @@
                 <select onchange="changeGame();" id="GameSelector" class="textbox">
                     <option disabled selected>Change Game</option>
 
-                    @using (var db = new Dashboard.Data.GameContext())
+                    @using (var db = new Dashboard.Data.Database())
                     {
-                        @using (var dbFav = new Dashboard.Data.FavouriteContext())
-                        {
-                            var records = db.GameRecords
-                            .OrderBy(gm => gm.Game)
+                        var recordsGames = db.Games
+                        .OrderBy(gm => gm.Name)
+                        .ToList();
+
+                        var recordsFavourites = db.Favourites
+                            .OrderByDescending(fm => fm.Id)
                             .ToList();
 
-                            var recordsFav = dbFav.FavouriteRecords
-                                .OrderByDescending(fm => fm.Id)
-                                .ToList();
+                        for (int i = 0; i < recordsFavourites.Count; i++)
+                        {
+                            <option value="@Dashboard.Helpers.Games.GetGame(recordsFavourites.ElementAt(i).GameID)">@Dashboard.Helpers.Games.GetGame(recordsFavourites.ElementAt(i).GameID)</option>
+                        }
 
-                            for (int i = 0; i < recordsFav.Count; i++)
-                            {
-                                <option value="@Dashboard.Helpers.Games.GetGame(recordsFav.ElementAt(i).GameID)">@Dashboard.Helpers.Games.GetGame(recordsFav.ElementAt(i).GameID)</option>
-                            }
+                        <option disabled>=========================</option>
 
-                            <option disabled>=========================</option>
-
-                            for (int i = 0; i < records.Count; i++)
-                            {
-                                <option value="@records.ElementAt(i).Game">@records.ElementAt(i).Game</option>
-                            }
+                        for (int i = 0; i < recordsGames.Count; i++)
+                        {
+                            <option value="@recordsGames.ElementAt(i).Name">@recordsGames.ElementAt(i).Name</option>
                         }
                     }
                 </select>
@@ -62,15 +59,15 @@
                 <br />
                 <select onchange="changeConsole();" id="ConsoleSelector" class="textbox">
                     <option selected disabled>Change Console</option>
-                    @using (var db = new Dashboard.Data.ConsoleContext())
+                    @using (var db = new Dashboard.Data.Database())
                     {
-                        var records = db.ConsoleRecords
-                            .OrderBy(cm => cm.Console)
+                        var records = db.Consoles
+                            .OrderBy(cm => cm.Name)
                             .ToList();
 
                         for (int i = 0; i < records.Count; i++)
                         {
-                            <option value="@records.ElementAt(i).Console">@records.ElementAt(i).Console</option>
+                            <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
                         }
                     }
                 </select>

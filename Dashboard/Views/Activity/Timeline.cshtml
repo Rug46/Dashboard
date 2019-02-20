@@ -31,9 +31,9 @@
                 <div class="card-body">
                     <h1>Timeline</h1>
                     <br />
-                    @using (var db = new Dashboard.Data.ActivityContext())
+                    @using (var db = new Dashboard.Data.Database())
                     {
-                        var records = db.ActivityRecords
+                        var records = db.Activity
                                 .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
                                 .OrderByDescending(ptm => ptm.Date)
                                 .ToList();

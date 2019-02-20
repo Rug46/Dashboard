@@ -10,9 +10,9 @@ namespace Dashboard.Helpers
     {
         public static float GetBudgetAmount()
         {
-            using (var db = new BudgetContext())
+            using (var db = new Database())
             {
-                var records = db.BudgetRecords
+                var records = db.Budgets
                     .Where(bm => bm.Name == "Month")
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -35,9 +35,9 @@ namespace Dashboard.Helpers
 
         public static float GetUsedAmount()
         {
-            using (var db = new ActivityContext())
+            using (var db = new Database())
             {
-                var records = db.ActivityRecords
+                var records = db.Activity
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();

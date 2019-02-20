@@ -8,6 +8,6 @@ namespace Dashboard.Models
     public class GameModel
     {
         public int Id { get; set; }
-        public string Game { get; set; }
+        public string Name { get; set; }
     }
 }
