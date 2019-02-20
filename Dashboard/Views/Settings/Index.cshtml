@@ -35,6 +35,15 @@
     .list-group-item {
         border: 1px solid #eeeeee;
     }
+
+    .yellow {
+        color: orange;
+    }
+
+    .btn-fav {
+        margin-right: 5px;
+        font-size: 16px;
+    }
 </style>
 
 <div class="main-content-inner">
@@ -42,6 +51,13 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+
                     <h1>Settings</h1>
                     <hr />
                     <div class="col-lg-6">
@@ -87,13 +103,22 @@
                                     <li class="list-group-item">
                                         @records.ElementAt(i).Game
                                         <div class="float-right">
+                                            @if (Dashboard.Helpers.Games.IsFavourite(records.ElementAt(i).Id))
+                                            {
+                                                <a href="/Settings/RemoveFavourite/@records.ElementAt(i).Id" class="btn-custom btn-fav"><i class="ti-star yellow"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Settings/AddFavourite/@records.ElementAt(i).Id" class="btn-custom btn-fav"><i class="ti-star"></i></a>
+                                            }
+
                                             <a href="/Settings/RemoveGame/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
                                         </div>
                                     </li>
                                 }
                             }
                             <li class="list-group-item" style="padding-top: 0; padding-bottom: 0; padding-left: 0;">
-                                <form action="Settings/NewGame" method="post">
+                                <form action="/Settings/NewGame" method="post">
                                     <input type="text" placeholder="New Game" class="textbox-task" name="Game" />
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-link btn-custom"><i class="ti-arrow-right align-middle"></i></button>
@@ -102,8 +127,7 @@
                             </li>
                         </ul>
                     </div>
-                    <br />
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="margin-top: 10px;">
                         <h2>Consoles</h2>
                         <ul class="list-group">
                             @using (var db = new Dashboard.Data.ConsoleContext())

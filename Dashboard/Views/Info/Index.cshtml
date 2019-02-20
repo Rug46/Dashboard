@@ -33,13 +33,27 @@
 
                     @using (var db = new Dashboard.Data.GameContext())
                     {
-                        var records = db.GameRecords
+                        @using (var dbFav = new Dashboard.Data.FavouriteContext())
+                        {
+                            var records = db.GameRecords
                             .OrderBy(gm => gm.Game)
                             .ToList();
 
-                        for (int i = 0; i < records.Count; i++)
-                        {
-                            <option value="@records.ElementAt(i).Game">@records.ElementAt(i).Game</option>
+                            var recordsFav = dbFav.FavouriteRecords
+                                .OrderByDescending(fm => fm.Id)
+                                .ToList();
+
+                            for (int i = 0; i < recordsFav.Count; i++)
+                            {
+                                <option value="@Dashboard.Helpers.Games.GetGame(recordsFav.ElementAt(i).GameID)">@Dashboard.Helpers.Games.GetGame(recordsFav.ElementAt(i).GameID)</option>
+                            }
+
+                            <option disabled>=========================</option>
+
+                            for (int i = 0; i < records.Count; i++)
+                            {
+                                <option value="@records.ElementAt(i).Game">@records.ElementAt(i).Game</option>
+                            }
                         }
                     }
                 </select>

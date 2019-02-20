@@ -19,7 +19,11 @@ namespace Dashboard.Controllers
         public IActionResult NewGameMode(string Mode)
         {
             var ModeTrim = Mode.Trim();
-            GameMode.NewGameMode(ModeTrim);
+
+            if (!GameMode.NewGameMode(ModeTrim))
+            {
+                TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
+            }
 
             return RedirectToAction("Index");
         }
@@ -34,7 +38,11 @@ namespace Dashboard.Controllers
         public IActionResult NewGame(string Game)
         {
             var GameTrim = Game.Trim();
-            Games.NewGame(GameTrim);
+
+            if (!Games.NewGame(GameTrim))
+            {
+                TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
+            }
 
             return RedirectToAction("Index");
         }
@@ -42,6 +50,18 @@ namespace Dashboard.Controllers
         public IActionResult RemoveGame(int id)
         {
             Games.RemoveGame(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult AddFavourite(int id)
+        {
+            Games.AddFavourite(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveFavourite(int id)
+        {
+            Games.RemoveFavourite(id);
             return RedirectToAction("Index");
         }
 

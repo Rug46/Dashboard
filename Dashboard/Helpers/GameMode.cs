@@ -10,7 +10,7 @@ namespace Dashboard.Helpers
 {
     public class GameMode
     {
-        public static void NewGameMode(string name)
+        public static bool NewGameMode(string name)
         {
             using (var db = new ModeContext())
             {
@@ -22,8 +22,13 @@ namespace Dashboard.Helpers
                 {
                     if (records.ElementAt(i).Mode.ToLower() == name.ToLower())
                     {
-                        return;
+                        return false;
                     }
+                }
+
+                if (name.Length <= 0 || name.Length > 32)
+                {
+                    return false;
                 }
 
                 ModeModel single = new ModeModel
@@ -33,6 +38,8 @@ namespace Dashboard.Helpers
 
                 db.ModeRecords.Add(single);
                 db.SaveChanges();
+
+                return true;
             }
         }
 
