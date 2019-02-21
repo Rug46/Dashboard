@@ -25,6 +25,7 @@ namespace Dashboard.Data
         }
 
         public DbSet<ActivityModel> Activity { get; set; }
+        public DbSet<BacklogModel> Backlog { get; set; }
         public DbSet<BudgetModel> Budgets { get; set; }
         public DbSet<ConsoleModel> Consoles { get; set; }
         public DbSet<FavouriteModel> Favourites { get; set; }
@@ -35,6 +36,7 @@ namespace Dashboard.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ActivityModel>().ToTable("Activity");
+            modelBuilder.Entity<BacklogModel>().ToTable("Backlog");
             modelBuilder.Entity<BudgetModel>().ToTable("Budget");
             modelBuilder.Entity<ConsoleModel>().ToTable("Console");
             modelBuilder.Entity<FavouriteModel>().ToTable("Favourite");

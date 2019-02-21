@@ -38,7 +38,7 @@
                     <br />
                     <form action="Search" method="post">
                         <input type="date" name="SearchDate" class="textbox" id="SearchDate" />
-                        <input type="button" value="Today" class="btn padding-btn" onclick="document.getElementById('SearchDate').value = getDate();" />
+                        <input type="button" value="Today" class="btn padding-btn" onclick="document.getElementById('SearchDate').value = getDateToday();" />
                         <input type="submit" value="Search" class="btn padding-btn" />
                     </form>
 
@@ -160,6 +160,9 @@
                                 </table>
                             }
                         }
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+                        <script src="~/js/ActivitySearch.js"></script>
                     }
                 </div>
             </div>
@@ -168,7 +171,7 @@
 </div>
 
 <script>
-    function getDate() {
+    function getDateToday() {
         var today = new Date();
         var date = today.getDate();
         var month = today.getMonth() + 1;
@@ -180,9 +183,7 @@
         if (month < 10) {
             month = '0' + month;
         }
+
         return year + "-" + month + "-" + date;
     }
 </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-<script src="~/js/ActivitySearch.js"></script>

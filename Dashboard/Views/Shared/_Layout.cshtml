@@ -61,38 +61,21 @@
                                     </a>
                                     <ul class="collapse">
                                         <li><a href="/Activity/Index/0">All Activity</a></li>
-                                        <li>
-                                            <a href="#" aria-expanded="true">Activity</a>
-                                            <ul class="collapse">
-                                                <li><a href="/Activity/Today/0">Last 24 Hours</a></li>
-                                                <li><a href="/Activity/Week/0">Last 7 Days</a></li>
-                                                <li><a href="/Activity/Month/0">Last 28 Days</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="/Activity/Timeline">Timeline</a></li>
                                         <li><a href="/Activity/Game">Game Activity</a></li>
                                         <li><a href="@Url.Action("Search", "Activity")">Search</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-eye"></i><span>Insights</span></a>
-                                    <ul class="collapse">
-                                        <li><a href="@Url.Action("Budget", "Insight")">Time Budget</a></li>
-                                        <li><a href="@Url.Action("Leaderboard", "Insight")">Game Leaderboard</a></li>
-                                        <li><a href="@Url.Action("Outlook", "Insight")">Future Outlook</a></li>
-                                    </ul>
+                                    <a href="/Insight/Budget" aria-expanded="true"><i class="ti-eye"></i><span>Time Budget</span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Charts</span></a>
-                                    <ul class="collapse">
-                                        <li><a href="@Url.Action("Year", "Chart")">Past Year</a></li>
-                                    </ul>
+                                    <a href="/Chart/Year" aria-expanded="true"><i class="ti-pie-chart"></i><span>Past Year</span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-game"></i><span>Info</span></a>
-                                    <ul class="collapse">
-                                        <li><a href="/Info/Index">Search</a></li>
-                                    </ul>
+                                    <a href="/Info/Index" aria-expanded="true"><i class="ti-game"></i><span>Info</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Backlog/Index" aria-expanded="true"><i class="ti-menu-alt"></i><span>Backlog</span></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
