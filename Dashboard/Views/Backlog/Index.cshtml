@@ -9,20 +9,24 @@
         background-color: gray;
         color: white;
         padding: 0px 10px;
+        font-size: 18px;
     }
 
     tfoot th {
         background-color: #969696;
         color: white;
         padding: 0px 10px;
+        font-size: 16px;
     }
 
     td {
         padding: 0px 10px;
+        font-size: 16px;
     }
 
     table {
         width: 100%;
+        margin-top: 10px;
     }
 
     .playStatus {
@@ -39,11 +43,11 @@
     }
 
     .red {
-        color: red;
+        color: #E20505;
     }
 
     .progress .red {
-        background-color: red;
+        background-color: #E20505;
     }
 
     .blue {
@@ -78,6 +82,35 @@
     .progress-td {
         width: 85%;
     }
+
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+        width: 100%;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+        margin: 0px 5px;
+    }
+
+    .btn-100 {
+        width: 100%;
+    }
+
+    .tooltip {
+        font-size: 16px;
+    }
+
+    .link-nostyle, .link-nostyle:link, .link-nostyle:visited, .link-nostyle:hover, .link-nostyle:active {
+        color: black;
+        text-decoration: inherit;
+    }
 </style>
 
 <div class="main-content-inner">
@@ -85,7 +118,22 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h1>Backlog</h1>
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"].ToString()
+                        </div>
+                    }
+
+                    <h1 class="float-left">Backlog</h1>
+                    <button type="button" class="btn btn-primary padding-btn" data-toggle="modal" data-target="#newModal">New</button>
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {
@@ -113,7 +161,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            <i class="ti-marker-alt"></i>
+                                            <a class="link-nostyle" href="/Backlog/Edit/@nowplaying.ElementAt(i).Id"><i class="ti-marker-alt"></i></a>
                                         </td>
                                         <td>
                                             @nowplaying.ElementAt(i).Name
@@ -129,42 +177,45 @@
                         <table class="playStatus">
                             <tr>
                                 <td>
-                                    0 <i class="ti-medall-alt red"></i>
+                                    @(Dashboard.Helpers.Backlog.GetFromStatus(0) + Dashboard.Helpers.Backlog.GetFromStatus(1))
+                                    <i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar silver" role="progressbar" style="width: 17%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar red" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar silver" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage(0)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar red" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage(1)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    0%
+                                    @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage(0) + Dashboard.Helpers.Backlog.GetFromStatusPercentage(1)))%
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    0 <i class="ti-medall-alt green"></i>
+                                    @Dashboard.Helpers.Backlog.GetFromStatus(2)
+                                    <i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar green" role="progressbar" style="width: 23%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar green" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage(2)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    0%
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage(2))%
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    0 <i class="ti-medall-alt gold"></i>
+                                    @Dashboard.Helpers.Backlog.GetFromStatus(3)
+                                    <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar gold" role="progressbar" style="width: 8%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar gold" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage(3)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    0%
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage(3))%
                                 </td>
                             </tr>
                         </table>
@@ -172,9 +223,9 @@
                             <thead>
                                 <tr>
                                     <th>System</th>
-                                    <th>U</th>
-                                    <th>B</th>
-                                    <th>C</th>
+                                    <th><i class="ti-medall-alt red" data-toggle="tooltip" data-placement="top" title="Unfinished"></i></th>
+                                    <th><i class="ti-medall-alt green" data-toggle="tooltip" data-placement="top" title="Beat"></i></th>
+                                    <th><i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="top" title="Completed"></i></th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -183,10 +234,10 @@
                                 {
                                     <tr>
                                         <td>@systems.ElementAt(i)</td>
-                                        <th>0</th>
-                                        <th>0</th>
-                                        <th>0</th>
-                                        <th>0</th>
+                                        <td>@(Dashboard.Helpers.Backlog.GetFromStatus(0, systems.ElementAt(i)) + Dashboard.Helpers.Backlog.GetFromStatus(1, systems.ElementAt(i)))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus(2, systems.ElementAt(i))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus(3, systems.ElementAt(i))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i))</td>
                                     </tr>
                                 }
                             </tbody>
@@ -196,7 +247,7 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th>0</th>
+                                    <th>@Dashboard.Helpers.Backlog.GetTotal()</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -206,3 +257,40 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newModalLabel">New</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Backlog/New" method="post">
+                    <input type="text" class="textbox" name="Name" placeholder="Name*" />
+                    <input type="text" class="textbox" name="Compilation" placeholder="Compilation" />
+                    <input type="text" class="textbox" name="System" placeholder="System*" />
+                    <select class="textbox" name="Status">
+                        <option value="0">Unplayed</option>
+                        <option value="1" selected>Unfinished</option>
+                        <option value="2">Beat</option>
+                        <option value="3">Completed</option>
+                    </select>
+                    <input type="text" class="textbox" name="Progress" placeholder="Progress Note" />
+                    <label><input type="checkbox" name="NowPlaying" value="true" />Now Playing</label>
+                    <input type="submit" class="btn btn-primary padding-btn btn-100" value="New" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
