@@ -151,7 +151,6 @@ namespace Dashboard.Helpers
                 var single = new BacklogModel
                 {
                     Name = Name,
-                    Compilation = Compilation,
                     System = System,
                     Status = Status,
                     Progress = Progress,
@@ -230,7 +229,6 @@ namespace Dashboard.Helpers
                 }
 
                 records.ElementAt(0).Name = Name;
-                records.ElementAt(0).Compilation = Compilation;
                 records.ElementAt(0).System = System;
                 records.ElementAt(0).Status = Status;
                 records.ElementAt(0).Progress = Progress;

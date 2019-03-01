@@ -24,16 +24,6 @@ namespace Dashboard.Controllers
             return View();
         }
 
-        public IActionResult Leaderboard()
-        {
-            return View();
-        }
-
-        public IActionResult Outlook()
-        {
-            return View();
-        }
-
         [HttpPost]
         public string SetBudgetAmount(int monthHours, int monthMinutes, int dayHours, int dayMinutes)
         {

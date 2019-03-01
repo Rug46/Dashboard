@@ -52,31 +52,5 @@ namespace Dashboard.Controllers
             Games.RemoveGame(id);
             return RedirectToAction("Index");
         }
-
-        public IActionResult AddFavourite(int id)
-        {
-            Games.AddFavourite(id);
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult RemoveFavourite(int id)
-        {
-            Games.RemoveFavourite(id);
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult NewConsole(string ConsoleName)
-        {
-            var ConsoleNameTrim = ConsoleName.Trim();
-            Consoles.NewConsole(ConsoleNameTrim);
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult RemoveConsole(int id)
-        {
-            Consoles.RemoveConsole(id);
-            return RedirectToAction("Index");
-        }
     }
 }
