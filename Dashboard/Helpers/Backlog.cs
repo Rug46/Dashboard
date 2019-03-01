@@ -254,5 +254,23 @@ namespace Dashboard.Helpers
                 db.SaveChanges();
             }
         }
+
+        public static List<BacklogModel> GetBacklogModelsFromSystem(string System)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Backlog
+                    .Where(bm => bm.System == System)
+                    .OrderBy(bm => bm.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return null;
+                }
+
+                return records;
+            }
+        }
     }
 }

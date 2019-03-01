@@ -1,0 +1,214 @@
+﻿@model IEnumerable<Dashboard.Models.BacklogModel>
+
+@{
+    ViewData["Title"] = TempData["Status"].ToString();
+}
+
+<style>
+    th {
+        background-color: gray;
+        color: white;
+        padding: 0px 10px;
+        font-size: 18px;
+    }
+
+    tfoot th {
+        background-color: #969696;
+        color: white;
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    td {
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .playStatus {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .progress .green {
+        background-color: green;
+    }
+
+    .red {
+        color: #E20505;
+    }
+
+    .progress .red {
+        background-color: #E20505;
+    }
+
+    .blue {
+        color: cadetblue;
+    }
+
+    .progress .blue {
+        background-color: cadetblue;
+    }
+
+    .gold {
+        color: gold;
+    }
+
+    .progress .gold {
+        background-color: gold;
+    }
+
+    .silver {
+        color: silver;
+    }
+
+    .progress .silver {
+        background-color: silver;
+    }
+
+    .progress {
+        height: 20px;
+        margin: 0px 10px;
+    }
+
+    .progress-td {
+        width: 85%;
+    }
+
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+        width: 100%;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+        margin: 0px 5px;
+    }
+
+    .btn-100 {
+        width: 100%;
+    }
+
+    .tooltip {
+        font-size: 16px;
+    }
+
+    .link-nostyle, .link-nostyle:link, .link-nostyle:visited, .link-nostyle:hover, .link-nostyle:active {
+        color: black;
+        text-decoration: inherit;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <br />
+                        <a class="btn btn-primary" href="/Backlog/Index">Back</a>
+                    </div>
+                    <hr />
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+                    <h1 class="float-left">@TempData["Status"].ToString()</h1>
+                    <br />
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        int StatusInt = 0;
+                        if (TempData["Status"].ToString() == "Unplayed") { StatusInt = 0; }
+                        if (TempData["Status"].ToString() == "Unfinished") { StatusInt = 1; }
+                        if (TempData["Status"].ToString() == "Beat") { StatusInt = 2; }
+                        if (TempData["Status"].ToString() == "Completed") { StatusInt = 3; }
+
+                        var Records = new List<BacklogModel>();
+
+                        if (StatusInt == 1)
+                        {
+                            Records = db.Backlog
+                            .Where(bm => bm.Status == 0 || bm.Status == 1)
+                            .OrderBy(bm => bm.Id)
+                            .ToList();
+                        }
+                        else
+                        {
+                            Records = db.Backlog
+                            .Where(bm => bm.Status == StatusInt)
+                            .OrderBy(bm => bm.Id)
+                            .ToList();
+                        }
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Game</th>
+                                    <th>System</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Records.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="link-nostyle" href="/Backlog/Edit/@Records.ElementAt(i).Id"><i class="ti-marker-alt"></i></a>
+
+                                            @if (Records.ElementAt(i).Status == 0)
+                                            {
+                                                <i class="ti-medall-alt silver" data-toggle="tooltip" data-placement="right" title="Unplayed"></i>
+                                            }
+                                            else if (Records.ElementAt(i).Status == 1)
+                                            {
+                                                <i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i>
+                                            }
+                                            else if (Records.ElementAt(i).Status == 2)
+                                            {
+                                                <i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i>
+                                            }
+                                            else if (Records.ElementAt(i).Status == 3)
+                                            {
+                                                <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Records.ElementAt(i).Name
+                                        </td>
+                                        <td>
+                                            @Records.ElementAt(i).System
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

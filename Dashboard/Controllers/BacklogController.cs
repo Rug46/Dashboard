@@ -67,5 +67,28 @@ namespace Dashboard.Controllers
             Backlog.Delete(Id);
             return RedirectToAction("Index");
         }
+
+        public IActionResult All()
+        {
+            return View();
+        }
+
+        public IActionResult System(string Id)
+        {
+            TempData["System"] = Id;
+
+            return View();
+        }
+
+        public IActionResult Status(int id)
+        {
+            if (id == 0) { TempData["Status"] = "Unplayed"; }
+            if (id == 1) { TempData["Status"] = "Unfinished"; }
+            if (id == 2) { TempData["Status"] = "Beat"; }
+            if (id == 3) { TempData["Status"] = "Completed"; }
+            if (id > 3) { return RedirectToAction("Index"); }
+
+            return View();
+        }
     }
 }

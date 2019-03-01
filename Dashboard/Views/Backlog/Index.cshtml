@@ -134,6 +134,7 @@
 
                     <h1 class="float-left">Backlog</h1>
                     <button type="button" class="btn btn-primary padding-btn" data-toggle="modal" data-target="#newModal">New</button>
+                    <a type="button" class="btn btn-secondary padding-btn" href="/Backlog/All">All Games</a>
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {
@@ -178,7 +179,7 @@
                             <tr>
                                 <td>
                                     @(Dashboard.Helpers.Backlog.GetFromStatus(0) + Dashboard.Helpers.Backlog.GetFromStatus(1))
-                                    <i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i>
+                                    <a class="link-nostyle" href="/Backlog/Status/1"><i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
@@ -193,7 +194,7 @@
                             <tr>
                                 <td>
                                     @Dashboard.Helpers.Backlog.GetFromStatus(2)
-                                    <i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i>
+                                    <a class="link-nostyle" href="/Backlog/Status/2"><i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
@@ -207,7 +208,7 @@
                             <tr>
                                 <td>
                                     @Dashboard.Helpers.Backlog.GetFromStatus(3)
-                                    <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
+                                    <a class="link-nostyle" href="/Backlog/Status/3"><i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
@@ -233,7 +234,7 @@
                                 @for (int i = 0; i < systems.Count; i++)
                                 {
                                     <tr>
-                                        <td>@systems.ElementAt(i)</td>
+                                        <td><a class="link-nostyle" href="/Backlog/System/@systems.ElementAt(i)">@systems.ElementAt(i)</a></td>
                                         <td>@(Dashboard.Helpers.Backlog.GetFromStatus(0, systems.ElementAt(i)) + Dashboard.Helpers.Backlog.GetFromStatus(1, systems.ElementAt(i)))</td>
                                         <td>@Dashboard.Helpers.Backlog.GetFromStatus(2, systems.ElementAt(i))</td>
                                         <td>@Dashboard.Helpers.Backlog.GetFromStatus(3, systems.ElementAt(i))</td>
