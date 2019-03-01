@@ -59,7 +59,7 @@ namespace Dashboard.Helpers
                 return GetUsedAmount() + " minutes";
             } else
             {
-                return Math.Floor(GetUsedAmount() / 60) + " hours";
+                return Math.Round(GetUsedAmount() / 60, 1) + " hours";
             }
         }
 
@@ -75,7 +75,7 @@ namespace Dashboard.Helpers
                 return GetLeftAmount() + " minutes";
             } else
             {
-                return Math.Floor(GetLeftAmount() / 60) + " hours";
+                return Math.Round(GetLeftAmount() / 60, 1) + " hours";
             }
         }
 

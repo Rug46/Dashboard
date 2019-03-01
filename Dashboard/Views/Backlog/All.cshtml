@@ -127,9 +127,7 @@
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {
-                        var records = db.Backlog
-                            .OrderBy(bm => bm.Id)
-                            .ToList();
+                        var records = Dashboard.Helpers.Backlog.GetAllGamesBySystem();
 
                         <table>
                             <thead>

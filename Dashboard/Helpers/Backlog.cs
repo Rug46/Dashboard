@@ -29,6 +29,8 @@ namespace Dashboard.Helpers
                     }
                 }
 
+                list.Sort();
+
                 return list;
             }
         }
@@ -268,6 +270,45 @@ namespace Dashboard.Helpers
                 }
 
                 return records;
+            }
+        }
+
+        public static List<BacklogModel> GetAllGamesBySystem()
+        {
+            using (var db = new Database())
+            {
+                var records = db.Backlog
+                    .OrderBy(bm => bm.System)
+                    .ToList();
+
+                var list = new List<List<BacklogModel>>();
+                var result = new List<BacklogModel>();
+                var systems = new List<string>();
+
+                for (int i = 0; i < records.Count; i++)
+                {
+                    if (!systems.Contains(records.ElementAt(i).System))
+                    {
+                        systems.Add(records.ElementAt(i).System);
+
+                        var systemList = records
+                            .Where(bm => bm.System == records.ElementAt(i).System)
+                            .OrderBy(bm => bm.Name)
+                            .ToList();
+
+                        list.Add(systemList);
+                    }
+                }
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    for (int j = 0; j < list.ElementAt(i).Count; j++)
+                    {
+                        result.Add(list.ElementAt(i).ElementAt(j));
+                    }
+                }
+
+                return result;
             }
         }
     }

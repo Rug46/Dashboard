@@ -17,7 +17,29 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game" class="control-label"></label>
-                    <input asp-for="Game" class="form-control" />
+                    @*<input asp-for="Game" class="form-control" />*@
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        var records = db.Games
+                            .OrderBy(gm => gm.Id)
+                            .ToList();
+
+                        var selected = Model.Game;
+
+                    <select name="GameName" class="form-control" style="height: 40px;">
+                        @for (int i = 0; i < records.Count; i++)
+                        {
+                            if (records.ElementAt(i).Name == selected)
+                            {
+                                <option value="@records.ElementAt(i).Name" selected>@records.ElementAt(i).Name</option>
+                            }
+                            else
+                            {
+                                <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                            }
+                        }
+                    </select>
+                    }
                     <span asp-validation-for="Game" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -27,7 +49,30 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Mode" class="control-label"></label>
-                    <input asp-for="Mode" class="form-control" />
+                    @*<input asp-for="Mode" class="form-control" />*@
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        var records = db.Modes
+                            .OrderBy(mm => mm.Id)
+                            .ToList();
+
+                        var selected = Model.Mode;
+
+                    <select name="ModeName" class="form-control" style="height: 40px;">
+                        <option value="0" selected disabled>Select Mode...</option>
+                        @for (int i = 0; i < records.Count; i++)
+                        {
+                            if (records.ElementAt(i).Name == selected)
+                            {
+                                <option value="@records.ElementAt(i).Name" selected>@records.ElementAt(i).Name</option>
+                            }
+                            else
+                            {
+                                <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                            }
+                        }
+                    </select>
+                    }
                     <span asp-validation-for="Mode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
