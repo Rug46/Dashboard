@@ -263,6 +263,10 @@ namespace Dashboard.Controllers
             {
                 return NotFound();
             }
+
+            activityModel.Game = activityModel.Game.Trim();
+            activityModel.Mode = activityModel.Mode.Trim();
+
             return View(activityModel);
         }
 
