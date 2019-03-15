@@ -82,10 +82,10 @@ namespace Dashboard.Controllers
 
         public IActionResult Status(int id)
         {
-            if (id == 0) { TempData["Status"] = "Unplayed"; }
-            if (id == 1) { TempData["Status"] = "Unfinished"; }
-            if (id == 2) { TempData["Status"] = "Beat"; }
-            if (id == 3) { TempData["Status"] = "Completed"; }
+            if (id == (int)BacklogModel.STATUS.UNPLAYED) { TempData["Status"] = "Unplayed"; }
+            if (id == (int)BacklogModel.STATUS.UNFINISHED) { TempData["Status"] = "Unfinished"; }
+            if (id == (int)BacklogModel.STATUS.BEAT) { TempData["Status"] = "Beat"; }
+            if (id == (int)BacklogModel.STATUS.COMPLETED) { TempData["Status"] = "Completed"; }
             if (id > 3) { return RedirectToAction("Index"); }
 
             return View();
