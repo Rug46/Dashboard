@@ -101,6 +101,7 @@
                                     <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
                                 }
                                 <a href="@Url.Action("Index", "Settings")"><li title="Settings"><i class="ti-settings"></i></li></a>
+                                <a data-toggle="modal" data-target="#modalTimer"><li title="Stopwatch"><i class="ti-timer"></i></li></a>
                                 <a data-toggle="modal" data-target="#modalNew"><li title="Add New Record"><i class="ti-plus"></i></li></a>
                             </ul>
                         </div>
@@ -182,7 +183,80 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTimer">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Activity/CreateByTimer" method="post" onsubmit="document.getElementById('stopwatchinput').value = document.getElementById('stopwatch').textContent;">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="datetime-local" class="form-control" id="DateDateT" name="DateStart" style="display:none;" />
+                        <input type="datetime-local" class="form-control" id="FinishDateT" name="DateFinish" style="display:none;" />
+
+                        <div class="form-group">
+                            <div style="font-size:50px; text-align:center; width:100%;" class="stopwatch" id="stopwatch"></div>
+                        </div>
+
+                        <input type="hidden" name="TimerValue" id="stopwatchinput" value="" />
+
+                        <div class="form-group">
+                            <label>Controls</label>
+                            <input type="button" value="Start" class="btn btn-default" style="float:right;" onclick="startTimer();" />
+                            <input type="button" value="Stop" class="btn btn-default" style="float:right;" onclick="stopTimer();" />
+                            <input type="button" value="Restart" class="btn btn-default" style="float:right;" onclick="restartTimer();" />
+                        </div>
+                        <div class="form-group">
+                            <label>Game</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Games
+                                    .OrderBy(gm => gm.Id)
+                                    .ToList();
+
+                                <select name="GameName" id="GameNameT" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Game...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label>Mode</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Modes
+                                    .OrderBy(mm => mm.Id)
+                                    .ToList();
+
+                                <select name="ModeName" id="ModeNameT" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Mode...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            @*<input type="button" value="Create" class="btn btn-primary" onclick="submitButton()" />*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+
         function getDate() {
             var today = new Date();
             var date = today.getDate();
@@ -204,7 +278,33 @@
             }
             return year + "-" + month + "-" + date + "T" + hour + ":" + minute;
         }
+
+        function startTimer() {
+            stopwatch.start();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function stopTimer() {
+            stopwatch.stop();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function restartTimer() {
+            stopwatch.restart();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function submitButton() {
+            var stopwatchValue = document.getElementById("stopwatch").textContent;
+            var gameName = document.getElementById("GameNameT").value.trim();
+            var modeName = document.getElementById("ModeNameT").value.trim();
+
+            window.location.href = "/Activity/CreateByTimer?TimerVal=" + stopwatchValue +
+                "&GameName=" + gameName +
+                "&ModeName=" + modeName;
+        }
     </script>
+    <script src="~/js/Stopwatch.js"></script>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

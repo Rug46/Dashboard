@@ -250,6 +250,35 @@ namespace Dashboard.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult CreateByTimer(string TimerValue, string GameName, string ModeName)
+        {
+            if (TimerValue == null || GameName == null || ModeName == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var minutes = int.Parse(TimerValue.Substring(0, 2));
+            var seconds = int.Parse(TimerValue.Substring(3, 2));
+
+            var now = DateTime.Now;
+            var start = now.AddMinutes(-minutes).AddSeconds(-seconds);
+
+            now = now.AddSeconds(-now.Second);
+            start = start.AddSeconds(-start.Second);
+
+            ActivityModel single = new ActivityModel
+            {
+                Date = start,
+                Game = GameName,
+                Finish = now,
+                Mode = ModeName
+            };
+
+            Activity.AddNew(single);
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Activity/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
