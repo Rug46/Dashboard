@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Dashboard.Models;
 using Dashboard.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class BacklogController : Controller
     {
         public IActionResult Index()

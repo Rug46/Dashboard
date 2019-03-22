@@ -53,29 +53,10 @@
                         <nav>
                             <ul class="metismenu" id="menu">
                                 <li>
-                                    <a asp-controller="Home" asp-action="Index" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
+                                    <a href="/Account/Login" aria-expanded="true"><i class="ti-user"></i><span>Login</span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" aria-expanded="true">
-                                        <i class="ti-list"></i><span>Activity</span>
-                                    </a>
-                                    <ul class="collapse">
-                                        <li><a href="/Activity/Index/0">All Activity</a></li>
-                                        <li><a href="/Activity/Game">Game Activity</a></li>
-                                        <li><a href="@Url.Action("Search", "Activity")">Search</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="/Insight/Budget" aria-expanded="true"><i class="ti-eye"></i><span>Time Budget</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Chart/Year" aria-expanded="true"><i class="ti-pie-chart"></i><span>Past Year</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Backlog/Index" aria-expanded="true"><i class="ti-menu-alt"></i><span>Backlog</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Home/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
+                                    <a href="/Account/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
                                 </li>
                             </ul>
                         </nav>
@@ -96,19 +77,6 @@
                         <!-- profile info & task notification -->
                         <div class="col-md-6 col-sm-4 clearfix">
                             <ul class="notification-area pull-right">
-                                @if (Dashboard.Helpers.Budget.IsOverBudgetAny())
-                                {
-                                    <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
-                                }
-                                <a href="@Url.Action("Index", "Settings")"><li title="Settings"><i class="ti-settings"></i></li></a>
-                                <a data-toggle="modal" data-target="#modalTimer"><li title="Stopwatch"><i class="ti-timer"></i></li></a>
-                                <a data-toggle="modal" data-target="#modalNew"><li title="Add New Record"><i class="ti-plus"></i></li></a>
-                                <li title="@User.Identity.Name" id="dropdownMenuLink" data-toggle="dropdown"><i class="ti-user"></i></li>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">@User.Identity.Name</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Account/Logout">Logout</a>
-                                </div>
                             </ul>
                         </div>
                     </div>

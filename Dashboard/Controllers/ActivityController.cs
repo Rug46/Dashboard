@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Dashboard.Data;
 using Dashboard.Models;
 using Dashboard.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class ActivityController : Controller
     {
         private readonly Database _context;
