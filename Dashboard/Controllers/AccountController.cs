@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Dashboard.Helpers;
 
 namespace Dashboard.Controllers
 {
     public class AccountController : Controller
     {
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -24,7 +26,7 @@ namespace Dashboard.Controllers
                 return RedirectToAction("Login");
             }
 
-            if (username == "testuser" && password == "Password")
+            if (Passwords.PasswordCorrect(username, password))
             {
                 var identity = new ClaimsIdentity(new[]
                 {
@@ -38,6 +40,23 @@ namespace Dashboard.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(string username, string password, string email)
+        {
+            if(!Account.RegisterParent(username, password, email))
+            {
+                return RedirectToAction("Register");
+            }
+
+            return RedirectToAction("Login");
         }
 
         public IActionResult Logout()
