@@ -23,11 +23,11 @@
 
 @for (int i = 0; i < 365; i++)
 {
-    <input type="hidden" value="@Dashboard.Helpers.DataYears.GetGameTime(DateTime.Now.AddDays(-@i))" id="activity_year_@(i + 1)" />
+    <input type="hidden" value="@Dashboard.Helpers.DataYears.GetGameTime(DateTime.Now.AddDays(-@i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" id="activity_year_@(i + 1)" />
     <input type="hidden" value="@DateTime.Now.AddDays(-@i).ToString("dd/MM/yyyy")" id="activity_year_@(i + 1)_l" />
 }
 
-<input type="hidden" value="@Dashboard.Helpers.DataYears.GetFirstRecordDate()" id="firstRecordDate" />
+<input type="hidden" value="@Dashboard.Helpers.DataYears.GetFirstRecordDate(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" id="firstRecordDate" />
 
 <div class="main-content-inner">
     <div class="row">
@@ -49,7 +49,7 @@
                             <option></option>
 
                             @{ 
-                                var firstRecordDate = Dashboard.Helpers.DataYears.GetFirstRecordDate();
+                                var firstRecordDate = Dashboard.Helpers.DataYears.GetFirstRecordDate(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
                                 var thisMonth = DateTime.Now;
                                 var months = Dashboard.Helpers.DataYears.GetMonths(thisMonth, firstRecordDate);
                             }

@@ -10,11 +10,12 @@ namespace Dashboard.Helpers
 {
     public class GameMode
     {
-        public static bool NewGameMode(string name)
+        public static bool NewGameMode(string name, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Modes
+                    .Where(mm => mm.UserId == user)
                     .OrderBy(mm => mm.Id)
                     .ToList();
 
@@ -63,30 +64,36 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetID(string name)
+        public static int GetID(string name, int user)
         {
             using (var db = new Database())
             {
                 return db.Modes
+                    .Where(mm => mm.UserId == user)
                     .Where(mm => mm.Name == name)
                     .ToList()
                     .ElementAt(0).Id;
             }
         }
 
-        public static List<ModeModel> GetList()
+        public static List<ModeModel> GetList(int user)
         {
             using (var db = new Database())
             {
-                return db.Modes.ToList();
+                return db.Modes
+                    .Where(mm => mm.UserId == user)
+                    .ToList();
             }
         }
 
-        public static int GetCount()
+        public static int GetCount(int user)
         {
             using (var db = new Database())
             {
-                return db.Modes.ToList().Count();
+                return db.Modes
+                    .Where(mm => mm.UserId == user)
+                    .ToList()
+                    .Count();
             }
         }
 

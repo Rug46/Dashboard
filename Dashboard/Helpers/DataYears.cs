@@ -9,11 +9,12 @@ namespace Dashboard.Helpers
 {
     public class DataYears
     {
-        public static int GetGameTime(DateTime day)
+        public static int GetGameTime(DateTime day, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date == day.Date)
                     .Where(ptm => ptm.Date.Day == day.Day)
                     .OrderBy(ptm => ptm.Date)
@@ -31,11 +32,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static DateTime GetFirstRecordDate()
+        public static DateTime GetFirstRecordDate(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 

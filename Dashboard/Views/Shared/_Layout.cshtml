@@ -143,6 +143,10 @@
                         </div>
                         <div class="form-group">
                             <label>Game</label>
+                            <input type="text" class="form-control" name="NewGame" />
+                        </div>
+                        @*<div class="form-group">
+                            <label>Game</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
                                 var records = db.Games
@@ -157,13 +161,17 @@
                                     }
                                 </select>
                             }
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label>Finish</label>
                             <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('FinishDate').value = getDate();" />
                             <input type="datetime-local" class="form-control" id="FinishDate" name="DateFinish" />
                         </div>
                         <div class="form-group">
+                            <label>Mode</label>
+                            <input type="text" class="form-control" name="NewMode" />
+                        </div>
+                        @*<div class="form-group">
                             <label>Mode</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
@@ -179,7 +187,7 @@
                                     }
                                 </select>
                             }
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
@@ -218,6 +226,14 @@
                         </div>
                         <div class="form-group">
                             <label>Game</label>
+                            <input type="text" class="form-control" name="TimerGame" />
+                        </div>
+                        <div class="form-group">
+                            <label>Mode</label>
+                            <input type="text" class="form-control" name="TimerMode" />
+                        </div>
+                        @*<div class="form-group">
+                            <label>Game</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
                                 var records = db.Games
@@ -249,7 +265,7 @@
                                     }
                                 </select>
                             }
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                             @*<input type="button" value="Create" class="btn btn-primary" onclick="submitButton()" />*@

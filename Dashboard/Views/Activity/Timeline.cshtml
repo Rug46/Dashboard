@@ -34,6 +34,7 @@
                     @using (var db = new Dashboard.Data.Database())
                     {
                         var records = db.Activity
+                            .Where(ptm => ptm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                                 .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
                                 .OrderByDescending(ptm => ptm.Date)
                                 .ToList();

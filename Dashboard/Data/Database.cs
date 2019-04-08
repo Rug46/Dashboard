@@ -30,6 +30,7 @@ namespace Dashboard.Data
         public DbSet<GameModel> Games { get; set; }
         public DbSet<ModeModel> Modes { get; set; }
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserBudgetModel> UserBudgets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,7 @@ namespace Dashboard.Data
             modelBuilder.Entity<GameModel>().ToTable("Game");
             modelBuilder.Entity<ModeModel>().ToTable("Mode");
             modelBuilder.Entity<UserModel>().ToTable("User");
+            modelBuilder.Entity<UserBudgetModel>().ToTable("UserBudget");
         }
     }
 }

@@ -46,5 +46,22 @@ namespace Dashboard.Helpers
                 return true;
             }
         }
+
+        public static int GetUserId(string username)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Users
+                    .Where(um => um.Username == username)
+                    .ToList();
+
+                if (records.Count != 1)
+                {
+                    return -1;
+                }
+
+                return records.ElementAt(0).Id;
+            }
+        }
     }
 }

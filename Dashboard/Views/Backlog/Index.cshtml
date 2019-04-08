@@ -139,6 +139,7 @@
                     @using (var db = new Dashboard.Data.Database())
                     {
                         var records = db.Backlog
+                            .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                             .OrderBy(bm => bm.Id)
                             .ToList();
 
@@ -147,7 +148,7 @@
                             .OrderBy(bm => bm.Id)
                             .ToList();
 
-                        var systems = Dashboard.Helpers.Backlog.GetSystems();
+                        var systems = Dashboard.Helpers.Backlog.GetSystems(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
 
                         <table>
                             <thead>
@@ -178,45 +179,45 @@
                         <table class="playStatus">
                             <tr>
                                 <td>
-                                    @(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED))
+                                    @(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))
                                     <a class="link-nostyle" href="/Backlog/Status/1"><i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar silver" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar red" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar silver" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar red" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED) + Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED)))%
+                                    @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)) + Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))))%
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT)
+                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                                     <a class="link-nostyle" href="/Backlog/Status/2"><i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar green" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar green" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT))%
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))%
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED)
+                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                                     <a class="link-nostyle" href="/Backlog/Status/3"><i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i></a>
                                 </td>
                                 <td class="progress-td">
                                     <div class="progress">
-                                        <div class="progress-bar gold" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED)%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar gold" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED))%
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))%
                                 </td>
                             </tr>
                         </table>
@@ -235,10 +236,10 @@
                                 {
                                     <tr>
                                         <td><a class="link-nostyle" href="/Backlog/System/@systems.ElementAt(i)">@systems.ElementAt(i)</a></td>
-                                        <td>@(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, systems.ElementAt(i)) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, systems.ElementAt(i)))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, systems.ElementAt(i))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, systems.ElementAt(i))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i))</td>
+                                        <td>@(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                        <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
                                     </tr>
                                 }
                             </tbody>
@@ -248,7 +249,7 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th>@Dashboard.Helpers.Backlog.GetTotal()</th>
+                                    <th>@Dashboard.Helpers.Backlog.GetTotal(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</th>
                                 </tr>
                             </tfoot>
                         </table>

@@ -66,6 +66,7 @@
                             @using (var db = new Dashboard.Data.Database())
                             {
                                 var records = db.Modes
+                                    .Where(mm => mm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                                     .OrderBy(mm => mm.Id)
                                     .ToList();
 
@@ -95,8 +96,9 @@
                             @using (var db = new Dashboard.Data.Database())
                             {
                                 var records = db.Games
-                                                .OrderBy(gm => gm.Id)
-                                                .ToList();
+                                    .Where(gm => gm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                                    .OrderBy(gm => gm.Id)
+                                    .ToList();
 
                                 for (int i = 1; i < records.Count; i++)
                                 {

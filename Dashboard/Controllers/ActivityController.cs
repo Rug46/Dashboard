@@ -52,7 +52,10 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.Activity.ToList();
+                var model = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                    .ToList();
+
                 model.Reverse();
 
                 var records = new List<ActivityModel>();
@@ -237,14 +240,15 @@ namespace Dashboard.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
-        public async Task<IActionResult> Create(int id, DateTime DateStart, string GameName, DateTime DateFinish, string ModeName)
+        public async Task<IActionResult> Create(int id, DateTime DateStart, string NewGame, DateTime DateFinish, string NewMode)
         {
             ActivityModel activityModel = new ActivityModel
             {
                 Date = DateStart,
-                Game = GameName,
+                Game = NewGame,
                 Finish = DateFinish,
-                Mode = ModeName
+                Mode = NewMode,
+                UserId = Account.GetUserId(User.Identity.Name)
             };
 
             Activity.AddNew(activityModel);
@@ -252,9 +256,9 @@ namespace Dashboard.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult CreateByTimer(string TimerValue, string GameName, string ModeName)
+        public IActionResult CreateByTimer(string TimerValue, string TimerGame, string TimerMode)
         {
-            if (TimerValue == null || GameName == null || ModeName == null)
+            if (TimerValue == null || TimerGame == null || TimerMode == null)
             {
                 return RedirectToAction("Index");
             }
@@ -271,9 +275,10 @@ namespace Dashboard.Controllers
             ActivityModel single = new ActivityModel
             {
                 Date = start,
-                Game = GameName,
+                Game = TimerGame,
                 Finish = now,
-                Mode = ModeName
+                Mode = TimerMode,
+                UserId = Account.GetUserId(User.Identity.Name)
             };
 
             Activity.AddNew(single);

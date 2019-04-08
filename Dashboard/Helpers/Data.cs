@@ -28,11 +28,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetGameTimeHour(DateTime hour)
+        public static int GetGameTimeHour(DateTime hour, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date == hour.Date)
                     .Where(ptm => ptm.Date.Hour == hour.Hour)
                     .OrderBy(ptm => ptm.Date)
@@ -50,11 +51,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetGameTimeDay(DateTime day)
+        public static int GetGameTimeDay(DateTime day, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date == day.Date)
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -71,11 +73,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetGameTimeGame(DateTime day, int GameID)
+        public static int GetGameTimeGame(DateTime day, int GameID, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date == day.Date)
                     .Where(ptm => ptm.Game == Games.GetGame(GameID))
                     .OrderBy(ptm => ptm.Id)
@@ -93,11 +96,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetPlayTimeLast24H()
+        public static string GetPlayTimeLast24H(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -120,11 +124,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetPlayTimeLast7D()
+        public static string GetPlayTimeLast7D(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -147,11 +152,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetPlayTimeLast28D()
+        public static string GetPlayTimeLast28D(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
@@ -174,16 +180,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetMostPlayedTime(int place)
+        public static int GetMostPlayedTime(int place, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var gameNames = new List<String>();
+                var gameNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -220,17 +227,18 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetMostPlayedName(int place)
+        public static string GetMostPlayedName(int place, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var gameNames = new List<String>();
-                var gameNamesOrdered = new List<String>();
+                var gameNames = new List<string>();
+                var gameNamesOrdered = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -269,16 +277,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetMostPlayedTimeToday(int place)
+        public static int GetMostPlayedTimeToday(int place, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var gameNames = new List<String>();
+                var gameNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -314,16 +323,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetMostPlayedTimeFormatted(int place)
+        public static string GetMostPlayedTimeFormatted(int place, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var gameNames = new List<String>();
+                var gameNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -368,21 +378,23 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetMostPlayedTimeTodayFormatted(int place)
+        public static string GetMostPlayedTimeTodayFormatted(int place, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
                 var recordsToday = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
-                var gameNames = new List<String>();
+                var gameNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -438,16 +450,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static List<String> GetGames()
+        public static List<string> GetGames(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Game)
                     .ToList();
 
-                var gameNames = new List<String>();
+                var gameNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -461,16 +474,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static List<String> GetModes()
+        public static List<string> GetModes(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Mode)
                     .ToList();
 
-                var modeNames = new List<String>();
+                var modeNames = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -484,16 +498,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetGameLast(int item)
+        public static string GetGameLast(int item, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderByDescending(ptm => ptm.Id)
                     .ToList();
 
-                var recordsSorted = new List<String>();
+                var recordsSorted = new List<string>();
 
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -513,16 +528,17 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static String GetModeLast(int item)
+        public static string GetModeLast(int item, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderByDescending(ptm => ptm.Id)
                     .ToList();
 
-                var recordsSorted = new List<String>();
+                var recordsSorted = new List<string>();
 
                 for(int i = 0; i < records.Count; i++)
                 {
@@ -543,11 +559,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool Any24H()
+        public static bool Any24H(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -563,11 +580,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool Any7D()
+        public static bool Any7D(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-7))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -583,11 +601,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool Any28D()
+        public static bool Any28D(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddDays(-28))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();

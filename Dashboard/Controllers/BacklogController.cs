@@ -26,7 +26,7 @@ namespace Dashboard.Controllers
         [HttpPost]
         public IActionResult New(string Name, string Compilation, string System, int Status, string Progress, bool NowPlaying)
         {
-            if (!Backlog.New(Name, Compilation, System, Status, Progress, NowPlaying))
+            if (!Backlog.New(Name, Compilation, System, Status, Progress, NowPlaying, Account.GetUserId(User.Identity.Name)))
             {
                 TempData["Error"] = "Please fill in the required fields (marked with a *)";
                 return RedirectToAction("Index");
