@@ -103,6 +103,18 @@ namespace Dashboard.Helpers
             }
         }
 
+        public static string GetUsername(int userId)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Users
+                    .Where(um => um.Id == userId)
+                    .ToList();
+
+                return records.ElementAt(0).Username;
+            }
+        }
+
         public static bool IsParent(int UserId)
         {
             using (var db = new Database())
@@ -133,6 +145,34 @@ namespace Dashboard.Helpers
                     .ToList();
 
                 return records.ElementAt(0).Email;
+            }
+        }
+
+        public static bool IsChildOf(int ParentId, int ChildId)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Users
+                    .Where(um => um.Id == ChildId)
+                    .OrderBy(um => um.Id)
+                    .ToList();
+
+                if (records.Count == 0)
+                {
+                    return false;
+                }
+
+                if (records.ElementAt(0).Admin != 0)
+                {
+                    return false;
+                }
+
+                if (records.ElementAt(0).ParentAccountId != ParentId)
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
     }

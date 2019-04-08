@@ -43,5 +43,18 @@ namespace Dashboard.Controllers
 
             return RedirectToAction("ChildAccounts");
         }
+
+        public IActionResult View(int id)
+        {
+            if(!Helpers.Account.IsChildOf(Helpers.Account.GetUserId(User.Identity.Name), id))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Username"] = Helpers.Account.GetUsername(id);
+            TempData["Activity"] = Helpers.Activity.GetByUser(id);
+
+            return View();
+        }
     }
 }
