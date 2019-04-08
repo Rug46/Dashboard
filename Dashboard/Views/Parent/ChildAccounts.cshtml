@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Child Accounts";
+}
+
+<style>
+    .btn-custom, .btn-custom:link, .btn-custom:visited, .btn-custom:hover, .btn-custom:active {
+        padding: 0;
+        color: black;
+        font-style: normal;
+        text-decoration: none;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Child Accounts</h1>
+                    <a class="btn btn-primary" href="/Parent/NewChild">New</a>
+                    <br />
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        var records = db.Users
+                            .Where(um => um.ParentAccountId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                            .OrderBy(um => um.Id)
+                            .ToList();
+
+                        foreach (var item in records)
+                        {
+                            <div class="card" style="width:50%;">
+                                <div class="card-body">
+                                    @item.Username
+                                    <div class="float-right">
+                                        <a href="" class="btn-custom"><i class="ti-eye"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

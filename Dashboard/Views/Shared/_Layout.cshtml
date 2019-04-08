@@ -100,6 +100,17 @@
                                 <li>
                                     <a href="/Home/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
                                 </li>
+                                @if (Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))
+                                {
+                                    <li>
+                                        <a href="javascript:void(0)" aria-expanded="true">
+                                            <i class="ti-ruler-alt"></i><span>Parent Controls</span>
+                                        </a>
+                                        <ul class="collapse">
+                                            <li><a href="/Parent/ChildAccounts">Child Accounts</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </nav>
                     </div>
