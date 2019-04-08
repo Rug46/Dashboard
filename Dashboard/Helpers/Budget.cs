@@ -8,28 +8,28 @@ namespace Dashboard.Helpers
 {
     public class Budget
     {
-        public static float GetBudgetAmount()
+        public static float GetBudgetAmount(int UserId)
         {
             using (var db = new Database())
             {
-                var records = db.Budgets
-                    .Where(bm => bm.Name == "Month")
-                    .OrderBy(bm => bm.Id)
+                var records = db.UserBudgets
+                    .Where(bm => bm.UserId == UserId)
+                    .OrderBy(bm => bm.id)
                     .ToList();
 
-                return records.ElementAt(0).Minutes;
+                return records.ElementAt(0).Monthly;
             }
         }
 
-        public static string GetBudgetAmountFormatted()
+        public static string GetBudgetAmountFormatted(int UserId)
         {
-            if(GetBudgetAmount() < 60)
+            if(GetBudgetAmount(UserId) < 60)
             {
-                return GetBudgetAmount() + " minutes";
+                return GetBudgetAmount(UserId) + " minutes";
             }
             else
             {
-                return Math.Floor(GetBudgetAmount() / 60) + " hours";
+                return Math.Floor(GetBudgetAmount(UserId) / 60) + " hours";
             }
         }
 
@@ -64,41 +64,41 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static float GetLeftAmount()
+        public static float GetLeftAmount(int UserId)
         {
-            return GetBudgetAmount() - GetUsedAmount();
+            return GetBudgetAmount(UserId) - GetUsedAmount();
         }
 
-        public static string GetLeftAmountFormatted()
+        public static string GetLeftAmountFormatted(int UserId)
         {
-            if(GetLeftAmount() < 60)
+            if(GetLeftAmount(UserId) < 60)
             {
-                return GetLeftAmount() + " minutes";
+                return GetLeftAmount(UserId) + " minutes";
             } else
             {
-                return Math.Round(GetLeftAmount() / 60, 1) + " hours";
+                return Math.Round(GetLeftAmount(UserId) / 60, 1) + " hours";
             }
         }
 
-        public static float GetPercentage()
+        public static float GetPercentage(int UserId)
         {
-            var budget = GetBudgetAmount();
+            var budget = GetBudgetAmount(UserId);
             var used = GetUsedAmount();
-            var left = GetLeftAmount();
+            var left = GetLeftAmount(UserId);
 
             var percentage = (used / budget) * 100;
 
             return percentage;
         }
 
-        public static string GetPercentageFormatted()
+        public static string GetPercentageFormatted(int UserId)
         {
-            return Math.Floor(GetPercentage()) + "% Used";
+            return Math.Floor(GetPercentage(UserId)) + "% Used";
         }
 
-        public static bool IsOverBudget()
+        public static bool IsOverBudget(int UserId)
         {
-            if(GetUsedAmount() >= GetBudgetAmount())
+            if(GetUsedAmount() >= GetBudgetAmount(UserId))
             {
                 return true;
             } else
@@ -107,9 +107,9 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool IsOverBudgetAny()
+        public static bool IsOverBudgetAny(int UserId)
         {
-            if(IsOverBudget() || BudgetToday.IsOverBudget())
+            if(IsOverBudget(UserId) || BudgetToday.IsOverBudget(UserId))
             {
                 return true;
             } else
@@ -118,12 +118,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static string IsOverBudgetFormatted()
+        public static string IsOverBudgetFormatted(int UserId)
         {
-            if (BudgetToday.IsOverBudget())
+            if (BudgetToday.IsOverBudget(UserId))
             {
                 return "Over Budget Today!";
-            } else if(IsOverBudget())
+            } else if(IsOverBudget(UserId))
             {
                 return "Over Budget!";
             } else

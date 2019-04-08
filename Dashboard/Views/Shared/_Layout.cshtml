@@ -1,4 +1,27 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    using (var db = new Dashboard.Data.Database())
+    {
+        var budgetRecords = db.UserBudgets
+            .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+            .OrderBy(bm => bm.id)
+            .ToList();
+
+        if (budgetRecords.Count == 0)
+        {
+            UserBudgetModel single = new UserBudgetModel
+            {
+                UserId = Dashboard.Helpers.Account.GetUserId(User.Identity.Name),
+                Daily = 120,
+                Monthly = 1440
+            };
+
+            db.UserBudgets.Add(single);
+            db.SaveChanges();
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -96,7 +119,7 @@
                         <!-- profile info & task notification -->
                         <div class="col-md-6 col-sm-4 clearfix">
                             <ul class="notification-area pull-right">
-                                @if (Dashboard.Helpers.Budget.IsOverBudgetAny())
+                                @if (Dashboard.Helpers.Budget.IsOverBudgetAny(Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))
                                 {
                                     <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
                                 }

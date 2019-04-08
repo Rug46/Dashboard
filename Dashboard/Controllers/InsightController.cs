@@ -27,44 +27,46 @@ namespace Dashboard.Controllers
         }
 
         [HttpPost]
+        public IActionResult SetBudget(int monthHours, int monthMinutes, int dayHours, int dayMinutes)
+        {
+            using (var db = new Database())
+            {
+                var monthTotalMinutes = (monthHours * 60) + monthMinutes;
+                var dayTotalMinutes = (dayHours * 60) + dayMinutes;
+
+                var records = db.UserBudgets
+                    .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                    .OrderBy(bm => bm.id)
+                    .ToList();
+
+                records.ElementAt(0).Monthly = monthTotalMinutes;
+                records.ElementAt(0).Daily = dayTotalMinutes;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Budget");
+            }
+        }
+
+        [HttpPost]
         public string SetBudgetAmount(int monthHours, int monthMinutes, int dayHours, int dayMinutes)
         {
             using (var db = new Database())
             {
                 var monthTotalMinutes = (monthHours * 60) + monthMinutes;
-
-                var monthRecords = db.Budgets
-                    .Where(bm => bm.Name == "Month")
-                    .OrderBy(bm => bm.Id)
-                    .ToList();
-
-                monthRecords.ElementAt(0).Minutes = monthTotalMinutes;
-
                 var dayTotalMinutes = (dayHours * 60) + dayMinutes;
 
-                var dayRecords = db.Budgets
-                    .Where(bm => bm.Name == "Day")
-                    .OrderBy(bm => bm.Id)
+                var records = db.UserBudgets
+                    .Where(bm => bm.UserId == Helpers.Account.GetUserId(User.Identity.Name))
+                    .OrderBy(bm => bm.id)
                     .ToList();
 
-                dayRecords.ElementAt(0).Minutes = dayTotalMinutes;
+                records.ElementAt(0).Monthly = monthTotalMinutes;
+                records.ElementAt(0).Daily = dayTotalMinutes;
                     
                 db.SaveChanges();
 
                 return "Month: " + monthTotalMinutes + ", Day: " + dayTotalMinutes;
-            }
-        }
-
-        public static void SetBudgetAmountToday(int hours, int minutes)
-        {
-            using (var db = new Database())
-            {
-                var totalMinutes = (hours * 60) + minutes;
-
-                db.Budgets.Where(bm => bm.Name == "Day")
-                    .ElementAt(0).Minutes = totalMinutes;
-
-                db.SaveChanges();
             }
         }
     }
