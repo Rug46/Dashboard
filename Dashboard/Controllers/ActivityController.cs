@@ -60,16 +60,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if(i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if(i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -108,16 +108,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -151,16 +151,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -193,16 +193,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 

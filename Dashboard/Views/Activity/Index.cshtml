@@ -86,12 +86,12 @@
                         </tbody>
                     </table>
 
-                    @{
+                    @*@{
                         var LastPage = Dashboard.Helpers.Activity.GetLastPage();
                         var currentPage = int.Parse(ViewData["Page"].ToString());
-                    }
+                    }*@
 
-                    @if (!Dashboard.Helpers.Activity.IsSinglePage())
+                    @*@if (!Dashboard.Helpers.Activity.IsSinglePage())
                     {
                         <nav aria-label="Page Navigation">
                             <ul class="pagination justify-content-center">
@@ -175,7 +175,7 @@
                                 }
                             </ul>
                         </nav>
-                    }
+                    }*@
                     <script src="~/js/activity.js"></script>
                 </div>
             </div>
