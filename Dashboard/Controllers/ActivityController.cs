@@ -410,5 +410,47 @@ namespace Dashboard.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Export(int format, int dataFrom)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                if (format == 0)
+                {
+                    string result = "Date,Game,Finish,Mode\n";
+
+                    if (dataFrom == 0)
+                    {
+                        foreach (var item in records)
+                        {
+                            string date = item.Date.ToString();
+                            string game = item.Game;
+                            string finish = item.Finish.ToString();
+                            string mode = item.Mode;
+
+                            string line = date + "," + game + "," + finish + "," + mode;
+                            result += line + "\n";
+                        }
+
+                        byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                        return File(resultBytes, "text/plain", "export-" + DateTime.Now + ".csv");
+                    }
+                }
+
+                return View();
+            }
+        }
     }
 }
