@@ -21,17 +21,5 @@
             </div>
         </form>
         <asp:ScriptManager id="smSave" runat="server" EnablePageMethods="true" />
-        <script>
-            function Save() {
-                var bmHours = $("#tbMonthH").val();
-                var bmMinutes = $("#tbMonthM").val();
-                var bdHours = $("#tbDayH").val();
-                var bdMinutes = $("#tbDayM").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Insight/SetBudgetAmount/?monthHours=" + bmHours + "&monthMinutes=" + bmMinutes + "&dayHours=" + bdHours + "&dayMinutes=" + bdMinutes;
-            }
-        </script>
     </div>
 </div>
