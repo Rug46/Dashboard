@@ -430,23 +430,42 @@ namespace Dashboard.Controllers
                 {
                     string result = "Date,Game,Finish,Mode\n";
 
-                    if (dataFrom == 0)
+                    if (dataFrom == 1)
                     {
-                        foreach (var item in records)
-                        {
-                            string date = item.Date.ToString();
-                            string game = item.Game;
-                            string finish = item.Finish.ToString();
-                            string mode = item.Mode;
-
-                            string line = date + "," + game + "," + finish + "," + mode;
-                            result += line + "\n";
-                        }
-
-                        byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
-
-                        return File(resultBytes, "text/plain", "export-" + DateTime.Now + ".csv");
+                        records = db.Activity
+                            .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
+                            .OrderBy(ptm => ptm.Date)
+                            .ToList();
                     }
+                    else if (dataFrom == 2)
+                    {
+                        records = db.Activity
+                            .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
+                            .OrderBy(ptm => ptm.Date)
+                            .ToList();
+                    }
+                    else if (dataFrom == 3)
+                    {
+                        records = db.Activity
+                            .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                            .OrderBy(ptm => ptm.Date)
+                            .ToList();
+                    }
+
+                    foreach (var item in records)
+                    {
+                        string date = item.Date.ToString();
+                        string game = item.Game;
+                        string finish = item.Finish.ToString();
+                        string mode = item.Mode;
+
+                        string line = date + "," + game + "," + finish + "," + mode;
+                        result += line + "\n";
+                    }
+
+                    byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                    return File(resultBytes, "text/plain", "export-" + DateTime.Now + ".csv");
                 }
 
                 return View();
