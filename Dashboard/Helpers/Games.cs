@@ -120,5 +120,28 @@ namespace Dashboard.Helpers
                 return records.ElementAt(0).Name;
             }
         }
+
+        public static List<string> GetGamesInActivity(int daysAgo)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-daysAgo))
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                var result = new List<string>();
+
+                foreach (var record in records)
+                {
+                    if (!result.Contains(record.Game))
+                    {
+                        result.Add(record.Game);
+                    }
+                }
+
+                return result;
+            }
+        }
     }
 }

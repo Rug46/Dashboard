@@ -390,18 +390,15 @@ namespace Dashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Game(int GameID)
+        public IActionResult Game(string GameName)
         {
-            if(GameID == 0)
+            if(GameName == "" || GameName == null)
             {
                 TempData["None"] = "Please select a game";
                 return View();
             }
 
-            string Name = Games.GetGame(GameID);
-
-            TempData["Id"] = GameID;
-            TempData["Game"] = Name;
+            TempData["Game"] = GameName;
 
             return View();
         }

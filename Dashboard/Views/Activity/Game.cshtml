@@ -42,15 +42,13 @@
                     <form action="Game" method="post">
                         @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.Games
-                                .OrderBy(gm => gm.Id)
-                                .ToList();
+                            var records = Dashboard.Helpers.Games.GetGamesInActivity(28);
 
-                            <select name="GameID" class="textbox">
+                            <select name="GameName" class="textbox">
                                 <option value="0" selected disabled>Select Game...</option>
                                 @for (int i = 0; i < records.Count; i++)
                                 {
-                                    <option value="@records.ElementAt(i).Id">@records.ElementAt(i).Name</option>
+                                    <option value="@records.ElementAt(i)">@records.ElementAt(i)</option>
                                 }
                             </select>
                             <input type="submit" value="Search" class="btn padding-btn" />
