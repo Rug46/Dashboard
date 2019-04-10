@@ -410,5 +410,88 @@ namespace Dashboard.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Export(int format, int dataFrom)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                if (dataFrom == 1)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+                else if (dataFrom == 2)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+                else if (dataFrom == 3)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+
+                if (format == 0)
+                {
+                    string result = "Date,Game,Finish,Mode\n";
+
+                    foreach (var item in records)
+                    {
+                        string date = item.Date.ToString();
+                        string game = item.Game;
+                        string finish = item.Finish.ToString();
+                        string mode = item.Mode;
+
+                        string line = date + "," + game + "," + finish + "," + mode;
+                        result += line + "\n";
+                    }
+
+                    byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                    return File(resultBytes, "text/plain", "export-" + DateTime.Now + ".csv");
+                }
+                else if (format == 1)
+                {
+                    string result = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+                    result += "<Activity>\n";
+
+                    foreach (var item in records)
+                    {
+                        string date = item.Date.ToString();
+                        string game = item.Game;
+                        string finish = item.Finish.ToString();
+                        string mode = item.Mode;
+
+                        string line = "\t<Record Date=\"" + date + "\" Game=\"" + game + "\" Finish=\"" + finish + "\" Mode=\"" + mode + "\" />";
+                        result += line + "\n";
+                    }
+
+                    result += "</Activity>";
+
+                    byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                    return File(resultBytes, "text/xml", "export-" + DateTime.Now + ".xml");
+                }
+
+                return View();
+            }
+        }
     }
 }
