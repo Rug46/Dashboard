@@ -430,12 +430,14 @@ namespace Dashboard.Controllers
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
                 if (dataFrom == 1)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
@@ -443,6 +445,7 @@ namespace Dashboard.Controllers
                 else if (dataFrom == 2)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
@@ -450,6 +453,7 @@ namespace Dashboard.Controllers
                 else if (dataFrom == 3)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
