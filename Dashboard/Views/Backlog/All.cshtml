@@ -127,7 +127,7 @@
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {
-                        var records = Dashboard.Helpers.Backlog.GetAllGamesBySystem();
+                        var records = Dashboard.Helpers.Backlog.GetAllGamesBySystem(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
 
                         <table>
                             <thead>

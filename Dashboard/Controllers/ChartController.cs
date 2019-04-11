@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class ChartController : Controller
     {
         public IActionResult Index()

@@ -10,11 +10,12 @@ namespace Dashboard.Helpers
 {
     public class Backlog
     {
-        public static List<string> GetSystems()
+        public static List<string> GetSystems(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bl => bl.UserId == user)
                     .OrderBy(bm => bm.Id)
                     .ToList();
 
@@ -35,11 +36,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetFromStatus(int status)
+        public static int GetFromStatus(int status, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bl => bl.UserId == user)
                     .OrderBy(bm => bm.Id)
                     .ToList();
 
@@ -57,11 +59,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetFromStatus(int status, string system)
+        public static int GetFromStatus(int status, string system, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .Where(bm => bm.System == system)
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -80,11 +83,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static double GetFromStatusPercentage(int status)
+        public static double GetFromStatusPercentage(int status, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .OrderBy(bm => bm.Id)
                     .ToList();
 
@@ -108,11 +112,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetFromStatusPercentage(int status, string system)
+        public static int GetFromStatusPercentage(int status, string system, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .Where(bm => bm.System == system)
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -137,7 +142,7 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool New(string Name, string Compilation, string System, int Status, string Progress, bool NowPlaying)
+        public static bool New(string Name, string Compilation, string System, int Status, string Progress, bool NowPlaying, int user)
         {
             using (var db = new Database())
             {
@@ -156,7 +161,8 @@ namespace Dashboard.Helpers
                     System = System,
                     Status = Status,
                     Progress = Progress,
-                    NowPlaying = NowPlayingInt
+                    NowPlaying = NowPlayingInt,
+                    UserId = user
                 };
 
                 db.Backlog.Add(single);
@@ -166,11 +172,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetSystemTotal(string system)
+        public static int GetSystemTotal(string system, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .Where(bm => bm.System == system)
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -179,11 +186,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetTotal()
+        public static int GetTotal(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .OrderBy(bm => bm.Id)
                     .ToList();
 
@@ -255,11 +263,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static List<BacklogModel> GetBacklogModelsFromSystem(string System)
+        public static List<BacklogModel> GetBacklogModelsFromSystem(string System, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .Where(bm => bm.System == System)
                     .OrderBy(bm => bm.Id)
                     .ToList();
@@ -273,11 +282,12 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static List<BacklogModel> GetAllGamesBySystem()
+        public static List<BacklogModel> GetAllGamesBySystem(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Backlog
+                    .Where(bm => bm.UserId == user)
                     .OrderBy(bm => bm.System)
                     .ToList();
 

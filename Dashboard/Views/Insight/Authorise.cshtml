@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Authorise";
+}
+
+<div class="col-lg-12">
+    <div class="single-report">
+        <h1>You need parent permission</h1>
+        <form asp-action="Authorise" method="post">
+            <div class="form-group">
+                <label>Parent's Password</label>
+                <input class="form-control" type="password" name="password" />
+            </div>
+        </form>
+    </div>
+</div>

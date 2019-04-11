@@ -6,14 +6,14 @@ using Dashboard.Data;
 
 namespace Dashboard.Helpers
 {
-    public class BudgetToday
+    public class UserBudgetToday
     {
-        public static float GetBudgetAmount(int UserId)
+        public static float GetBudgetAmount(int user)
         {
             using (var db = new Database())
             {
                 var records = db.UserBudgets
-                    .Where(bm => bm.UserId == UserId)
+                    .Where(bm => bm.UserId == user)
                     .OrderBy(bm => bm.id)
                     .ToList();
 
@@ -21,22 +21,23 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static string GetBudgetAmountFormatted(int UserId)
+        public static string GetBudgetAmountFormatted(int user)
         {
-            if(GetBudgetAmount(UserId) < 60)
+            if(GetBudgetAmount(user) < 60)
             {
-                return GetBudgetAmount(UserId) + " minutes";
+                return GetBudgetAmount(user) + " minutes";
             } else
             {
-                return Math.Floor(GetBudgetAmount(UserId) / 60) + " hours";
+                return Math.Floor(GetBudgetAmount(user) / 60) + " hours";
             }
         }
 
-        public static float GetUsedAmount()
+        public static float GetUsedAmount(int user)
         {
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == user)
                     .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                     .OrderBy(ptm => ptm.Id)
                     .ToList();
@@ -52,52 +53,52 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static string GetUsedAmountFormatted()
+        public static string GetUsedAmountFormatted(int user)
         {
-            if(GetUsedAmount() < 60)
+            if(GetUsedAmount(user) < 60)
             {
-                return GetUsedAmount() + " minutes";
+                return GetUsedAmount(user) + " minutes";
             } else
             {
-                return Math.Round(GetUsedAmount() / 60, 1) + " hours";
+                return Math.Round(GetUsedAmount(user) / 60, 1) + " hours";
             }
         }
 
-        public static float GetLeftAmount(int UserId)
+        public static float GetLeftAmount(int user)
         {
-            return GetBudgetAmount(UserId) - GetUsedAmount();
+            return GetBudgetAmount(user) - GetUsedAmount(user);
         }
 
-        public static string GetLeftAmountFormatted(int UserId)
+        public static string GetLeftAmountFormatted(int user)
         {
-            if(GetLeftAmount(UserId) < 60)
+            if(GetLeftAmount(user) < 60)
             {
-                return GetLeftAmount(UserId) + " minutes";
+                return GetLeftAmount(user) + " minutes";
             } else
             {
-                return Math.Round(GetLeftAmount(UserId) / 60, 1) + " hours";
+                return Math.Round(GetLeftAmount(user) / 60, 1) + " hours";
             }
         }
 
-        public static float GetPercentage(int UserId)
+        public static float GetPercentage(int user)
         {
-            var budget = GetBudgetAmount(UserId);
-            var used = GetUsedAmount();
-            var left = GetLeftAmount(UserId);
+            var budget = GetBudgetAmount(user);
+            var used = GetUsedAmount(user);
+            var left = GetLeftAmount(user);
 
             var percentage = (used / budget) * 100;
 
             return percentage;
         }
 
-        public static string GetPercentageFormatted(int UserId)
+        public static string GetPercentageFormatted(int user)
         {
-            return Math.Floor(GetPercentage(UserId)) + "% Used";
+            return Math.Floor(GetPercentage(user)) + "% Used";
         }
 
-        public static bool IsOverBudget(int UserId)
+        public static bool IsOverBudget(int user)
         {
-            if(GetUsedAmount() > GetBudgetAmount(UserId))
+            if(GetUsedAmount(user) > GetBudgetAmount(user))
             {
                 return true;
             }

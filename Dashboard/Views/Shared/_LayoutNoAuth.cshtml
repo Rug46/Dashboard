@@ -1,27 +1,4 @@
-﻿@{ 
-    using (var db = new Dashboard.Data.Database())
-    {
-        var budgetRecords = db.UserBudgets
-            .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
-            .OrderBy(bm => bm.id)
-            .ToList();
-
-        if (budgetRecords.Count == 0)
-        {
-            UserBudgetModel single = new UserBudgetModel
-            {
-                UserId = Dashboard.Helpers.Account.GetUserId(User.Identity.Name),
-                Daily = 120,
-                Monthly = 1440
-            };
-
-            db.UserBudgets.Add(single);
-            db.SaveChanges();
-        }
-    }
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -76,42 +53,11 @@
                         <nav>
                             <ul class="metismenu" id="menu">
                                 <li>
-                                    <a asp-controller="Home" asp-action="Index" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
+                                    <a href="/Account/Login" aria-expanded="true"><i class="ti-user"></i><span>Login</span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" aria-expanded="true">
-                                        <i class="ti-list"></i><span>Activity</span>
-                                    </a>
-                                    <ul class="collapse">
-                                        <li><a href="/Activity/Index/0">All Activity</a></li>
-                                        <li><a href="/Activity/Game">Game Activity</a></li>
-                                        <li><a href="@Url.Action("Search", "Activity")">Search</a></li>
-                                        <li><a href="/Activity/Export">Export</a></li>
-                                    </ul>
+                                    <a href="/Account/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
                                 </li>
-                                <li>
-                                    <a href="/Insight/Budget" aria-expanded="true"><i class="ti-eye"></i><span>Time Budget</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Chart/Year" aria-expanded="true"><i class="ti-pie-chart"></i><span>Past Year</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Backlog/Index" aria-expanded="true"><i class="ti-menu-alt"></i><span>Backlog</span></a>
-                                </li>
-                                <li>
-                                    <a href="/Home/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
-                                </li>
-                                @if (Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))
-                                {
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true">
-                                            <i class="ti-ruler-alt"></i><span>Parent Controls</span>
-                                        </a>
-                                        <ul class="collapse">
-                                            <li><a href="/Parent/ChildAccounts">Child Accounts</a></li>
-                                        </ul>
-                                    </li>
-                                }
                             </ul>
                         </nav>
                     </div>
@@ -131,19 +77,6 @@
                         <!-- profile info & task notification -->
                         <div class="col-md-6 col-sm-4 clearfix">
                             <ul class="notification-area pull-right">
-                                @if (Dashboard.Helpers.Budget.IsOverBudgetAny(Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))
-                                {
-                                    <a href="@Url.Action("Budget", "Insight")"><li title="Over Budget!"><i class="ti-eye" style="color:red;"></i></li></a>
-                                }
-                                @*<a href="@Url.Action("Index", "Settings")"><li title="Settings"><i class="ti-settings"></i></li></a>*@
-                                <a data-toggle="modal" data-target="#modalTimer"><li title="Stopwatch"><i class="ti-timer"></i></li></a>
-                                <a data-toggle="modal" data-target="#modalNew"><li title="Add New Record"><i class="ti-plus"></i></li></a>
-                                <li title="@User.Identity.Name" id="dropdownMenuLink" data-toggle="dropdown"><i class="ti-user"></i></li>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">@User.Identity.Name</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Account/Logout">Logout</a>
-                                </div>
                             </ul>
                         </div>
                     </div>
@@ -178,10 +111,6 @@
                         </div>
                         <div class="form-group">
                             <label>Game</label>
-                            <input type="text" class="form-control" name="NewGame" />
-                        </div>
-                        @*<div class="form-group">
-                            <label>Game</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
                                 var records = db.Games
@@ -196,17 +125,13 @@
                                     }
                                 </select>
                             }
-                        </div>*@
+                        </div>
                         <div class="form-group">
                             <label>Finish</label>
                             <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('FinishDate').value = getDate();" />
                             <input type="datetime-local" class="form-control" id="FinishDate" name="DateFinish" />
                         </div>
                         <div class="form-group">
-                            <label>Mode</label>
-                            <input type="text" class="form-control" name="NewMode" />
-                        </div>
-                        @*<div class="form-group">
                             <label>Mode</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
@@ -222,7 +147,7 @@
                                     }
                                 </select>
                             }
-                        </div>*@
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
@@ -255,19 +180,11 @@
 
                         <div class="form-group">
                             <label>Controls</label>
-                            <input type="button" value="Start" class="btn btn-success" style="float:right;" onclick="startTimer();" />
-                            <input type="button" value="Stop" class="btn btn-danger" style="float:right;" onclick="stopTimer();" />
+                            <input type="button" value="Start" class="btn btn-default" style="float:right;" onclick="startTimer();" />
+                            <input type="button" value="Stop" class="btn btn-default" style="float:right;" onclick="stopTimer();" />
                             <input type="button" value="Restart" class="btn btn-default" style="float:right;" onclick="restartTimer();" />
                         </div>
                         <div class="form-group">
-                            <label>Game</label>
-                            <input type="text" class="form-control" name="TimerGame" />
-                        </div>
-                        <div class="form-group">
-                            <label>Mode</label>
-                            <input type="text" class="form-control" name="TimerMode" />
-                        </div>
-                        @*<div class="form-group">
                             <label>Game</label>
                             @using (var db = new Dashboard.Data.Database())
                             {
@@ -300,7 +217,7 @@
                                     }
                                 </select>
                             }
-                        </div>*@
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                             @*<input type="button" value="Create" class="btn btn-primary" onclick="submitButton()" />*@
