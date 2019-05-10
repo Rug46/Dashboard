@@ -9,6 +9,9 @@ using Dashboard.Data;
 using Dashboard.Models;
 using Dashboard.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Text;
 
 namespace Dashboard.Controllers
 {
@@ -501,6 +504,35 @@ namespace Dashboard.Controllers
                     return File(resultBytes, "text/xml", "export-" + DateTime.Now + ".xml");
                 }
 
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Import(IFormFile file)
+        {
+            if (Helpers.Import.IsFileType(file, "xml"))
+            {
+                return View();
+            }
+            else if (Helpers.Import.IsFileType(file, "csv"))
+            {
+                var CSV = Helpers.Import.ImportCSV(file);
+
+                Helpers.Import.CSVDatabase(CSV, User.Identity.Name);
+
+                TempData["Imported"] = "CSV";
+
+                return View();
+            }
+            else
+            {
                 return View();
             }
         }
