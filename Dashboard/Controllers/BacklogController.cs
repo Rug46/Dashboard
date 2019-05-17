@@ -39,12 +39,16 @@ namespace Dashboard.Controllers
         {
             var BacklogEntry = Backlog.Get(id);
 
-            if (BacklogEntry == null)
+            var BacklogEntryUser = BacklogEntry.UserId;
+            var CurrentUser = Account.GetUserId(User.Identity.Name);
+
+            if (BacklogEntry == null || BacklogEntryUser != CurrentUser)
             {
                 TempData["Error"] = "This entry doesn't exist";
             }
             else
             {
+
                 TempData["Backlog"] = BacklogEntry;
             }
 
