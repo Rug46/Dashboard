@@ -306,6 +306,11 @@ namespace Dashboard.Controllers
             activityModel.Game = activityModel.Game.Trim();
             activityModel.Mode = activityModel.Mode.Trim();
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -317,6 +322,11 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
         {
             if (id != activityModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
             {
                 return NotFound();
             }
@@ -359,6 +369,11 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -368,8 +383,15 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var activityModel = await _context.Activity.FindAsync(id);
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             _context.Activity.Remove(activityModel);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
