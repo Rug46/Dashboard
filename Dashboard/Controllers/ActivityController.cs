@@ -536,5 +536,24 @@ namespace Dashboard.Controllers
                 return View();
             }
         }
+
+        public IActionResult Profile(string id)
+        {
+            int userID = Account.GetUserId(id);
+
+            if (userID == -1)
+            {
+                TempData["Error"] = "User does not exist";
+                TempData["id"] = -1;
+                TempData["username"] = id;
+
+                return View();
+            }
+
+            TempData["id"] = Account.GetUserId(id);
+            TempData["username"] = id;
+
+            return View();
+        }
     }
 }
