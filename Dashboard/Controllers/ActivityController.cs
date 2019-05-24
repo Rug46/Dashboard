@@ -8,9 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Dashboard.Data;
 using Dashboard.Models;
 using Dashboard.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Text;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class ActivityController : Controller
     {
         private readonly Database _context;
@@ -50,21 +55,24 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.Activity.ToList();
+                var model = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                    .ToList();
+
                 model.Reverse();
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if(i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if(i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -103,16 +111,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -146,16 +154,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -188,16 +196,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -235,14 +243,15 @@ namespace Dashboard.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
-        public async Task<IActionResult> Create(int id, DateTime DateStart, string GameName, DateTime DateFinish, string ModeName)
+        public async Task<IActionResult> Create(int id, DateTime DateStart, string NewGame, DateTime DateFinish, string NewMode)
         {
             ActivityModel activityModel = new ActivityModel
             {
                 Date = DateStart,
-                Game = GameName,
+                Game = NewGame,
                 Finish = DateFinish,
-                Mode = ModeName
+                Mode = NewMode,
+                UserId = Account.GetUserId(User.Identity.Name)
             };
 
             Activity.AddNew(activityModel);
@@ -250,9 +259,9 @@ namespace Dashboard.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult CreateByTimer(string TimerValue, string GameName, string ModeName)
+        public IActionResult CreateByTimer(string TimerValue, string TimerGame, string TimerMode)
         {
-            if (TimerValue == null || GameName == null || ModeName == null)
+            if (TimerValue == null || TimerGame == null || TimerMode == null)
             {
                 return RedirectToAction("Index");
             }
@@ -269,9 +278,10 @@ namespace Dashboard.Controllers
             ActivityModel single = new ActivityModel
             {
                 Date = start,
-                Game = GameName,
+                Game = TimerGame,
                 Finish = now,
-                Mode = ModeName
+                Mode = TimerMode,
+                UserId = Account.GetUserId(User.Identity.Name)
             };
 
             Activity.AddNew(single);
@@ -296,6 +306,11 @@ namespace Dashboard.Controllers
             activityModel.Game = activityModel.Game.Trim();
             activityModel.Mode = activityModel.Mode.Trim();
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -307,6 +322,11 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
         {
             if (id != activityModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
             {
                 return NotFound();
             }
@@ -349,6 +369,11 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -358,8 +383,15 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var activityModel = await _context.Activity.FindAsync(id);
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             _context.Activity.Remove(activityModel);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -420,12 +452,14 @@ namespace Dashboard.Controllers
             using (var db = new Database())
             {
                 var records = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                     .OrderBy(ptm => ptm.Date)
                     .ToList();
 
                 if (dataFrom == 1)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
@@ -433,6 +467,7 @@ namespace Dashboard.Controllers
                 else if (dataFrom == 2)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
@@ -440,6 +475,7 @@ namespace Dashboard.Controllers
                 else if (dataFrom == 3)
                 {
                     records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
                         .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
                         .OrderBy(ptm => ptm.Date)
                         .ToList();
@@ -489,6 +525,54 @@ namespace Dashboard.Controllers
 
                 return View();
             }
+        }
+
+        [HttpGet]
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Import(IFormFile file)
+        {
+            if (Helpers.Import.IsFileType(file, "xml"))
+            {
+                return View();
+            }
+            else if (Helpers.Import.IsFileType(file, "csv"))
+            {
+                var CSV = Helpers.Import.ImportCSV(file);
+
+                Helpers.Import.CSVDatabase(CSV, User.Identity.Name);
+
+                TempData["Imported"] = "CSV";
+
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public IActionResult Profile(string id)
+        {
+            int userID = Account.GetUserId(id);
+
+            if (userID == -1)
+            {
+                TempData["Error"] = "User does not exist";
+                TempData["id"] = -1;
+                TempData["username"] = id;
+
+                return View();
+            }
+
+            TempData["id"] = Account.GetUserId(id);
+            TempData["username"] = id;
+
+            return View();
         }
     }
 }

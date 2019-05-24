@@ -8,17 +8,17 @@ namespace Dashboard.Helpers
 {
     public class SetBudgetToday
     {
-        public static int GetBudgetHours()
+        public static int GetBudgetHours(int UserId)
         {
-            var totalMinutes = BudgetToday.GetBudgetAmount();
+            var totalMinutes = BudgetToday.GetBudgetAmount(UserId);
             var hours = (int)Math.Floor(totalMinutes / 60);
 
             return hours;
         }
 
-        public static int GetBudgetMinutes()
+        public static int GetBudgetMinutes(int UserId)
         {
-            var totalMinutes = BudgetToday.GetBudgetAmount();
+            var totalMinutes = BudgetToday.GetBudgetAmount(UserId);
             var minutes = (int)Math.Floor(totalMinutes % 60);
 
             return minutes;

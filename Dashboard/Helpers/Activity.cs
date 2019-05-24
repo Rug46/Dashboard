@@ -10,6 +10,19 @@ namespace Dashboard.Helpers
 {
     public class Activity
     {
+        public static List<ActivityModel> GetByUser(int userid)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.UserId == userid)
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                return records;
+            }
+        }
+
         public static int GetLastPage()
         {
             var recordsPerPage = ActivityController.recordsPerPage;

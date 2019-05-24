@@ -12,5 +12,6 @@ namespace Dashboard.Models
         public string Game { get; set; }
         public DateTime Finish { get; set; }
         public string Mode { get; set; }
+        public int UserId { get; set; }
     }
 }

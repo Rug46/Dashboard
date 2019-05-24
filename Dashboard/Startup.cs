@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Dashboard.Models;
 using Microsoft.EntityFrameworkCore;
 using Dashboard.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Dashboard
 {
@@ -35,6 +36,8 @@ namespace Dashboard
 
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<Database>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
@@ -56,6 +59,7 @@ namespace Dashboard
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
