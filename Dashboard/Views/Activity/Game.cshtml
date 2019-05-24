@@ -42,10 +42,7 @@
                     <form action="Game" method="post">
                         @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.Games
-                                .Where(gm => gm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
-                                .OrderBy(gm => gm.Id)
-                                .ToList();
+                            var records = Dashboard.Helpers.Activity.GetGames(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
 
                             <select name="GameName" class="textbox">
                                 <option value="0" selected disabled>Select Game...</option>

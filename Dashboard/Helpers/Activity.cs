@@ -126,5 +126,29 @@ namespace Dashboard.Helpers
                 db.SaveChanges();
             }
         }
+
+        public static List<string> GetGames(int userid)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                    .Where(ptm => ptm.UserId == userid)
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                var games = new List<string>();
+
+                foreach (var record in records)
+                {
+                    if (!games.Contains(record.Game))
+                    {
+                        games.Add(record.Game);
+                    }
+                }
+
+                return games;
+            }
+        }
     }
 }
