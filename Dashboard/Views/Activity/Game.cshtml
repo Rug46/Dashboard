@@ -47,11 +47,11 @@
                                 .OrderBy(gm => gm.Id)
                                 .ToList();
 
-                            <select name="GameID" class="textbox">
+                            <select name="GameName" class="textbox">
                                 <option value="0" selected disabled>Select Game...</option>
                                 @for (int i = 0; i < records.Count; i++)
                                 {
-                                    <option value="@records.ElementAt(i).Id">@records.ElementAt(i).Name</option>
+                                    <option value="@records.ElementAt(i)">@records.ElementAt(i)</option>
                                 }
                             </select>
                             <input type="submit" value="Search" class="btn padding-btn" />
@@ -123,6 +123,9 @@
                                     </tbody>
                                 </table>
                             }
+                            <hr />
+                            <h3>Links</h3>
+                            <a href="@Dashboard.Helpers.GameLinks.GetMetacritic(TempData["Game"].ToString())" target="_blank"><img src="~/images/logo-metacritic.png" style="height:50px;" /></a>
                         }
                     }
                 </div>
