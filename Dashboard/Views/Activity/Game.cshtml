@@ -120,9 +120,22 @@
                                     </tbody>
                                 </table>
                             }
-                            <hr />
-                            <h3>Links</h3>
-                            <a href="@Dashboard.Helpers.GameLinks.GetMetacritic(TempData["Game"].ToString())" target="_blank"><img src="~/images/logo-metacritic.png" style="height:50px;" /></a>
+
+                            var isParent = Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
+                            var enableLinks = Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks"));
+
+                            @if (isParent || bool.Parse(enableLinks))
+                            {
+                                <hr />
+                                <h3>Links</h3>
+                                <a href="@Dashboard.Helpers.GameLinks.GetMetacritic(TempData["Game"].ToString())" target="_blank"><img src="~/images/logo-metacritic.png" style="height:50px;" /></a>
+                            }
+                            else
+                            {
+                                <hr />
+                                <h3>Links</h3>
+                                <i>External links are disabled</i>
+                            }
                         }
                     }
                 </div>
