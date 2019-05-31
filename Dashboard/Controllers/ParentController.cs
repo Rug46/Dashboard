@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Dashboard.Helpers;
 
 namespace Dashboard.Controllers
 {
@@ -44,16 +45,30 @@ namespace Dashboard.Controllers
             return RedirectToAction("ChildAccounts");
         }
 
-        public IActionResult View(int id)
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            if(!Helpers.Account.IsChildOf(Helpers.Account.GetUserId(User.Identity.Name), id))
+            var currentUser = Account.GetUserId(User.Identity.Name);
+
+            if (!Account.IsChildOf(currentUser, id))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ChildAccounts");
             }
 
-            TempData["Username"] = Helpers.Account.GetUsername(id);
-            TempData["Activity"] = Helpers.Activity.GetByUser(id);
+            TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
 
+            TempData["id"] = id;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string enableLinks)
+        {
+            UserSetting.SetSettingValue(id, Setting.GetSettingId("enableLinks"), enableLinks);
+
+            TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
+
+            TempData["id"] = id;
             return View();
         }
     }

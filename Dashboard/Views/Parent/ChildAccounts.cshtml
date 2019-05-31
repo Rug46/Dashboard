@@ -9,6 +9,7 @@
         color: black;
         font-style: normal;
         text-decoration: none;
+        margin-left: 5px;
     }
 </style>
 
@@ -33,7 +34,8 @@
                                 <div class="card-body">
                                     @item.Username
                                     <div class="float-right">
-                                        <a href="/Parent/View/@item.Id" class="btn-custom"><i class="ti-eye"></i></a>
+                                        <a href="/Activity/Profile/@item.Username" class="btn-custom"><i class="ti-eye"></i></a>
+                                        <a href="/Parent/Edit/@item.Id" class="btn-custom"><i class="ti-settings"></i></a>
                                     </div>
                                 </div>
                             </div>
