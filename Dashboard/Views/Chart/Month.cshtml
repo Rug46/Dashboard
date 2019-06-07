@@ -353,7 +353,7 @@
                     <form action="/Chart/Month" method="post">
                         Month
                         <select id="month-select" name="month" class="textbox">
-                            <option value="None"></option>
+                            <option></option>
 
                             @{
                                 var firstRecordDate = Dashboard.Helpers.DataYears.GetFirstRecordDate(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
@@ -363,9 +363,9 @@
 
                             @for (int i = 0; i < months + 1; i++)
                             {
-                                var monthsAgo = DateTime.Now.AddMonths(i);
+                                var monthsAgo = DateTime.Now.AddMonths(-i);
 
-                                <option value="@Dashboard.Helpers.DataYears.GetMonthID(monthsAgo)">@Dashboard.Helpers.DataYears.GetMonthName(monthsAgo)</option>
+                                <option value="@monthsAgo">@Dashboard.Helpers.DataYears.GetMonthName(monthsAgo)</option>
                             }
                         </select>
                         <input type="submit" class="btn btn-primary padding-btn" value="Go" />
