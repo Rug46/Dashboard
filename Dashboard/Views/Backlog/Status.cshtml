@@ -144,16 +144,18 @@
                         if (StatusInt == (int)BacklogModel.STATUS.UNFINISHED)
                         {
                             Records = db.Backlog
-                            .Where(bm => bm.Status == (int)BacklogModel.STATUS.UNPLAYED || bm.Status == (int)BacklogModel.STATUS.UNFINISHED)
-                            .OrderBy(bm => bm.Id)
-                            .ToList();
+                                .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                                .Where(bm => bm.Status == (int)BacklogModel.STATUS.UNPLAYED || bm.Status == (int)BacklogModel.STATUS.UNFINISHED)
+                                .OrderBy(bm => bm.Id)
+                                .ToList();
                         }
                         else
                         {
                             Records = db.Backlog
-                            .Where(bm => bm.Status == StatusInt)
-                            .OrderBy(bm => bm.Id)
-                            .ToList();
+                                .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                                .Where(bm => bm.Status == StatusInt)
+                                .OrderBy(bm => bm.Id)
+                                .ToList();
                         }
 
                         <table>

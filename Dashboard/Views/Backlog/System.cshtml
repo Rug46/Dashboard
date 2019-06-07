@@ -134,6 +134,7 @@
                     @using (var db = new Dashboard.Data.Database())
                     {
                         var Records = db.Backlog
+                            .Where(bm => bm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                             .Where(bm => bm.System == TempData["System"].ToString())
                             .OrderBy(bm => bm.Id)
                             .ToList();
