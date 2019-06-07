@@ -101,5 +101,20 @@ namespace Dashboard.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Wishlist(string gameName, string consoleName)
+        {
+            Helpers.Wishlist.AddWishlist(Account.GetUserId(User.Identity.Name), gameName, consoleName);
+
+            return View();
+        }
+
+        public IActionResult WishlistDelete(int id)
+        {
+            Helpers.Wishlist.RemoveWishlist(id, Account.GetUserId(User.Identity.Name));
+
+            return RedirectToAction("Wishlist");
+        }
     }
 }

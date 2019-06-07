@@ -46,6 +46,7 @@
 
     .btn-100 {
         width: 100%;
+        margin-top: 5px;
     }
 
     .tooltip {
@@ -66,7 +67,42 @@
                     <h1 class="float-left">Wishlist</h1>
                     <a href="/Backlog" class="btn btn-primary padding-btn" type="button">Back</a>
                     <br />
+                    <hr />
+                    <form method="post">
+                        <input type="text" name="gameName" placeholder="Game Name" class="textbox" />
+                        <input type="text" name="consoleName" placeholder="Console Name" class="textbox" />
+                        <input type="submit" value="Add" class="btn btn-primary btn-100" />
+                    </form>
+                    <hr />
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        var records = db.Wishlist
+                            .Where(wm => wm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                            .OrderBy(wm => wm.GameName)
+                            .ToList();
 
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Console</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in records)
+                                {
+                                    <tr>
+                                        <td>@record.GameName</td>
+                                        <td>@record.ConsoleName</td>
+                                        <td>
+                                            <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </div>
