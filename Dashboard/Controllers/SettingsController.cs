@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
 using Dashboard.Helpers;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class SettingsController : Controller
     {
         public IActionResult Index()
@@ -20,7 +21,7 @@ namespace Dashboard.Controllers
         {
             var ModeTrim = Mode.Trim();
 
-            if (!GameMode.NewGameMode(ModeTrim))
+            if (!GameMode.NewGameMode(ModeTrim, Account.GetUserId(User.Identity.Name)))
             {
                 TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
             }
@@ -39,7 +40,7 @@ namespace Dashboard.Controllers
         {
             var GameTrim = Game.Trim();
 
-            if (!Games.NewGame(GameTrim))
+            if (!Games.NewGame(GameTrim, Account.GetUserId(User.Identity.Name)))
             {
                 TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
             }

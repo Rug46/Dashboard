@@ -10,11 +10,12 @@ namespace Dashboard.Helpers
 {
     public class Games
     {
-        public static bool NewGame(string name)
+        public static bool NewGame(string name, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Games
+                    .Where(gm => gm.UserId == user)
                     .OrderBy(gm => gm.Id)
                     .ToList();
 
@@ -33,7 +34,8 @@ namespace Dashboard.Helpers
 
                 GameModel single = new GameModel
                 {
-                    Name = name
+                    Name = name,
+                    UserId = user
                 };
 
                 db.Games.Add(single);
@@ -63,22 +65,24 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static int GetID(string name)
+        public static int GetID(string name, int user)
         {
             using (var db = new Database())
             {
                 return db.Games
+                    .Where(gm => gm.Name == name)
                     .Where(gm => gm.Name == name)
                     .ToList()
                     .ElementAt(0).Id;
             }
         }
 
-        public static int SearchGame(string name)
+        public static int SearchGame(string name, int user)
         {
             using (var db = new Database())
             {
                 var records = db.Games
+                    .Where(gm => gm.UserId == user)
                     .Where(gm => gm.Name == name)
                     .OrderBy(gm => gm.Id)
                     .ToList();
@@ -92,19 +96,24 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static List<GameModel> GetList()
+        public static List<GameModel> GetList(int user)
         {
             using (var db = new Database())
             {
-                return db.Games.ToList();
+                return db.Games
+                    .Where(gm => gm.UserId == user)
+                    .ToList();
             }
         }
 
-        public static int GetCount()
+        public static int GetCount(int user)
         {
             using (var db = new Database())
             {
-                return db.Games.ToList().Count();
+                return db.Games
+                    .Where(gm => gm.UserId == user)
+                    .ToList()
+                    .Count();
             }
         }
 
@@ -118,6 +127,29 @@ namespace Dashboard.Helpers
                     .ToList();
 
                 return records.ElementAt(0).Name;
+            }
+        }
+
+        public static List<string> GetGamesInActivity(int daysAgo)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-daysAgo))
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                var result = new List<string>();
+
+                foreach (var record in records)
+                {
+                    if (!result.Contains(record.Game))
+                    {
+                        result.Add(record.Game);
+                    }
+                }
+
+                return result;
             }
         }
     }

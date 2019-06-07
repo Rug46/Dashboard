@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dashboard</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="~/assets/css/typography.css">
+    <link rel="stylesheet" href="~/assets/css/default-css.css">
+    <link rel="stylesheet" href="~/assets/css/styles.css">
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="~/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!--<partial name="_CookieConsentPartial" />-->
+
+    <div class="container body-content">
+        <div class="page-container">
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="logo">
+                        <a asp-controller="Home" asp-action="Index"><img src="~/assets/images/icon/logonew.png" /></a>
+                    </div>
+                </div>
+                <div class="main-menu">
+                    <div class="menu-inner">
+                        <nav>
+                            <ul class="metismenu" id="menu">
+                                <li>
+                                    <a href="/Account/Login" aria-expanded="true"><i class="ti-user"></i><span>Login</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Account/About" aria-expanded="true"><i class="ti-info-alt"></i><span>About</span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="header-area">
+                    <div class="row align-items-center">
+                        <!-- nav and search button -->
+                        <div class="col-md-6 col-sm-8 clearfix">
+                            <div class="nav-btn pull-left">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <!-- profile info & task notification -->
+                        <div class="col-md-6 col-sm-4 clearfix">
+                            <ul class="notification-area pull-right">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @RenderBody()
+            </div>
+            <footer>
+                <div class="footer-area">
+                    <p>© Copyright 2018-2019. All right reserved..</p>
+                </div>
+            </footer>
+        </div>
+        <hr />
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalNew">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Activity/Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label>Start</label>
+                            <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('DateDate').value = getDate();" />
+                            <input type="datetime-local" class="form-control" id="DateDate" name="DateStart" />
+                        </div>
+                        <div class="form-group">
+                            <label>Game</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Games
+                                    .OrderBy(gm => gm.Id)
+                                    .ToList();
+
+                                <select name="GameName" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Game...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label>Finish</label>
+                            <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('FinishDate').value = getDate();" />
+                            <input type="datetime-local" class="form-control" id="FinishDate" name="DateFinish" />
+                        </div>
+                        <div class="form-group">
+                            <label>Mode</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Modes
+                                    .OrderBy(mm => mm.Id)
+                                    .ToList();
+
+                                <select name="ModeName" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Mode...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTimer">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Activity/CreateByTimer" method="post" onsubmit="document.getElementById('stopwatchinput').value = document.getElementById('stopwatch').textContent;">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="datetime-local" class="form-control" id="DateDateT" name="DateStart" style="display:none;" />
+                        <input type="datetime-local" class="form-control" id="FinishDateT" name="DateFinish" style="display:none;" />
+
+                        <div class="form-group">
+                            <div style="font-size:50px; text-align:center; width:100%;" class="stopwatch" id="stopwatch"></div>
+                        </div>
+
+                        <input type="hidden" name="TimerValue" id="stopwatchinput" value="" />
+
+                        <div class="form-group">
+                            <label>Controls</label>
+                            <input type="button" value="Start" class="btn btn-default" style="float:right;" onclick="startTimer();" />
+                            <input type="button" value="Stop" class="btn btn-default" style="float:right;" onclick="stopTimer();" />
+                            <input type="button" value="Restart" class="btn btn-default" style="float:right;" onclick="restartTimer();" />
+                        </div>
+                        <div class="form-group">
+                            <label>Game</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Games
+                                    .OrderBy(gm => gm.Id)
+                                    .ToList();
+
+                                <select name="GameName" id="GameNameT" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Game...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label>Mode</label>
+                            @using (var db = new Dashboard.Data.Database())
+                            {
+                                var records = db.Modes
+                                    .OrderBy(mm => mm.Id)
+                                    .ToList();
+
+                                <select name="ModeName" id="ModeNameT" class="form-control" style="height: 40px;">
+                                    <option value="0" selected disabled>Select Mode...</option>
+                                    @for (int i = 0; i < records.Count; i++)
+                                    {
+                                        <option value="@records.ElementAt(i).Name">@records.ElementAt(i).Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            @*<input type="button" value="Create" class="btn btn-primary" onclick="submitButton()" />*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+
+        function getDate() {
+            var today = new Date();
+            var date = today.getDate();
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+            if (date < 10) {
+                date = '0' + date;
+            }
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+            return year + "-" + month + "-" + date + "T" + hour + ":" + minute;
+        }
+
+        function startTimer() {
+            stopwatch.start();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function stopTimer() {
+            stopwatch.stop();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function restartTimer() {
+            stopwatch.restart();
+            document.getElementById("stopwatchinput").value = document.getElementById("stopwatch").textContent;
+        }
+
+        function submitButton() {
+            var stopwatchValue = document.getElementById("stopwatch").textContent;
+            var gameName = document.getElementById("GameNameT").value.trim();
+            var modeName = document.getElementById("ModeNameT").value.trim();
+
+            window.location.href = "/Activity/CreateByTimer?TimerVal=" + stopwatchValue +
+                "&GameName=" + gameName +
+                "&ModeName=" + modeName;
+        }
+    </script>
+    <script src="~/js/Stopwatch.js"></script>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script src="~/assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/metisMenu.min.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    @*<script src="~/assets/js/line-chart.js"></script>*@
+    <!-- all pie chart -->
+    @*<script src="~/assets/js/pie-chart.js"></script>*@
+    <!-- others plugins -->
+    <script src="~/assets/js/plugins.js"></script>
+    <script src="~/assets/js/scripts.js"></script>
+
+    @*<script src="~/js/home.js"></script>*@
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

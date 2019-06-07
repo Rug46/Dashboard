@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Dashboard.Models.BacklogModel BacklogEntry = (Dashboard.Models.BacklogModel) TempData["Backlog"];
+    Dashboard.Models.BacklogModel BacklogEntry = (Dashboard.Models.BacklogModel)TempData["Backlog"];
 }
 
 <style>
@@ -82,10 +82,10 @@
                             <input type="text" class="textbox" name="Name" placeholder="Name*" value="@BacklogEntry.Name" />
                             <input type="text" class="textbox" name="System" placeholder="System*" value="@BacklogEntry.System" />
                             <select class="textbox" name="Status" id="Status">
-                                <option value="0">Unplayed</option>
-                                <option value="1">Unfinished</option>
-                                <option value="2">Beat</option>
-                                <option value="3">Completed</option>
+                                <option value="@((int)BacklogModel.STATUS.UNPLAYED)">Unplayed</option>
+                                <option value="@((int)BacklogModel.STATUS.UNFINISHED)">Unfinished</option>
+                                <option value="@((int)BacklogModel.STATUS.BEAT)">Beat</option>
+                                <option value="@((int)BacklogModel.STATUS.COMPLETED)">Completed</option>
                             </select>
                             <input type="text" class="textbox" name="Progress" placeholder="Progress Note" value="@BacklogEntry.Progress" />
                             <label><input type="checkbox" name="NowPlaying" value="true" id="NowPlaying" />Now Playing</label>
@@ -98,23 +98,26 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Delete this game?<br />
-                <a class="btn btn-secondary" style="color: white;" data-dismiss="modal">No</a>
-                <a class="btn btn-danger" style="color: white;" href="/Backlog/Delete/@BacklogEntry.Id">Yes</a>
+@if (TempData["Error"] == null)
+{
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Delete this game?<br />
+                    <a class="btn btn-secondary" style="color: white;" data-dismiss="modal">No</a>
+                    <a class="btn btn-danger" style="color: white;" href="/Backlog/Delete/@BacklogEntry.Id">Yes</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 <script>
     var index = document.getElementById("StatusVal").value;

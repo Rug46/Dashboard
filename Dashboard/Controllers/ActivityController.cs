@@ -8,9 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Dashboard.Data;
 using Dashboard.Models;
 using Dashboard.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Text;
 
 namespace Dashboard.Controllers
 {
+    [Authorize]
     public class ActivityController : Controller
     {
         private readonly Database _context;
@@ -50,21 +55,24 @@ namespace Dashboard.Controllers
                 int startRecordSorted = count - endRecord;
                 int endRecordSorted = count - startRecord;
 
-                var model = db.Activity.ToList();
+                var model = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                    .ToList();
+
                 model.Reverse();
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if(i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if(i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -103,16 +111,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -146,16 +154,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -188,16 +196,16 @@ namespace Dashboard.Controllers
 
                 var records = new List<ActivityModel>();
 
-                for (int i = startRecord; i < endRecord; i++)
-                {
-                    if (i < count)
-                    {
-                        records.Add(model.ElementAt(i));
-                    }
-                }
+                //for (int i = startRecord; i < endRecord; i++)
+                //{
+                //    if (i < count)
+                //    {
+                //        records.Add(model.ElementAt(i));
+                //    }
+                //}
 
                 ViewData["Page"] = id + 1;
-                return View(records);
+                return View(model);
             }
         }
 
@@ -235,17 +243,48 @@ namespace Dashboard.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //public async Task<IActionResult> Create([Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
-        public async Task<IActionResult> Create(int id, DateTime DateStart, string GameName, DateTime DateFinish, string ModeName)
+        public async Task<IActionResult> Create(int id, DateTime DateStart, string NewGame, DateTime DateFinish, string NewMode)
         {
             ActivityModel activityModel = new ActivityModel
             {
                 Date = DateStart,
-                Game = GameName,
+                Game = NewGame,
                 Finish = DateFinish,
-                Mode = ModeName
+                Mode = NewMode,
+                UserId = Account.GetUserId(User.Identity.Name)
             };
 
             Activity.AddNew(activityModel);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult CreateByTimer(string TimerValue, string TimerGame, string TimerMode)
+        {
+            if (TimerValue == null || TimerGame == null || TimerMode == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var minutes = int.Parse(TimerValue.Substring(0, 2));
+            var seconds = int.Parse(TimerValue.Substring(3, 2));
+
+            var now = DateTime.Now;
+            var start = now.AddMinutes(-minutes).AddSeconds(-seconds);
+
+            now = now.AddSeconds(-now.Second);
+            start = start.AddSeconds(-start.Second);
+
+            ActivityModel single = new ActivityModel
+            {
+                Date = start,
+                Game = TimerGame,
+                Finish = now,
+                Mode = TimerMode,
+                UserId = Account.GetUserId(User.Identity.Name)
+            };
+
+            Activity.AddNew(single);
 
             return RedirectToAction("Index");
         }
@@ -267,6 +306,11 @@ namespace Dashboard.Controllers
             activityModel.Game = activityModel.Game.Trim();
             activityModel.Mode = activityModel.Mode.Trim();
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -278,6 +322,11 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Game,Finish,Mode")] ActivityModel activityModel)
         {
             if (id != activityModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
             {
                 return NotFound();
             }
@@ -320,6 +369,11 @@ namespace Dashboard.Controllers
                 return NotFound();
             }
 
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             return View(activityModel);
         }
 
@@ -329,8 +383,15 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var activityModel = await _context.Activity.FindAsync(id);
+
+            if (activityModel.UserId != Account.GetUserId(User.Identity.Name))
+            {
+                return NotFound();
+            }
+
             _context.Activity.Remove(activityModel);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -361,24 +422,156 @@ namespace Dashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Game(int GameID)
+        public IActionResult Game(string GameName)
         {
-            if(GameID == 0)
+            if(GameName == "" || GameName == null)
             {
                 TempData["None"] = "Please select a game";
                 return View();
             }
 
-            string Name = Games.GetGame(GameID);
-
-            TempData["Id"] = GameID;
-            TempData["Game"] = Name;
+            TempData["Game"] = GameName;
 
             return View();
         }
 
         public IActionResult Timeline()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Export(int format, int dataFrom)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                if (dataFrom == 1)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddHours(-24))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+                else if (dataFrom == 2)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-7))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+                else if (dataFrom == 3)
+                {
+                    records = db.Activity
+                        .Where(ptm => ptm.UserId == Account.GetUserId(User.Identity.Name))
+                        .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                        .OrderBy(ptm => ptm.Date)
+                        .ToList();
+                }
+
+                if (format == 0)
+                {
+                    string result = "Date,Game,Finish,Mode\n";
+
+                    foreach (var item in records)
+                    {
+                        string date = item.Date.ToString();
+                        string game = item.Game;
+                        string finish = item.Finish.ToString();
+                        string mode = item.Mode;
+
+                        string line = date + "," + game + "," + finish + "," + mode;
+                        result += line + "\n";
+                    }
+
+                    byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                    return File(resultBytes, "text/plain", "export-" + DateTime.Now + ".csv");
+                }
+                else if (format == 1)
+                {
+                    string result = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+                    result += "<Activity>\n";
+
+                    foreach (var item in records)
+                    {
+                        string date = item.Date.ToString();
+                        string game = item.Game;
+                        string finish = item.Finish.ToString();
+                        string mode = item.Mode;
+
+                        string line = "\t<Record Date=\"" + date + "\" Game=\"" + game + "\" Finish=\"" + finish + "\" Mode=\"" + mode + "\" />";
+                        result += line + "\n";
+                    }
+
+                    result += "</Activity>";
+
+                    byte[] resultBytes = System.Text.Encoding.ASCII.GetBytes(result);
+
+                    return File(resultBytes, "text/xml", "export-" + DateTime.Now + ".xml");
+                }
+
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Import(IFormFile file)
+        {
+            if (Helpers.Import.IsFileType(file, "xml"))
+            {
+                return View();
+            }
+            else if (Helpers.Import.IsFileType(file, "csv"))
+            {
+                var CSV = Helpers.Import.ImportCSV(file);
+
+                Helpers.Import.CSVDatabase(CSV, User.Identity.Name);
+
+                TempData["Imported"] = "CSV";
+
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public IActionResult Profile(string id)
+        {
+            int userID = Account.GetUserId(id);
+
+            if (userID == -1)
+            {
+                TempData["Error"] = "User does not exist";
+                TempData["id"] = -1;
+                TempData["username"] = id;
+
+                return View();
+            }
+
+            TempData["id"] = Account.GetUserId(id);
+            TempData["username"] = id;
+
             return View();
         }
     }

@@ -127,7 +127,7 @@
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {
-                        var records = Dashboard.Helpers.Backlog.GetAllGamesBySystem();
+                        var records = Dashboard.Helpers.Backlog.GetAllGamesBySystem(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
 
                         <table>
                             <thead>
@@ -144,19 +144,19 @@
                                         <td>
                                             <a class="link-nostyle" href="/Backlog/Edit/@records.ElementAt(i).Id"><i class="ti-marker-alt"></i></a>
 
-                                            @if (records.ElementAt(i).Status == 0)
+                                            @if (records.ElementAt(i).Status == (int)BacklogModel.STATUS.UNPLAYED)
                                             {
                                                 <i class="ti-medall-alt silver" data-toggle="tooltip" data-placement="right" title="Unplayed"></i>
                                             }
-                                            else if (records.ElementAt(i).Status == 1)
+                                            else if (records.ElementAt(i).Status == (int)BacklogModel.STATUS.UNFINISHED)
                                             {
                                                 <i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i>
                                             }
-                                            else if (records.ElementAt(i).Status == 2)
+                                            else if (records.ElementAt(i).Status == (int)BacklogModel.STATUS.BEAT)
                                             {
                                                 <i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i>
                                             }
-                                            else if (records.ElementAt(i).Status == 3)
+                                            else if (records.ElementAt(i).Status == (int)BacklogModel.STATUS.COMPLETED)
                                             {
                                                 <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
                                             }

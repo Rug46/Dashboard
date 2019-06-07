@@ -10,6 +10,19 @@ namespace Dashboard.Helpers
 {
     public class Activity
     {
+        public static List<ActivityModel> GetByUser(int userid)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.UserId == userid)
+                    .OrderBy(ptm => ptm.Id)
+                    .ToList();
+
+                return records;
+            }
+        }
+
         public static int GetLastPage()
         {
             var recordsPerPage = ActivityController.recordsPerPage;
@@ -111,6 +124,30 @@ namespace Dashboard.Helpers
             {
                 db.Activity.Add(model);
                 db.SaveChanges();
+            }
+        }
+
+        public static List<string> GetGames(int userid)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Activity
+                    .Where(ptm => ptm.Date >= DateTime.Now.AddDays(-28))
+                    .Where(ptm => ptm.UserId == userid)
+                    .OrderBy(ptm => ptm.Date)
+                    .ToList();
+
+                var games = new List<string>();
+
+                foreach (var record in records)
+                {
+                    if (!games.Contains(record.Game))
+                    {
+                        games.Add(record.Game);
+                    }
+                }
+
+                return games;
             }
         }
     }

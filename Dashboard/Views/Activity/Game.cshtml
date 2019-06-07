@@ -42,15 +42,13 @@
                     <form action="Game" method="post">
                         @using (var db = new Dashboard.Data.Database())
                         {
-                            var records = db.Games
-                                .OrderBy(gm => gm.Id)
-                                .ToList();
+                            var records = Dashboard.Helpers.Activity.GetGames(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
 
-                            <select name="GameID" class="textbox">
+                            <select name="GameName" class="textbox">
                                 <option value="0" selected disabled>Select Game...</option>
                                 @for (int i = 0; i < records.Count; i++)
                                 {
-                                    <option value="@records.ElementAt(i).Id">@records.ElementAt(i).Name</option>
+                                    <option value="@records.ElementAt(i)">@records.ElementAt(i)</option>
                                 }
                             </select>
                             <input type="submit" value="Search" class="btn padding-btn" />
@@ -61,6 +59,7 @@
                         @using (var db = new Dashboard.Data.Database())
                         {
                             var records = db.Activity
+                                .Where(ptm => ptm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                                 .Where(ptm => ptm.Game == TempData["Game"].ToString())
                                 .OrderBy(ptm => ptm.Date)
                                 .ToList();
@@ -120,6 +119,22 @@
                                         }
                                     </tbody>
                                 </table>
+                            }
+
+                            var isParent = Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
+                            var enableLinks = Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks"));
+
+                            @if (isParent || bool.Parse(enableLinks))
+                            {
+                                <hr />
+                                <h3>Links</h3>
+                                <a href="@Dashboard.Helpers.GameLinks.GetMetacritic(TempData["Game"].ToString())" target="_blank"><img src="~/images/logo-metacritic.png" style="height:50px;" /></a>
+                            }
+                            else
+                            {
+                                <hr />
+                                <h3>Links</h3>
+                                <i>External links are disabled</i>
                             }
                         }
                     }

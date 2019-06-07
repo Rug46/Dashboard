@@ -1,0 +1,282 @@
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
+
+@{
+    int id = (int)TempData["id"];
+    string username = (string)TempData["username"];
+
+    ViewData["Title"] = username + "'s Profile";
+}
+
+<style>
+    th {
+        background-color: gray;
+        color: white;
+        padding: 0px 10px;
+    }
+
+    tfoot th {
+        background-color: #969696;
+        color: white;
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    td {
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .playStatus {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .progress .green {
+        background-color: green;
+    }
+
+    .red {
+        color: #E20505;
+    }
+
+    .progress .red {
+        background-color: #E20505;
+    }
+
+    .blue {
+        color: cadetblue;
+    }
+
+    .progress .blue {
+        background-color: cadetblue;
+    }
+
+    .gold {
+        color: gold;
+    }
+
+    .progress .gold {
+        background-color: gold;
+    }
+
+    .silver {
+        color: silver;
+    }
+
+    .progress .silver {
+        background-color: silver;
+    }
+
+    .progress {
+        height: 20px;
+        margin: 0px 10px;
+    }
+
+    .progress-td {
+        width: 85%;
+    }
+
+    .padding-btn {
+        padding: 5px 1px;
+        margin: 0px 5px;
+    }
+
+    .btn-100 {
+        width: 100%;
+    }
+
+    .tooltip {
+        font-size: 16px;
+    }
+
+    .link-nostyle, .link-nostyle:link, .link-nostyle:visited, .link-nostyle:hover, .link-nostyle:active {
+        color: black;
+        text-decoration: inherit;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+                    else
+                    {
+                        <h1>@username 's Profile</h1>
+                        <br />
+
+                        var records = Dashboard.Helpers.Activity.GetByUser(id);
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Game
+                                    </th>
+                                    <th>
+                                        Finish
+                                    </th>
+                                    <th>
+                                        Mode
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in records)
+                                {
+                                    <tr>
+                                        <td>
+                                            @record.Date
+                                        </td>
+                                        <td>
+                                            @record.Game
+                                        </td>
+                                        <td>
+                                            @record.Finish
+                                        </td>
+                                        <td>
+                                            @record.Mode
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <h2>Backlog</h2>
+                        <br />
+
+                        @using (var db = new Dashboard.Data.Database())
+                        {
+                            var backlog = db.Backlog
+                                .Where(bm => bm.UserId == id)
+                                .OrderBy(bm => bm.Id)
+                                .ToList();
+
+                            var nowplaying = backlog
+                                .Where(bm => bm.NowPlaying != 0)
+                                .OrderBy(bm => bm.Id)
+                                .ToList();
+
+                            var systems = Dashboard.Helpers.Backlog.GetSystems(id);
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Now Playing</th>
+                                        <th>Progress Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < nowplaying.Count; i++)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td>@nowplaying.ElementAt(i).Name</td>
+                                            <td>@nowplaying.ElementAt(i).Progress</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <br />
+                            <table class="playStatus">
+                                <tr>
+                                    <td>
+                                        <i class="ti-medall-alt red" data-toggle="tooltip" data-placement="right" title="Unfinished"></i>
+                                    </td>
+                                    <td class="progress-td">
+                                        <div class="progress">
+                                            <div class="progress-bar silver" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED, id)%"></div>
+                                            <div class="progress-bar red" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED, id)%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNPLAYED, id) + Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.UNFINISHED, id)))%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="ti-medall-alt green" data-toggle="tooltip" data-placement="right" title="Beat"></i>
+                                    </td>
+                                    <td class="progress-td">
+                                        <div class="progress">
+                                            <div class="progress-bar green" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT, id)%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.BEAT, id)))%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
+                                    </td>
+                                    <td class="progress-td">
+                                        <div class="progress">
+                                            <div class="progress-bar gold" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED, id)%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Math.Round((Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED, id)))%
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th><i class="ti-medall-alt red" data-toggle="tooltip" data-placement="top" title="Unfinished"></i></th>
+                                        <th><i class="ti-medall-alt green" data-toggle="tooltip" data-placement="top" title="Beat"></i></th>
+                                        <th><i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="top" title="Completed"></i></th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < systems.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@systems.ElementAt(i)</td>
+                                            <td>@(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, systems.ElementAt(i), id) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, systems.ElementAt(i), id))</td>
+                                            <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, systems.ElementAt(i), id)</td>
+                                            <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, systems.ElementAt(i), id)</td>
+                                            <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i), id)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Dashboard.Helpers.Backlog.GetTotal(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        }
+                    }
+                    <script src="~/js/activity.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

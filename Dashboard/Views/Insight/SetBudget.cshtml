@@ -7,40 +7,19 @@
 <div class="col-lg-12">
     <div class="single-report">
         <h1>Set Budget</h1>
-        <form asp-action="SetBudget">
+        <form asp-action="SetBudget" method="post">
             <div class="form-group">
-                Daily Budget: <input type="number" id="tbDayH" style="width:50px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetHours()" /> h
-                <input type="number" id="tbDayM" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetMinutes()" /> m
+                Daily Budget: <input type="number" id="tbDayH" name="dayHours" style="width:50px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetHours(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" /> h
+                <input type="number" id="tbDayM" name="dayMinutes" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudgetToday.GetBudgetMinutes(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" /> m
             </div>
             <div class="form-group">
-                Monthly Budget: <input type="number" id="tbMonthH" style="width: 50px;" value="@Dashboard.Helpers.SetBudget.GetBudgetHours()" /> h
-                <input type="number" id="tbMonthM" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudget.GetBudgetMinutes()" /> m
+                Monthly Budget: <input type="number" id="tbMonthH" name="monthHours" style="width: 50px;" value="@Dashboard.Helpers.SetBudget.GetBudgetHours(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" /> h
+                <input type="number" id="tbMonthM" name="monthMinutes" style="width:50px;margin-left:10px;" value="@Dashboard.Helpers.SetBudget.GetBudgetMinutes(Dashboard.Helpers.Account.GetUserId(User.Identity.Name))" /> m
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" style="background-color:lightgray;margin-left:10px;" onclick="Save()" />
+                <input type="submit" value="Save" class="btn btn-default" style="background-color:lightgray;margin-left:10px;" />
             </div>
         </form>
         <asp:ScriptManager id="smSave" runat="server" EnablePageMethods="true" />
-        <script>
-            function Save() {
-                var bmHours = $("#tbMonthH").val();
-                var bmMinutes = $("#tbMonthM").val();
-                var bdHours = $("#tbDayH").val();
-                var bdMinutes = $("#tbDayM").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Insight/SetBudgetAmount/?monthHours=" + bmHours + "&monthMinutes=" + bmMinutes + "&dayHours=" + bdHours + "&dayMinutes=" + bdMinutes,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "html",
-                    success: function (result, status, xhr) {
-                        window.location.href = "/Insight/Budget";
-                    },
-                    error: function (xhr, status, error) {
-                        alert('error: ' + status + ", " + error);
-                    }
-                });
-            }
-        </script>
     </div>
 </div>

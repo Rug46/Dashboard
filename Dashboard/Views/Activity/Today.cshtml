@@ -44,6 +44,7 @@
                     <br />
                     @{
                         var records = Model
+                            .Where(ptm => ptm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
                             .Where(ptm => ptm.Date.Date >= DateTime.Now.AddHours(-24))
                             .OrderByDescending(ptm => ptm.Date)
                             .ToList();
