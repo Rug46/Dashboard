@@ -92,11 +92,18 @@
                             <tbody>
                                 @foreach (var record in records)
                                 {
+                                    var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
+                                    var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+
                                     <tr>
                                         <td>@record.GameName</td>
                                         <td>@record.ConsoleName</td>
                                         <td>
-                                            <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
+                                            @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
+                                            {
+                                                <a href="@amazonLink">View</a>
+                                            }
+                                            | <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
                                         </td>
                                     </tr>
                                 }
