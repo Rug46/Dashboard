@@ -69,5 +69,28 @@ namespace Dashboard.Helpers
                 db.SaveChanges();
             }
         }
+
+        public static void ArchiveWishlist(int id, int parentid)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Wishlist
+                    .Where(wm => wm.Id == id)
+                    .ToList();
+
+                if (records.Count != 1)
+                {
+                    return;
+                }
+
+                if (!Account.IsChildOf(parentid, records.ElementAt(0).UserId))
+                {
+                    return;
+                }
+
+                records.ElementAt(0).Archived = 1;
+                db.SaveChanges();
+            }
+        }
     }
 }

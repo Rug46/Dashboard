@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Wishlist";
+    var UserId = TempData["UserId"].ToString();
 }
 
 <style>
@@ -77,38 +78,89 @@
                     @using (var db = new Dashboard.Data.Database())
                     {
                         var records = db.Wishlist
-                            .Where(wm => wm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                            .Where(wm => wm.UserId == int.Parse(UserId))
                             .OrderBy(wm => wm.GameName)
                             .ToList();
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Game</th>
-                                    <th>Console</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var record in records)
-                                {
-                                    var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
-                                    var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+                        var recordsNoArchive = records
+                            .Where(wm => wm.Archived == 0)
+                            .ToList();
 
+                        bool loggedInAccount = false;
+                        bool parentAccount = false;
+
+                        if (int.Parse(UserId) == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                        {
+                            loggedInAccount = true;
+                        }
+
+                        if (Dashboard.Helpers.Account.IsChildOf(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), int.Parse(UserId)))
+                        {
+                            parentAccount = true;
+                        }
+
+                        @if (loggedInAccount)
+                        {
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>@record.GameName</td>
-                                        <td>@record.ConsoleName</td>
-                                        <td>
-                                            @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
-                                            {
-                                                <a href="@amazonLink">View</a>
-                                            }
-                                            | <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
-                                        </td>
+                                        <th>Game</th>
+                                        <th>Console</th>
+                                        <th></th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var record in records)
+                                    {
+                                        var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
+                                        var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+
+                                        <tr>
+                                            <td>@record.GameName</td>
+                                            <td>@record.ConsoleName</td>
+                                            <td>
+                                                @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
+                                                {
+                                                    <a href="@amazonLink">View</a>
+                                                }
+                                                | <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else if (parentAccount)
+                        {
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Game</th>
+                                        <th>Console</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var record in recordsNoArchive)
+                                    {
+                                        var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
+                                        var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+
+                                        <tr>
+                                            <td>@record.GameName</td>
+                                            <td>@record.ConsoleName</td>
+                                            <td>
+                                                @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
+                                                {
+                                                    <a href="@amazonLink">View</a>
+                                                }
+                                                | <a href="/Backlog/WishlistArchive/@record.Id?userid=@record.UserId">Archive</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
                     }
                 </div>
             </div>

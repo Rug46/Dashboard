@@ -97,8 +97,10 @@ namespace Dashboard.Controllers
             return View();
         }
 
-        public IActionResult Wishlist()
+        public IActionResult Wishlist(int id)
         {
+            TempData["UserId"] = id;
+
             return View();
         }
 
@@ -107,14 +109,21 @@ namespace Dashboard.Controllers
         {
             Helpers.Wishlist.AddWishlist(Account.GetUserId(User.Identity.Name), gameName, consoleName);
 
-            return View();
+            return RedirectToAction("Wishlist", new { id = Account.GetUserId(User.Identity.Name) });
         }
 
         public IActionResult WishlistDelete(int id)
         {
             Helpers.Wishlist.RemoveWishlist(id, Account.GetUserId(User.Identity.Name));
 
-            return RedirectToAction("Wishlist");
+            return RedirectToAction("Wishlist", new { id = Account.GetUserId(User.Identity.Name) });
+        }
+
+        public IActionResult WishlistArchive(int id, int userid)
+        {
+            Helpers.Wishlist.ArchiveWishlist(id, Account.GetUserId(User.Identity.Name));
+
+            return RedirectToAction("Wishlist", new { id = userid });
         }
     }
 }
