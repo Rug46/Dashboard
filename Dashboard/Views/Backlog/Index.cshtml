@@ -135,6 +135,7 @@
                     <h1 class="float-left">Backlog</h1>
                     <button type="button" class="btn btn-primary padding-btn" data-toggle="modal" data-target="#newModal">New</button>
                     <a type="button" class="btn btn-secondary padding-btn" href="/Backlog/All">All Games</a>
+                    <a type="button" class="btn btn-secondary padding-btn" href="/Backlog/Wishlist/@Dashboard.Helpers.Account.GetUserId(User.Identity.Name)">Wishlist</a>
                     <br />
                     @using (var db = new Dashboard.Data.Database())
                     {

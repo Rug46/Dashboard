@@ -33,6 +33,7 @@ namespace Dashboard.Data
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserBudgetModel> UserBudgets { get; set; }
         public DbSet<UserSettingModel> UserSettings { get; set; }
+        public DbSet<WishlistModel> Wishlist { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +47,7 @@ namespace Dashboard.Data
             modelBuilder.Entity<UserModel>().ToTable("User");
             modelBuilder.Entity<UserBudgetModel>().ToTable("UserBudget");
             modelBuilder.Entity<UserSettingModel>().ToTable("UserSetting");
+            modelBuilder.Entity<WishlistModel>().ToTable("Wishlist");
         }
     }
 }

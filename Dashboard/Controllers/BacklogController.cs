@@ -96,5 +96,34 @@ namespace Dashboard.Controllers
 
             return View();
         }
+
+        public IActionResult Wishlist(int id)
+        {
+            TempData["UserId"] = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Wishlist(string gameName, string consoleName)
+        {
+            Helpers.Wishlist.AddWishlist(Account.GetUserId(User.Identity.Name), gameName, consoleName);
+
+            return RedirectToAction("Wishlist", new { id = Account.GetUserId(User.Identity.Name) });
+        }
+
+        public IActionResult WishlistDelete(int id)
+        {
+            Helpers.Wishlist.RemoveWishlist(id, Account.GetUserId(User.Identity.Name));
+
+            return RedirectToAction("Wishlist", new { id = Account.GetUserId(User.Identity.Name) });
+        }
+
+        public IActionResult WishlistArchive(int id, int userid)
+        {
+            Helpers.Wishlist.ArchiveWishlist(id, Account.GetUserId(User.Identity.Name));
+
+            return RedirectToAction("Wishlist", new { id = userid });
+        }
     }
 }

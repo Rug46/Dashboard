@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewData["Title"] = "Wishlist";
+    var UserId = TempData["UserId"].ToString();
+}
+
+<style>
+    th {
+        background-color: gray;
+        color: white;
+        padding: 0px 10px;
+        font-size: 18px;
+    }
+
+    tfoot th {
+        background-color: #969696;
+        color: white;
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    td {
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    form {
+        font-size: 20px;
+    }
+
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+        width: 100%;
+    }
+
+    .padding-btn {
+        padding: 5px 10px;
+        margin: 0px 5px;
+    }
+
+    .btn-100 {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .tooltip {
+        font-size: 16px;
+    }
+
+    .link-nostyle, .link-nostyle:link, .link-nostyle:visited, .link-nostyle:hover, .link-nostyle:active {
+        color: black;
+        text-decoration: inherit;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="float-left">Wishlist</h1>
+                    <a href="/Backlog" class="btn btn-primary padding-btn" type="button">Back</a>
+                    <br />
+                    <hr />
+                    <form method="post">
+                        <input type="text" name="gameName" placeholder="Game Name" class="textbox" />
+                        <input type="text" name="consoleName" placeholder="Console Name" class="textbox" />
+                        <input type="submit" value="Add" class="btn btn-primary btn-100" />
+                    </form>
+                    <hr />
+                    @using (var db = new Dashboard.Data.Database())
+                    {
+                        var records = db.Wishlist
+                            .Where(wm => wm.UserId == int.Parse(UserId))
+                            .OrderBy(wm => wm.GameName)
+                            .ToList();
+
+                        var recordsNoArchive = records
+                            .Where(wm => wm.Archived == 0)
+                            .ToList();
+
+                        bool loggedInAccount = false;
+                        bool parentAccount = false;
+
+                        if (int.Parse(UserId) == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                        {
+                            loggedInAccount = true;
+                        }
+
+                        if (Dashboard.Helpers.Account.IsChildOf(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), int.Parse(UserId)))
+                        {
+                            parentAccount = true;
+                        }
+
+                        @if (loggedInAccount)
+                        {
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Game</th>
+                                        <th>Console</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var record in records)
+                                    {
+                                        var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
+                                        var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+
+                                        <tr>
+                                            <td>@record.GameName</td>
+                                            <td>@record.ConsoleName</td>
+                                            <td>
+                                                @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
+                                                {
+                                                    <a href="@amazonLink">View</a>
+                                                }
+                                                | <a href="/Backlog/WishlistDelete/@record.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else if (parentAccount)
+                        {
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Game</th>
+                                        <th>Console</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var record in recordsNoArchive)
+                                    {
+                                        var searchName = record.GameName.Replace(" ", "+") + "+for+" + record.ConsoleName.Replace(" ", "+");
+                                        var amazonLink = "https://www.amazon.co.uk/s?k=" + searchName;
+
+                                        <tr>
+                                            <td>@record.GameName</td>
+                                            <td>@record.ConsoleName</td>
+                                            <td>
+                                                @if (Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks")) == "true")
+                                                {
+                                                    <a href="@amazonLink">View</a>
+                                                }
+                                                | <a href="/Backlog/WishlistArchive/@record.Id?userid=@record.UserId">Archive</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
