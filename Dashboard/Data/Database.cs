@@ -29,6 +29,7 @@ namespace Dashboard.Data
         public DbSet<BudgetModel> Budgets { get; set; }
         public DbSet<GameModel> Games { get; set; }
         public DbSet<ModeModel> Modes { get; set; }
+        public DbSet<SecurityQuestionModel> SecurityQuestions { get; set; }
         public DbSet<SettingModel> Settings { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserBudgetModel> UserBudgets { get; set; }
@@ -43,6 +44,7 @@ namespace Dashboard.Data
             modelBuilder.Entity<BudgetModel>().ToTable("Budget");
             modelBuilder.Entity<GameModel>().ToTable("Game");
             modelBuilder.Entity<ModeModel>().ToTable("Mode");
+            modelBuilder.Entity<SecurityQuestionModel>().ToTable("SecurityQuestion");
             modelBuilder.Entity<SettingModel>().ToTable("Setting");
             modelBuilder.Entity<UserModel>().ToTable("User");
             modelBuilder.Entity<UserBudgetModel>().ToTable("UserBudget");

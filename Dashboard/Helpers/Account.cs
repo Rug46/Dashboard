@@ -9,7 +9,7 @@ namespace Dashboard.Helpers
 {
     public class Account
     {
-        public static bool RegisterParent(string username, string password, string email)
+        public static bool RegisterParent(string username, string password, string email, int question1, int question2, int question3, string answer1, string answer2, string answer3)
         {
             using (var db = new Database())
             {
@@ -32,12 +32,33 @@ namespace Dashboard.Helpers
                     return false;
                 }
 
+                if (question1 == 0 || question2 == 0 || question3 == 0)
+                {
+                    return false;
+                }
+
+                if (answer1 == "" || answer1 == null || answer2 == "" || answer2 == null || answer3 == "" || answer3 == null)
+                {
+                    return false;
+                }
+
+                if (question1 == question2 || question1 == question3 || question2 == question3)
+                {
+                    return false;
+                }
+
                 UserModel user = new UserModel
                 {
                     Username = username,
                     Password = Passwords.Hash(password),
                     Email = email,
-                    Admin = 1
+                    Admin = 1,
+                    Question1 = question1,
+                    Question2 = question2,
+                    Question3 = question3,
+                    Answer1 = answer1,
+                    Answer2 = answer2,
+                    Answer3 = answer3
                 };
 
                 db.Users.Add(user);

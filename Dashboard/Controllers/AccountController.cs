@@ -49,9 +49,9 @@ namespace Dashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string username, string password, string email)
+        public IActionResult Register(string username, string password, string email, int question1, int question2, int question3, string answer1, string answer2, string answer3)
         {
-            if(!Account.RegisterParent(username, password, email))
+            if(!Account.RegisterParent(username, password, email, question1, question2, question3, answer1, answer2, answer3))
             {
                 return RedirectToAction("Register");
             }
