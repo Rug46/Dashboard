@@ -173,6 +173,11 @@
                     <form action="/Activity/Create" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
+                            <div class="alert alert-warning">
+                                This modal will be removed in a future version. Please use the timer or import page to add activity.
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Start</label>
                             <input type="button" value="Now" class="btn btn-default" style="float:right;" onclick="document.getElementById('DateDate').value = getDate();" />
                             <input type="datetime-local" class="form-control" id="DateDate" name="DateStart" />
