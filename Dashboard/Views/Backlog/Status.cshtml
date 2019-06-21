@@ -74,6 +74,14 @@
         background-color: silver;
     }
 
+    .darkgrey {
+        color: darkgray;
+    }
+
+    .progress .darkgrey {
+        background-color: darkgrey;
+    }
+
     .progress {
         height: 20px;
         margin: 0px 10px;
@@ -138,6 +146,8 @@
                         if (TempData["Status"].ToString() == "Unfinished") { StatusInt = (int)BacklogModel.STATUS.UNFINISHED; }
                         if (TempData["Status"].ToString() == "Beat") { StatusInt = (int)BacklogModel.STATUS.BEAT; }
                         if (TempData["Status"].ToString() == "Completed") { StatusInt = (int)BacklogModel.STATUS.COMPLETED; }
+                        if (TempData["Status"].ToString() == "Endless") { StatusInt = (int)BacklogModel.STATUS.ENDLESS; }
+                        if (TempData["Status"].ToString() == "Retired") { StatusInt = (int)BacklogModel.STATUS.RETIRED; }
 
                         var Records = new List<BacklogModel>();
 
@@ -188,6 +198,14 @@
                                             else if (Records.ElementAt(i).Status == (int)BacklogModel.STATUS.COMPLETED)
                                             {
                                                 <i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="right" title="Completed"></i>
+                                            }
+                                            else if (Records.ElementAt(i).Status == (int)BacklogModel.STATUS.ENDLESS)
+                                            {
+                                                <i class="ti-medall-alt blue" data-toggle="tooltip" data-placement="right" title="Endless"></i>
+                                            }
+                                            else if (Records.ElementAt(i).Status == (int)BacklogModel.STATUS.RETIRED)
+                                            {
+                                                <i class="ti-medall-alt darkgrey" data-toggle="tooltip" data-placement="right" title="Retired"></i>
                                             }
                                         </td>
                                         <td>

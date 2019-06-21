@@ -92,7 +92,9 @@ namespace Dashboard.Controllers
             if (id == (int)BacklogModel.STATUS.UNFINISHED) { TempData["Status"] = "Unfinished"; }
             if (id == (int)BacklogModel.STATUS.BEAT) { TempData["Status"] = "Beat"; }
             if (id == (int)BacklogModel.STATUS.COMPLETED) { TempData["Status"] = "Completed"; }
-            if (id > 3) { return RedirectToAction("Index"); }
+            if (id == (int)BacklogModel.STATUS.ENDLESS) { TempData["Status"] = "Endless"; }
+            if (id == (int)BacklogModel.STATUS.RETIRED) { TempData["Status"] = "Retired"; }
+            if (id > 5) { return RedirectToAction("Index"); }
 
             return View();
         }

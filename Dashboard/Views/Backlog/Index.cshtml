@@ -74,6 +74,14 @@
         background-color: silver;
     }
 
+    .darkgrey {
+        color: darkgray;
+    }
+
+    .progress .darkgrey {
+        background-color: darkgrey;
+    }
+
     .progress {
         height: 20px;
         margin: 0px 10px;
@@ -221,6 +229,34 @@
                                     @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.COMPLETED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))%
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.ENDLESS, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                                    <a class="link-nostyle" href="/Backlog/Status/4"><i class="ti-medall-alt blue" data-toggle="tooltip" data-placement="right" title="Endless"></i></a>
+                                </td>
+                                <td class="progress-td">
+                                    <div class="progress">
+                                        <div class="progress-bar blue" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.ENDLESS, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.ENDLESS, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.RETIRED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
+                                    <a class="link-nostyle" href="/Backlog/Status/5"><i class="ti-medall-alt darkgrey" data-toggle="tooltip" data-placement="right" title="Retired"></i></a>
+                                </td>
+                                <td class="progress-td">
+                                    <div class="progress">
+                                        <div class="progress-bar darkgrey" role="progressbar" style="width: @Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.RETIRED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name))%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @Math.Round(Dashboard.Helpers.Backlog.GetFromStatusPercentage((int)BacklogModel.STATUS.RETIRED, Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))%
+                                </td>
+                            </tr>
                         </table>
                         <table>
                             <thead>
@@ -229,24 +265,30 @@
                                     <th><i class="ti-medall-alt red" data-toggle="tooltip" data-placement="top" title="Unfinished"></i></th>
                                     <th><i class="ti-medall-alt green" data-toggle="tooltip" data-placement="top" title="Beat"></i></th>
                                     <th><i class="ti-medall-alt gold" data-toggle="tooltip" data-placement="top" title="Completed"></i></th>
+                                    <th><i class="ti-medall-alt blue" data-toggle="tooltip" data-placement="top" title="Endless"></i></th>
+                                    <th><i class="ti-medall-alt darkgrey" data-toggle="tooltip" data-placement="top" title="Retired"></i></th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for (int i = 0; i < systems.Count; i++)
                                 {
-                                    <tr>
-                                        <td><a class="link-nostyle" href="/Backlog/System/@systems.ElementAt(i)">@systems.ElementAt(i)</a></td>
-                                        <td>@(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
-                                        <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
-                                    </tr>
+                                <tr>
+                                    <td><a class="link-nostyle" href="/Backlog/System/@systems.ElementAt(i)">@systems.ElementAt(i)</a></td>
+                                    <td>@(Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNPLAYED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)) + Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.UNFINISHED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name)))</td>
+                                    <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.BEAT, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                    <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.COMPLETED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                    <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.ENDLESS, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                    <td>@Dashboard.Helpers.Backlog.GetFromStatus((int)BacklogModel.STATUS.RETIRED, systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                    <td>@Dashboard.Helpers.Backlog.GetSystemTotal(systems.ElementAt(i), Dashboard.Helpers.Account.GetUserId(User.Identity.Name))</td>
+                                </tr>
                                 }
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Total</th>
+                                    <th></th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -279,6 +321,8 @@
                         <option value="@((int)BacklogModel.STATUS.UNFINISHED)" selected>Unfinished</option>
                         <option value="@((int)BacklogModel.STATUS.BEAT)">Beat</option>
                         <option value="@((int)BacklogModel.STATUS.COMPLETED)">Completed</option>
+                        <option value="@((int)BacklogModel.STATUS.ENDLESS)">Endless</option>
+                        <option value="@((int)BacklogModel.STATUS.RETIRED)">Retired</option>
                     </select>
                     <input type="text" class="textbox" name="Progress" placeholder="Progress Note" />
                     <label><input type="checkbox" name="NowPlaying" value="true" />Now Playing</label>
