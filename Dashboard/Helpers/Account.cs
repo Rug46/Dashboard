@@ -77,6 +77,10 @@ namespace Dashboard.Helpers
                     .Where(u => u.Username == username)
                     .ToList();
 
+                var parent = db.Users
+                    .Where(u => u.Id == parentAccountId)
+                    .ToList();
+
                 if (records.Count != 0)
                 {
                     return false;
@@ -98,7 +102,13 @@ namespace Dashboard.Helpers
                     Password = Passwords.Hash(password),
                     Email = email,
                     Admin = 0,
-                    ParentAccountId = parentAccountId
+                    ParentAccountId = parentAccountId,
+                    Question1 = parent.ElementAt(0).Question1,
+                    Question2 = parent.ElementAt(0).Question2,
+                    Question3 = parent.ElementAt(0).Question3,
+                    Answer1 = parent.ElementAt(0).Answer1,
+                    Answer2 = parent.ElementAt(0).Answer2,
+                    Answer3 = parent.ElementAt(0).Answer3
                 };
 
                 db.Users.Add(user);
