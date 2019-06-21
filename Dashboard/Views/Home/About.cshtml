@@ -29,6 +29,11 @@
     }
 </style>
 
+@{ 
+    var isParent = Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
+    var enableLinks = Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks"));
+}
+
 <div class="main-content-inner">
     <div class="row">
         <div class="col-lg-12">
@@ -43,12 +48,20 @@
                             <tr>
                                 <td>SRTdash</td>
                                 <td>Colorlib</td>
-                                <td><a href="https://github.com/puikinsh/srtdash-admin-dashboard">GitHub</a></td>
+
+                                @if (isParent || bool.Parse(enableLinks))
+                                {
+                                    <td><a href="https://github.com/puikinsh/srtdash-admin-dashboard">GitHub</a></td>
+                                }
                             </tr>
                             <tr>
                                 <td>ScrapySharp</td>
                                 <td>Flechner Romain</td>
-                                <td><a href="https://github.com/rflechner/ScrapySharp">GitHub</a></td>
+
+                                @if (isParent || bool.Parse(enableLinks))
+                                {
+                                    <td><a href="https://github.com/rflechner/ScrapySharp">GitHub</a></td>
+                                }
                             </tr>
                         </tbody>
                     </table>
