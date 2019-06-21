@@ -69,5 +69,84 @@ namespace Dashboard.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Reset()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Reset(string username, string email)
+        {
+            if (!SecurityQuestion.UsernameEmailMatch(username, email))
+            {
+                TempData["Error"] = "Username and Email don't match";
+
+                return View();
+            }
+
+            return RedirectToAction("ResetAuth", new { username, email });
+        }
+
+        [HttpGet]
+        public IActionResult ResetAuth(string username, string email)
+        {
+            if (username == "" || username == null || email == "" || email == null)
+            {
+                return RedirectToAction("Reset");
+            }
+
+            TempData["username"] = username;
+            TempData["email"] = email;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetAuth(string username, string email, string answer1, string answer2, string answer3)
+        {
+            var token = Account.GenerateResetToken(username, email, answer1, answer2, answer3);
+
+            if (token == null)
+            {
+                return RedirectToAction("Reset");
+            }
+
+            return RedirectToAction("ResetToken", new { token });
+        }
+
+        [HttpGet]
+        public IActionResult ResetToken(string token)
+        {
+            if (token == "" || token == null)
+            {
+                return RedirectToAction("Reset");
+            }
+
+            TempData["Token"] = token;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetToken(string token, string password, string confirm)
+        {
+            var userid = Account.GetTokenUserId(token);
+
+            if (userid <= 0)
+            {
+                return RedirectToAction("Reset");
+            }
+
+            if (password != confirm)
+            {
+                return RedirectToAction("ResetToken", new { token });
+            }
+
+            Account.ResetPassword(token, password);
+
+            return RedirectToAction("Login");
+        }
     }
 }

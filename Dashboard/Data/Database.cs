@@ -32,6 +32,7 @@ namespace Dashboard.Data
         public DbSet<SecurityQuestionModel> SecurityQuestions { get; set; }
         public DbSet<SettingModel> Settings { get; set; }
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserResetTokenModel> UserResetTokens { get; set; }
         public DbSet<UserBudgetModel> UserBudgets { get; set; }
         public DbSet<UserSettingModel> UserSettings { get; set; }
         public DbSet<WishlistModel> Wishlist { get; set; }
@@ -47,6 +48,7 @@ namespace Dashboard.Data
             modelBuilder.Entity<SecurityQuestionModel>().ToTable("SecurityQuestion");
             modelBuilder.Entity<SettingModel>().ToTable("Setting");
             modelBuilder.Entity<UserModel>().ToTable("User");
+            modelBuilder.Entity<UserResetTokenModel>().ToTable("UserResetToken");
             modelBuilder.Entity<UserBudgetModel>().ToTable("UserBudget");
             modelBuilder.Entity<UserSettingModel>().ToTable("UserSetting");
             modelBuilder.Entity<WishlistModel>().ToTable("Wishlist");

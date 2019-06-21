@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dashboard.Data;
 using Dashboard.Models;
+using System.Text;
 
 namespace Dashboard.Helpers
 {
@@ -194,6 +195,119 @@ namespace Dashboard.Helpers
                 }
 
                 return true;
+            }
+        }
+
+        public static string GenerateResetToken(string username, string email, string answer1, string answer2, string answer3)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Users
+                    .Where(um => um.Username == username)
+                    .Where(um => um.Email == email)
+                    .Where(um => um.Answer1 == answer1)
+                    .Where(um => um.Answer2 == answer2)
+                    .Where(um => um.Answer3 == answer3)
+                    .ToList();
+
+                if (records.Count() != 1)
+                {
+                    return null;
+                }
+
+                Random random = new Random();
+                string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+                int length = 16;
+                StringBuilder result = new StringBuilder(length);
+                for (int i = 0; i < length; i++)
+                {
+                    result.Append(characters[random.Next(characters.Length)]);
+                }
+
+                UserResetTokenModel tokenModel = new UserResetTokenModel
+                {
+                    UserId = GetUserId(username),
+                    Token = result.ToString()
+                };
+
+                db.UserResetTokens.Add(tokenModel);
+                db.SaveChanges();
+
+                return result.ToString();
+            }
+        }
+
+        public static bool TokenExists(string token)
+        {
+            using (var db = new Database())
+            {
+                var records = db.UserResetTokens
+                    .Where(tm => tm.Token == token)
+                    .ToList();
+
+                if (records.Count() == 1)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static int GetTokenUserId(string token)
+        {
+            using (var db = new Database())
+            {
+                var records = db.UserResetTokens
+                    .Where(tm => tm.Token == token)
+                    .ToList();
+
+                if (records.Count() != 1)
+                {
+                    return -1;
+                }
+
+                return records.ElementAt(0).UserId;
+            }
+        }
+
+        public static void ResetPassword(string token, string password)
+        {
+            using (var db = new Database())
+            {
+                var tokens = db.UserResetTokens
+                    .Where(tm => tm.Token == token)
+                    .ToList();
+
+                if (tokens.Count() != 1)
+                {
+                    return;
+                }
+
+                var userid = tokens.ElementAt(0).UserId;
+
+                var users = db.Users
+                    .Where(um => um.Id == userid)
+                    .ToList();
+
+                if (users.Count() == 0)
+                {
+                    return;
+                }
+
+                if (tokens.ElementAt(0).UserId != userid)
+                {
+                    return;
+                }
+
+                if (password == null || password.Length < 6)
+                {
+                    return;
+                }
+
+                users.ElementAt(0).Password = Passwords.Hash(password);
+                db.UserResetTokens.Remove(tokens.ElementAt(0));
+                db.SaveChanges();
             }
         }
     }

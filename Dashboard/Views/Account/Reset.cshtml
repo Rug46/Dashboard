@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Reset";
+    Layout = "~/Views/Shared/_LayoutNoAuth.cshtml";
+}
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Reset Password</h1>
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+
+                    <form asp-action="Reset" method="post">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="User Name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" />
+                        </div>
+                        <div class="form-check">
+                            <button type="submit" class="btn btn-primary">Reset</button>
+                            <a type="button" class="btn btn-secondary" href="/Account/Login">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
