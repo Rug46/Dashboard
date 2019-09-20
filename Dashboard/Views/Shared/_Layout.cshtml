@@ -80,6 +80,15 @@
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)" aria-expanded="true">
+                                        <i class="ti-user"></i><span>@User.Identity.Name</span>
+                                    </a>
+                                    <ul class="collapse">
+                                        <li><a href="/Activity/Profile/@User.Identity.Name">Profile</a></li>
+                                        <li><a href="/Account/Logout">Logout</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" aria-expanded="true">
                                         <i class="ti-list"></i><span>Activity</span>
                                     </a>
                                     <ul class="collapse">
@@ -139,12 +148,12 @@
                                 @*<a href="@Url.Action("Index", "Settings")"><li title="Settings"><i class="ti-settings"></i></li></a>*@
                                 <a data-toggle="modal" data-target="#modalTimer"><li title="Stopwatch"><i class="ti-timer"></i></li></a>
                                 <a data-toggle="modal" data-target="#modalNew"><li title="Add New Record"><i class="ti-plus"></i></li></a>
-                                <li title="@User.Identity.Name" id="dropdownMenuLink" data-toggle="dropdown"><i class="ti-user"></i></li>
+                                @*<li title="@User.Identity.Name" id="dropdownMenuLink" data-toggle="dropdown"><i class="ti-user"></i></li>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="/Activity/Profile/@User.Identity.Name">@User.Identity.Name</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/Account/Logout">Logout</a>
-                                </div>
+                                </div>*@
                             </ul>
                         </div>
                     </div>
