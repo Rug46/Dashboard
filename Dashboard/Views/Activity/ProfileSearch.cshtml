@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Dashboard.Models.ActivityModel>
+
+@{
+    ViewData["Title"] = "Profile Search";
+}
+
+<style>
+    .textbox {
+        border: solid 1px black;
+        margin-top: 5px;
+        padding: 0px 5px;
+        width: 100%;
+    }
+</style>
+
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"].ToString()
+                        </div>
+                    }
+                    <h1>Find a user</h1>
+                    <form action="/Activity/ProfileSearch" method="post">
+                        <input type="text" class="textbox" name="Name" placeholder="Name" />
+                        <input type="submit" class="btn btn-primary" value="Find User" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

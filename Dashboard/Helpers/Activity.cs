@@ -150,5 +150,24 @@ namespace Dashboard.Helpers
                 return games;
             }
         }
+
+        public static bool UserExists(string name)
+        {
+            using (var db = new Database())
+            {
+                var records = db.Users
+                    .Where(um => um.Username == name)
+                    .ToList();
+
+                if (records.Count == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

@@ -574,5 +574,23 @@ namespace Dashboard.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult ProfileSearch()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProfileSearch(string Name)
+        {
+            if (Activity.UserExists(Name))
+            {
+                return RedirectToAction("Profile", new { id = Name });
+            }
+
+            TempData["Error"] = "Unable to find a user with that name";
+            return View();
+        }
     }
 }
