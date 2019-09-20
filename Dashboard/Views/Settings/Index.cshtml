@@ -58,34 +58,43 @@
                         </div>
                     }
 
-                    <h1>Settings</h1>
-                    <form method="post" action="/Settings/Index">
-                        <div class="form-group">
-                            <table>
-                                <tr>
-                                    <td style="padding-right: 10px;">External Links</td>
-                                    <td>
-                                        <select class="textbox" name="enableLinks" id="enableLinks">
-                                            <option value="true">Enable</option>
-                                            <option value="false">Disable</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-right: 10px;">Private Profile</td>
-                                    <td>
-                                        <select class="textbox" name="privateProfile" id="private">
-                                            <option value="true">Enable</option>
-                                            <option value="false">Disable</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
+                    @if (TempData["ErrorStop"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorStop"].ToString()
                         </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                        </div>
-                    </form>
+                    }
+                    else
+                    {
+                        <h1>Settings</h1>
+                        <form method="post" action="/Settings/Index">
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 10px;">External Links</td>
+                                        <td>
+                                            <select class="textbox" name="enableLinks" id="enableLinks">
+                                                <option value="true">Enable</option>
+                                                <option value="false">Disable</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 10px;">Private Profile</td>
+                                        <td>
+                                            <select class="textbox" name="privateProfile" id="private">
+                                                <option value="true">Enable</option>
+                                                <option value="false">Disable</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    }
                 </div>
             </div>
         </div>

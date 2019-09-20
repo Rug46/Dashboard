@@ -16,6 +16,16 @@ namespace Dashboard.Controllers
         {
             var currentUser = Account.GetUserId(User.Identity.Name);
 
+            if (!Account.IsParent(currentUser))
+            {
+                TempData["ErrorStop"] = "Child accounts are not allowed to change settings";
+
+                TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("enableLinks"));
+                TempData["private"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("private"));
+
+                return View();
+            }
+
             TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("enableLinks"));
             TempData["private"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("private"));
 
@@ -26,6 +36,16 @@ namespace Dashboard.Controllers
         public IActionResult Index(string enableLinks, string privateProfile)
         {
             var currentUser = Account.GetUserId(User.Identity.Name);
+
+            if (!Account.IsParent(currentUser))
+            {
+                TempData["ErrorStop"] = "Child accounts are not allowed to change settings";
+
+                TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("enableLinks"));
+                TempData["private"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("private"));
+
+                return View();
+            }
 
             UserSetting.SetSettingValue(currentUser, Setting.GetSettingId("enableLinks"), enableLinks);
             UserSetting.SetSettingValue(currentUser, Setting.GetSettingId("private"), privateProfile);
