@@ -7,7 +7,7 @@ using Dashboard.Data;
 
 namespace Dashboard.Helpers
 {
-    public class Data
+    public class ActivityData
     {
 
         public static int GetTimeDifference(int id)

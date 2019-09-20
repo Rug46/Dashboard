@@ -7,7 +7,7 @@ using Dashboard.Data;
 
 namespace Dashboard.Helpers
 {
-    public class DataYears
+    public class ActivityDataYears
     {
         public static int GetGameTime(DateTime day, int user)
         {
@@ -25,7 +25,7 @@ namespace Dashboard.Helpers
                 for (int i = 0; i < records.Count; i++)
                 {
                     var id = records.ElementAt(i).Id;
-                    count += Data.GetTimeDifference(id);
+                    count += ActivityData.GetTimeDifference(id);
                 }
 
                 return count;

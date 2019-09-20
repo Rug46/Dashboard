@@ -7,7 +7,7 @@ using Dashboard.Data;
 
 namespace Dashboard.Helpers
 {
-    public class DataHours : Controller
+    public class ActivityDataHours : Controller
     {
         public JsonResult GetRecordsHours1(int hoursAgo, int index, int col, int user)
         {

@@ -45,7 +45,7 @@ namespace Dashboard.Helpers
 
                 for(int i = 0; i < records.Count; i++)
                 {
-                    count += Data.GetTimeDifference(records.ElementAt(i).Id);
+                    count += ActivityData.GetTimeDifference(records.ElementAt(i).Id);
                 }
 
                 return count;
