@@ -116,6 +116,13 @@
                     }
                     else
                     {
+                        @if (TempData["Warn"] != null)
+                        {
+                            <div class="alert alert-warning">
+                                @TempData["Warn"].ToString()
+                            </div>
+                        }
+
                         <h1>@username 's Profile</h1>
                         <br />
 

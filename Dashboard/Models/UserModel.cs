@@ -19,5 +19,6 @@ namespace Dashboard.Models
         public string Answer2 { get; set; }
         public int Question3 { get; set; }
         public string Answer3 { get; set; }
+        public int Private { get; set; }
     }
 }

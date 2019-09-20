@@ -56,17 +56,20 @@ namespace Dashboard.Controllers
             }
 
             TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
+            TempData["private"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("private"));
 
             TempData["id"] = id;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string enableLinks)
+        public IActionResult Edit(int id, string enableLinks, string privateProfile)
         {
             UserSetting.SetSettingValue(id, Setting.GetSettingId("enableLinks"), enableLinks);
+            UserSetting.SetSettingValue(id, Setting.GetSettingId("private"), privateProfile);
 
             TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
+            TempData["private"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("private"));
 
             TempData["id"] = id;
             return View();

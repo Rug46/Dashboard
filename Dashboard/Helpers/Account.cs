@@ -320,5 +320,31 @@ namespace Dashboard.Helpers
                 db.SaveChanges();
             }
         }
+
+        public static bool isPrivate(int userid)
+        {
+            using (var db = new Database())
+            {
+                var user = db.Users
+                    .Where(um => um.Id == userid)
+                    .ToList();
+
+                if (user.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (user.ElementAt(0).Private == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
     }
 }

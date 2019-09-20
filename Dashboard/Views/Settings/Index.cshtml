@@ -59,72 +59,52 @@
                     }
 
                     <h1>Settings</h1>
-                    <hr />
-                    <div class="col-lg-6">
-                        <h2>Game Modes</h2>
-                        <ul class="list-group">
-                            @using (var db = new Dashboard.Data.Database())
-                            {
-                                var records = db.Modes
-                                    .Where(mm => mm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
-                                    .OrderBy(mm => mm.Id)
-                                    .ToList();
-
-                                for (int i = 0; i < records.Count; i++)
-                                {
-                                    <li class="list-group-item">
-                                        @records.ElementAt(i).Name
-                                        <div class="float-right">
-                                            <a href="/Settings/RemoveGameMode/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
-                                        </div>
-                                    </li>
-                                }
-                            }
-                            <li class="list-group-item" style="padding-top: 0; padding-bottom: 0; padding-left: 0;">
-                                <form action="Settings/NewGameMode" method="post">
-                                    <input type="text" placeholder="New Mode" class="textbox-task" name="Mode" />
-                                    <div class="float-right">
-                                        <button type="submit" class="btn btn-link btn-custom"><i class="ti-arrow-right align-middle"></i></button>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <h2>Games</h2>
-                        <ul class="list-group">
-                            @using (var db = new Dashboard.Data.Database())
-                            {
-                                var records = db.Games
-                                    .Where(gm => gm.UserId == Dashboard.Helpers.Account.GetUserId(User.Identity.Name))
-                                    .OrderBy(gm => gm.Id)
-                                    .ToList();
-
-                                for (int i = 1; i < records.Count; i++)
-                                {
-                                    <li class="list-group-item">
-                                        @records.ElementAt(i).Name
-                                        <div class="float-right">
-                                            <a href="/Settings/RemoveGame/@records.ElementAt(i).Id" class="btn-custom"><i class="ti-close"></i></a>
-                                        </div>
-                                    </li>
-                                }
-                            }
-                            <li class="list-group-item" style="padding-top: 0; padding-bottom: 0; padding-left: 0;">
-                                <form action="/Settings/NewGame" method="post">
-                                    <input type="text" placeholder="New Game" class="textbox-task" name="Game" />
-                                    <div class="float-right">
-                                        <button type="submit" class="btn btn-link btn-custom"><i class="ti-arrow-right align-middle"></i></button>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                    <form method="post" action="/Settings/Index">
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td style="padding-right: 10px;">External Links</td>
+                                    <td>
+                                        <select class="textbox" name="enableLinks" id="enableLinks">
+                                            <option value="true">Enable</option>
+                                            <option value="false">Disable</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 10px;">Private Profile</td>
+                                    <td>
+                                        <select class="textbox" name="privateProfile" id="private">
+                                            <option value="true">Enable</option>
+                                            <option value="false">Disable</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-<script src="~/js/year.js"></script>
+<script>
+    var enableLinks = "@TempData["enableLinks"].ToString()";
+    var private = "@TempData["private"].ToString()";
+
+    if (enableLinks == "true") {
+        document.getElementById("enableLinks").selectedIndex = 0;
+    } else {
+        document.getElementById("enableLinks").selectedIndex = 1;
+    }
+
+    if (private == "true") {
+        document.getElementById("private").selectedIndex = 0;
+    } else {
+        document.getElementById("private").selectedIndex = 1;
+    }
+</script>

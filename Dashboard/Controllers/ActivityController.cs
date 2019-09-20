@@ -569,6 +569,22 @@ namespace Dashboard.Controllers
                 return View();
             }
 
+            if (UserSetting.GetSettingValueOrDefault(userID, Setting.GetSettingId("private")) == "true")
+            {
+                if (userID == Account.GetUserId(User.Identity.Name))
+                {
+                    TempData["Warn"] = "Your profile has been set to private. Only you can see this page.";
+                }
+                else
+                {
+                    TempData["Error"] = "This user has their profile set to private";
+                    TempData["id"] = -1;
+                    TempData["username"] = id;
+
+                    return View();
+                }
+            }
+
             TempData["id"] = Account.GetUserId(id);
             TempData["username"] = id;
 

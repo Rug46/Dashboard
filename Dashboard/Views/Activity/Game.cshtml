@@ -121,10 +121,9 @@
                                 </table>
                             }
 
-                            var isParent = Dashboard.Helpers.Account.IsParent(Dashboard.Helpers.Account.GetUserId(User.Identity.Name));
                             var enableLinks = Dashboard.Helpers.UserSetting.GetSettingValueOrDefault(Dashboard.Helpers.Account.GetUserId(User.Identity.Name), Dashboard.Helpers.Setting.GetSettingId("enableLinks"));
 
-                            @if (isParent || bool.Parse(enableLinks))
+                            @if (bool.Parse(enableLinks))
                             {
                                 <hr />
                                 <h3>Links</h3>

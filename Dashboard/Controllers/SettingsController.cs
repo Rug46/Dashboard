@@ -11,47 +11,29 @@ namespace Dashboard.Controllers
     [Authorize]
     public class SettingsController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
+            var currentUser = Account.GetUserId(User.Identity.Name);
+
+            TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("enableLinks"));
+            TempData["private"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("private"));
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult NewGameMode(string Mode)
+        public IActionResult Index(string enableLinks, string privateProfile)
         {
-            var ModeTrim = Mode.Trim();
+            var currentUser = Account.GetUserId(User.Identity.Name);
 
-            if (!GameMode.NewGameMode(ModeTrim, Account.GetUserId(User.Identity.Name)))
-            {
-                TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
-            }
+            UserSetting.SetSettingValue(currentUser, Setting.GetSettingId("enableLinks"), enableLinks);
+            UserSetting.SetSettingValue(currentUser, Setting.GetSettingId("private"), privateProfile);
 
-            return RedirectToAction("Index");
-        }
+            TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("enableLinks"));
+            TempData["private"] = UserSetting.GetSettingValueOrDefault(currentUser, Setting.GetSettingId("private"));
 
-        public IActionResult RemoveGameMode(int id)
-        {
-            GameMode.RemoveGameMode(id);
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult NewGame(string Game)
-        {
-            var GameTrim = Game.Trim();
-
-            if (!Games.NewGame(GameTrim, Account.GetUserId(User.Identity.Name)))
-            {
-                TempData["Error"] = "There was an error, please make sure what you entered doesn't already exist and is between 1 and 32 characters";
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult RemoveGame(int id)
-        {
-            Games.RemoveGame(id);
-            return RedirectToAction("Index");
+            return View();
         }
     }
 }
