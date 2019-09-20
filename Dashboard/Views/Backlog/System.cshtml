@@ -188,7 +188,12 @@
                                             }
                                         </td>
                                         <td>
-                                            @Records.ElementAt(i).Name
+                                            @Records.ElementAt(i).Name<br />
+
+                                            @for (int j = 0; j < Records.ElementAt(i).Rating; j++)
+                                            {
+                                                <i class="ti-star" style="color: #eba134;"></i>
+                                            }
                                         </td>
                                         <td>
                                             @Records.ElementAt(i).System

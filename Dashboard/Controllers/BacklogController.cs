@@ -56,11 +56,11 @@ namespace Dashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int Id, string Name, string Compilation, string System, int Status, string Progress, bool NowPlaying)
+        public IActionResult Edit(int Id, string Name, string Compilation, string System, int Status, string Progress, int Rating, bool NowPlaying)
         {
-            if (!Backlog.Edit(Id, Name, Compilation, System, Status, Progress, NowPlaying))
+            if (!Backlog.Edit(Id, Name, Compilation, System, Status, Progress, Rating, NowPlaying))
             {
-                TempData["Error"] = "Please fill in the required fields (marked with a *)";
+                TempData["Error"] = "Please fill in the required fields (marked with a *). Make sure rating is a whole number between 1 and 5";
                 return RedirectToAction("Index");
             }
 

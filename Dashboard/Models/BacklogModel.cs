@@ -14,6 +14,7 @@ namespace Dashboard.Models
         public string Progress { get; set; }
         public int NowPlaying { get; set; }
         public int UserId { get; set; }
+        public int Rating { get; set; }
 
         public enum STATUS { UNPLAYED, UNFINISHED, BEAT, COMPLETED, ENDLESS, RETIRED };
     }

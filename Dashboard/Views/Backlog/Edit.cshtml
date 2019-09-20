@@ -90,6 +90,7 @@
                                 <option value="@((int)BacklogModel.STATUS.RETIRED)">Retired</option>
                             </select>
                             <input type="text" class="textbox" name="Progress" placeholder="Progress Note" value="@BacklogEntry.Progress" />
+                            <input type="number" class="textbox" name="Rating" placeholder="Rating (1-5)" value="@BacklogEntry.Rating" />
                             <label><input type="checkbox" name="NowPlaying" value="true" id="NowPlaying" />Now Playing</label>
                             <input type="submit" class="btn btn-primary padding-btn btn-100" value="Edit" />
                         </form>

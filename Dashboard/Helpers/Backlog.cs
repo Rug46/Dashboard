@@ -216,7 +216,7 @@ namespace Dashboard.Helpers
             }
         }
 
-        public static bool Edit(int id, string Name, string Compilation, string System, int Status, string Progress, bool NowPlaying)
+        public static bool Edit(int id, string Name, string Compilation, string System, int Status, string Progress, int Rating, bool NowPlaying)
         {
             using (var db = new Database())
             {
@@ -238,10 +238,16 @@ namespace Dashboard.Helpers
                     return false;
                 }
 
+                if (Rating > 5 || Rating < 0)
+                {
+                    return false;
+                }
+
                 records.ElementAt(0).Name = Name;
                 records.ElementAt(0).System = System;
                 records.ElementAt(0).Status = Status;
                 records.ElementAt(0).Progress = Progress;
+                records.ElementAt(0).Rating = Rating;
                 records.ElementAt(0).NowPlaying = NowPlayingInt;
 
                 db.SaveChanges();

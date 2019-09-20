@@ -175,7 +175,12 @@
                                             <a class="link-nostyle" href="/Backlog/Edit/@nowplaying.ElementAt(i).Id"><i class="ti-marker-alt"></i></a>
                                         </td>
                                         <td>
-                                            @nowplaying.ElementAt(i).Name
+                                            @nowplaying.ElementAt(i).Name<br />
+
+                                            @for (int j = 0; j < nowplaying.ElementAt(i).Rating; j++)
+                                            {
+                                                <i class="ti-star" style="color: #eba134;"></i>
+                                            }
                                         </td>
                                         <td>
                                             @nowplaying.ElementAt(i).Progress
