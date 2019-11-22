@@ -58,18 +58,33 @@ namespace Dashboard.Controllers
             TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
             TempData["private"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("private"));
 
+            TempData["dailyBudgetH"] = SetUserBudgetToday.GetBudgetHours(id);
+            TempData["dailyBudgetM"] = SetUserBudgetToday.GetBudgetMinutes(id);
+
+            TempData["monthlyBudgetH"] = SetUserBudget.GetBudgetHours(id);
+            TempData["monthlyBudgetM"] = SetUserBudget.GetBudgetMinutes(id);
+
             TempData["id"] = id;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string enableLinks, string privateProfile)
+        public IActionResult Edit(int id, string enableLinks, string privateProfile, int dailyBudgetH, int dailyBudgetM, int monthlyBudgetH, int monthlyBudgetM)
         {
             UserSetting.SetSettingValue(id, Setting.GetSettingId("enableLinks"), enableLinks);
             UserSetting.SetSettingValue(id, Setting.GetSettingId("private"), privateProfile);
 
+            SetUserBudgetToday.SetBudgetAmount(dailyBudgetH, dailyBudgetM, id);
+            SetUserBudget.SetBudgetAmount(monthlyBudgetH, monthlyBudgetM, id);
+
             TempData["enableLinks"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("enableLinks"));
             TempData["private"] = UserSetting.GetSettingValueOrDefault(id, Setting.GetSettingId("private"));
+
+            TempData["dailyBudgetH"] = SetUserBudgetToday.GetBudgetHours(id);
+            TempData["dailyBudgetM"] = SetUserBudgetToday.GetBudgetMinutes(id);
+
+            TempData["monthlyBudgetH"] = SetUserBudget.GetBudgetHours(id);
+            TempData["monthlyBudgetM"] = SetUserBudget.GetBudgetMinutes(id);
 
             TempData["id"] = id;
             return View();

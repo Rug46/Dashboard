@@ -45,6 +45,23 @@
                                     </td>
                                 </tr>
                             </table>
+                            <h2>Time Budget</h2>
+                            <table>
+                                <tr>
+                                    <td style="padding-right: 10px;">Daily Budget</td>
+                                    <td>
+                                        <input type="number" name="dailyBudgetH" value="@TempData["dailyBudgetH"]" style="width: 75px;" />h
+                                        <input type="number" name="dailyBudgetM" value="@TempData["dailyBudgetM"]" style="width: 75px;" />m
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 10px;">Monthly Budget</td>
+                                    <td>
+                                        <input type="number" name="monthlyBudgetH" value="@TempData["monthlyBudgetH"]" style="width: 75px;" />h
+                                        <input type="number" name="monthlyBudgetM" value="@TempData["monthlyBudgetM"]" style="width: 75px;" />m
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
